@@ -1,0 +1,3 @@
+[submodule "WebVOWL"]
+	path = WebVOWL
+	url = https://github.com/FUB-HCC/WebVOWL.git

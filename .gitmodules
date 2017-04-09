@@ -1,3 +1,6 @@
 [submodule "WebVOWL"]
 	path = WebVOWL
-	url = https://github.com/FUB-HCC/WebVOWL.git
+	url = https://github.com/joetm/WebVOWL.git
+[submodule "SemanticMediaWiki"]
+	path = SemanticMediaWiki
+	url = https://github.com/SemanticMediaWiki/SemanticMediaWiki.git

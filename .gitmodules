@@ -4,3 +4,6 @@
 [submodule "SemanticMediaWiki"]
 	path = SemanticMediaWiki
 	url = https://github.com/SemanticMediaWiki/SemanticMediaWiki.git
+[submodule "LODE"]
+	path = LODE
+	url = https://github.com/joetm/LODE.git

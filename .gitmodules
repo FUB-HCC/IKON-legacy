@@ -7,3 +7,6 @@
 [submodule "LODE"]
 	path = LODE
 	url = https://github.com/joetm/LODE.git
+[submodule "VocabularyMatchingTool"]
+	path = VocabularyMatchingTool
+	url = https://github.com/cbinding/VocabularyMatchingTool.git

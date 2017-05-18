@@ -10,3 +10,6 @@
 [submodule "VocabularyMatchingTool"]
 	path = VocabularyMatchingTool
 	url = https://github.com/cbinding/VocabularyMatchingTool.git
+[submodule "dbpedia-spotlight"]
+	path = dbpedia-spotlight
+	url = https://github.com/dbpedia-spotlight/dbpedia-spotlight.git

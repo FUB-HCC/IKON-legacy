@@ -1,0 +1,12 @@
+{
+    "name": "root/mf-n",
+    "authors": [
+        {
+            "name": "Jonas Oppenlaender",
+            "email": "jonas.oppenlaender@fu-berlin.de"
+        }
+    ],
+    "require": {
+        "fabpot/goutte": "^3.2"
+    }
+}

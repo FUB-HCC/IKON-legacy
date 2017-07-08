@@ -13,3 +13,9 @@
 [submodule "dbpedia-spotlight"]
 	path = dbpedia-spotlight
 	url = https://github.com/dbpedia-spotlight/dbpedia-spotlight.git
+[submodule "citation-parse/anystyle-parser"]
+	path = citation-parse/anystyle-parser
+	url = https://github.com/inukshuk/anystyle-parser.git
+[submodule "citation-parse/grobid"]
+	path = citation-parse/grobid
+	url = https://github.com/kermitt2/grobid.git

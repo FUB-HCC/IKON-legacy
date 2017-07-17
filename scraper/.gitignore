@@ -1,2 +1,5 @@
-mitarbeiter-liste.json
-mitarbeiter-data.json
+PHP/mitarbeiter-liste.json
+PHP/mitarbeiter-data.json
+staff.json
+staff.csv
+venv/**/*

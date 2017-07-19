@@ -43,5 +43,9 @@ $crawler->filter('.view-content .ui.grid a')
 
 // var_dump($mitarbeiter);
 
-print json_encode($mitarbeiter);
+// print json_encode($mitarbeiter);
+
+foreach ($mitarbeiter as $emp) {
+	print $emp['name'] . ', ' . $emp['href'] . PHP_EOL;
+}
 

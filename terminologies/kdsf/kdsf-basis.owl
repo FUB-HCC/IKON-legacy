@@ -20,13 +20,13 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:kdsf="http://kerndatensatz-forschung.de/owl/Basis#">
     <owl:Ontology rdf:about="http://kerndatensatz-forschung.de/owl/Basis">
-        <owl:imports rdf:resource="http://kerndatensatz-forschung.de/owl/Meta"/>
+        <owl:imports rdf:resource="https://github.com/FUB-HCC/IKON/raw/master/terminologies/kdsf/kdsf-meta.owl"/> <!-- http://kerndatensatz-forschung.de/owl/Meta -->
         <owl:versionIRI rdf:resource="http://kerndatensatz-forschung.de/owl/Basis/20151010"/>
     </owl:Ontology>
-    
 
 
-    <!-- 
+
+    <!--
     ///////////////////////////////////////////////////////////////////////////////////////
     //
     // Object Properties
@@ -34,7 +34,7 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hasIdentifier -->
@@ -46,7 +46,7 @@
         <rdfs:range rdf:resource="&kdsf;Identifier"/>
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatAnmelder -->
@@ -63,7 +63,7 @@
             </owl:Class>
         </rdfs:range>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatArt -->
@@ -74,7 +74,7 @@
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
         <rdfs:range rdf:resource="&kdsf;Forschungsinfrastrukturart"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatBefristung -->
@@ -86,7 +86,7 @@
         <rdfs:range rdf:resource="&kdsf;Befristung"/>
         <rdfs:domain rdf:resource="&kdsf;Beschaeftigung"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatBeschaeftigung -->
@@ -97,7 +97,7 @@
         <rdfs:domain rdf:resource="&kdsf;Beschaeftigter"/>
         <rdfs:range rdf:resource="&kdsf;Beschaeftigung"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatBetreiber -->
@@ -108,7 +108,7 @@
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
         <rdfs:range rdf:resource="&kdsf;Organisationseinheit"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatBetriebspersonal -->
@@ -119,7 +119,7 @@
         <rdfs:range rdf:resource="&kdsf;Beschaeftigter"/>
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatBezeichnung -->
@@ -130,7 +130,7 @@
         <rdfs:domain rdf:resource="&kdsf;Professoren"/>
         <rdfs:range rdf:resource="&kdsf;Professorenbezeichnung"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatDokumenttyp -->
@@ -142,7 +142,7 @@
         <rdfs:range rdf:resource="&kdsf;Dokumenttyp"/>
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatErfinder -->
@@ -153,7 +153,7 @@
         <rdfs:domain rdf:resource="&kdsf;Patent"/>
         <rdfs:range rdf:resource="&kdsf;Person"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatErstbetreuer -->
@@ -164,7 +164,7 @@
         <rdfs:range rdf:resource="&kdsf;Person"/>
         <rdfs:domain rdf:resource="&kdsf;Promotion"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatFach -->
@@ -190,7 +190,7 @@
             </owl:Class>
         </rdfs:domain>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatFinanzierungsform -->
@@ -209,7 +209,7 @@
             </owl:Class>
         </rdfs:domain>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatFormat -->
@@ -221,7 +221,7 @@
         <rdfs:range rdf:resource="&kdsf;Format"/>
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatForschungsfeld -->
@@ -247,7 +247,7 @@
             </owl:Class>
         </rdfs:domain>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatGemeinsameBerufung -->
@@ -258,7 +258,7 @@
         <rdfs:range rdf:resource="&kdsf;GemeinsameBerufung"/>
         <rdfs:domain rdf:resource="&kdsf;Professoren"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatKooperationspartner -->
@@ -269,7 +269,7 @@
         <rdfs:domain rdf:resource="&kdsf;Promotion"/>
         <rdfs:range rdf:resource="&kdsf;Promotionskooperationspartner"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatKoordinator -->
@@ -280,7 +280,7 @@
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
         <rdfs:range rdf:resource="&kdsf;Organisationseinheit"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatMittelgeber -->
@@ -291,7 +291,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&kdsf;Mittelgeber"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatNutzung -->
@@ -302,7 +302,7 @@
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
         <rdfs:range rdf:resource="&kdsf;Nutzung"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatOrganisationseinheit -->
@@ -329,7 +329,7 @@
             </owl:Class>
         </rdfs:domain>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatPersonalkategorie -->
@@ -340,7 +340,7 @@
         <rdfs:domain rdf:resource="&kdsf;Beschaeftigung"/>
         <rdfs:range rdf:resource="&kdsf;Personalkategorie"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatPublikation -->
@@ -351,7 +351,7 @@
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
         <rdfs:range rdf:resource="&kdsf;Publikation"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatPublikationstyp -->
@@ -363,7 +363,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&kdsf;Publikationstyp"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatQualifikation -->
@@ -374,7 +374,7 @@
         <rdfs:domain rdf:resource="&kdsf;Person"/>
         <rdfs:range rdf:resource="&kdsf;Qualifikation"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatQualifizierungsverfahren -->
@@ -385,7 +385,7 @@
         <rdfs:domain rdf:resource="&kdsf;Person"/>
         <rdfs:range rdf:resource="&kdsf;Qualifizierungsverfahren"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatSchoepfer -->
@@ -398,7 +398,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&kdsf;Schoepfer"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatSchoepfertyp -->
@@ -410,7 +410,7 @@
         <rdfs:domain rdf:resource="&kdsf;Schoepfer"/>
         <rdfs:range rdf:resource="&kdsf;Schoepfertyp"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatSprecher -->
@@ -421,7 +421,7 @@
         <rdfs:range rdf:resource="&kdsf;Person"/>
         <rdfs:domain rdf:resource="&kdsf;StrukturiertesPromotionsprogramm"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatTaetigkeitsart -->
@@ -432,7 +432,7 @@
         <rdfs:domain rdf:resource="&kdsf;Beschaeftigung"/>
         <rdfs:range rdf:resource="&kdsf;Taetigkeitsart"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatTyp -->
@@ -443,7 +443,7 @@
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
         <rdfs:range rdf:resource="&kdsf;Forschungsinfrastrukturtyp"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatUebergeordnetesProjekt -->
@@ -454,7 +454,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&kdsf;Drittmittelprojekt"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatUntereinheit -->
@@ -468,7 +468,7 @@
         <rdfs:domain rdf:resource="&kdsf;Organisationseinheit"/>
         <rdfs:range rdf:resource="&kdsf;Organisationseinheit"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatUnterstuetzungDurch -->
@@ -490,7 +490,7 @@
             </owl:Class>
         </rdfs:range>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatVerlag -->
@@ -502,7 +502,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&kdsf;Verlag"/>
     </owl:ObjectProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatZugangsart -->
@@ -513,10 +513,10 @@
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
         <rdfs:range rdf:resource="&kdsf;Zugangsart"/>
     </owl:ObjectProperty>
-    
 
 
-    <!-- 
+
+    <!--
     ///////////////////////////////////////////////////////////////////////////////////////
     //
     // Data properties
@@ -524,7 +524,7 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Abschlusszeitpunkt -->
@@ -536,7 +536,7 @@
         <rdfs:domain rdf:resource="&kdsf;Qualifizierungsverfahren"/>
         <rdfs:range rdf:resource="&xsd;dateTime"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Altersgruppe -->
@@ -547,7 +547,7 @@
         <rdfs:domain rdf:resource="&kdsf;Person"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#AltersgruppeBeiAbschluss -->
@@ -559,7 +559,7 @@
         <rdfs:domain rdf:resource="&kdsf;Qualifizierungsverfahren"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#AnzahlGenutzteStunden -->
@@ -570,7 +570,7 @@
         <rdfs:domain rdf:resource="&kdsf;Nutzung"/>
         <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#AnzahlNutzer -->
@@ -581,7 +581,7 @@
         <rdfs:domain rdf:resource="&kdsf;Nutzung"/>
         <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#AnzahlNutzungszugriffe -->
@@ -592,7 +592,7 @@
         <rdfs:domain rdf:resource="&kdsf;Nutzung"/>
         <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Band -->
@@ -604,7 +604,7 @@
         <rdfs:domain rdf:resource="&kdsf;Format"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#BeschreibungDerForschungsinfrastruktur -->
@@ -615,7 +615,7 @@
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Besoldung -->
@@ -736,7 +736,7 @@
             </rdfs:Datatype>
         </rdfs:range>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#BeteiligteInstitutionen -->
@@ -747,7 +747,7 @@
         <rdfs:domain rdf:resource="&kdsf;StrukturiertesPromotionsprogramm"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Bewilligungssume -->
@@ -759,7 +759,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&xsd;integer"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#BezeichnungDerForschungsinfrastruktur -->
@@ -770,7 +770,7 @@
         <rdfs:domain rdf:resource="&kdsf;Forschungsinfrastruktur"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#BezeichnungDerProfessur -->
@@ -781,7 +781,7 @@
         <rdfs:domain rdf:resource="&kdsf;Professoren"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#DatumDerPrioritaetsbegruendendenErstanmeldung -->
@@ -793,7 +793,7 @@
         <rdfs:domain rdf:resource="&kdsf;Patent"/>
         <rdfs:range rdf:resource="&xsd;dateTime"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Drittmitteleinnahmen -->
@@ -804,7 +804,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&xsd;float"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Drittmittelertraege -->
@@ -815,7 +815,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&xsd;float"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Foerderer -->
@@ -827,7 +827,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#FoerderkennzeichenDrittmittelprojekt -->
@@ -838,7 +838,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#FoerderkennzeichenPublikation -->
@@ -851,7 +851,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Geschlecht -->
@@ -886,7 +886,7 @@
             </rdfs:Datatype>
         </rdfs:range>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Heft -->
@@ -898,7 +898,7 @@
         <rdfs:domain rdf:resource="&kdsf;Format"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#IdentifierName -->
@@ -910,7 +910,7 @@
         <rdfs:domain rdf:resource="&kdsf;Identifier"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Konferenzname -->
@@ -922,7 +922,7 @@
         <rdfs:domain rdf:resource="&kdsf;Format"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Kooperationspartner -->
@@ -933,7 +933,7 @@
         <rdfs:domain rdf:resource="&kdsf;Promotion"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Koordinationsrolle -->
@@ -944,7 +944,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&xsd;boolean"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#KoordinatorEinrichtung -->
@@ -956,7 +956,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#LaenderDerBeteiligtenInstitutionen -->
@@ -967,7 +967,7 @@
         <rdfs:domain rdf:resource="&kdsf;StrukturiertesPromotionsprogramm"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Name -->
@@ -978,7 +978,7 @@
         <rdfs:domain rdf:resource="&kdsf;Person"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#NameAusgruendung -->
@@ -989,7 +989,7 @@
         <rdfs:domain rdf:resource="&kdsf;Ausgruendung"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#NameDerOrganisationseinheit -->
@@ -1001,7 +1001,7 @@
         <rdfs:domain rdf:resource="&kdsf;Organisationseinheit"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#NameDerQuelle -->
@@ -1012,7 +1012,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#NameDerWeiterenEinrichtung -->
@@ -1023,7 +1023,7 @@
         <rdfs:domain rdf:resource="&kdsf;GemeinsameBerufung"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#PeerReviewed -->
@@ -1036,7 +1036,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&xsd;boolean"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Projektbeginn -->
@@ -1048,7 +1048,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&xsd;dateTime"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Projektende -->
@@ -1060,7 +1060,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&xsd;dateTime"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Ressource -->
@@ -1104,7 +1104,7 @@
             </rdfs:Datatype>
         </rdfs:range>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Schoepfername -->
@@ -1116,7 +1116,7 @@
         <rdfs:domain rdf:resource="&kdsf;Schoepfer"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Seitenbereich -->
@@ -1128,7 +1128,7 @@
         <rdfs:domain rdf:resource="&kdsf;Format"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Sprachcode -->
@@ -1140,7 +1140,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Sprache -->
@@ -1153,7 +1153,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Staatsangehoerigkeit -->
@@ -1164,7 +1164,7 @@
         <rdfs:domain rdf:resource="&kdsf;Person"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#StartDerPromotionNachAnnahmeAmFachbereichAnDerFakultaet -->
@@ -1175,7 +1175,7 @@
         <rdfs:domain rdf:resource="&kdsf;Promotion"/>
         <rdfs:range rdf:resource="&xsd;dateTime"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#StartDerPromotionNachBetreuungsvereinbarungArbeitsvertrag -->
@@ -1186,7 +1186,7 @@
         <rdfs:domain rdf:resource="&kdsf;Promotion"/>
         <rdfs:range rdf:resource="&xsd;dateTime"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#TitelPatent -->
@@ -1198,7 +1198,7 @@
         <rdfs:domain rdf:resource="&kdsf;Patent"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#TitelProjekt -->
@@ -1209,7 +1209,7 @@
         <rdfs:domain rdf:resource="&kdsf;Drittmittelprojekt"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#TitelPromotionsprogramm -->
@@ -1220,7 +1220,7 @@
         <rdfs:domain rdf:resource="&kdsf;StrukturiertesPromotionsprogramm"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#TitelPublikation -->
@@ -1233,7 +1233,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Verlagsort -->
@@ -1244,7 +1244,7 @@
         <rdfs:domain rdf:resource="&kdsf;Verlag"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Veroeffentlichungsjahr -->
@@ -1257,7 +1257,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&xsd;dateTime"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Veroeffentlichungsnummer -->
@@ -1268,7 +1268,7 @@
         <rdfs:domain rdf:resource="&kdsf;Patent"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#VertragslaufzeitInMonaten -->
@@ -1280,7 +1280,7 @@
         <rdfs:domain rdf:resource="&kdsf;Befristet"/>
         <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Zugriffsrechte -->
@@ -1292,7 +1292,7 @@
         <rdfs:domain rdf:resource="&kdsf;Publikation"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#hatPromotionsberechtigungAus -->
@@ -1303,10 +1303,10 @@
         <rdfs:domain rdf:resource="&kdsf;Person"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
-    
 
 
-    <!-- 
+
+    <!--
     ///////////////////////////////////////////////////////////////////////////////////////
     //
     // Classes
@@ -1314,7 +1314,7 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#AUF -->
@@ -1324,7 +1324,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Promotionskooperationspartner"/>
         <Meta:inhaltlicheDefinition>Na94</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#ArbeitspapierForschungsbericht -->
@@ -1334,7 +1334,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu37</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Artikel -->
@@ -1344,7 +1344,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu25</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Ausgruendung -->
@@ -1353,7 +1353,7 @@
         <rdfs:label>Ausgründung</rdfs:label>
         <Meta:inhaltlicheDefinition>Pa39</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#AusserplanmaessigeProfessoren -->
@@ -1363,7 +1363,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;SonstigeProfessoren"/>
         <Meta:inhaltlicheDefinition>Be89</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Autor -->
@@ -1374,7 +1374,7 @@
         <Meta:pgbid>kds.creator.author</Meta:pgbid>
         <Meta:inhaltlicheDefinition>Pu52</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Befristet -->
@@ -1385,7 +1385,7 @@
         <owl:disjointWith rdf:resource="&kdsf;Unbefristet"/>
         <Meta:inhaltlicheDefinition>Be33</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Befristung -->
@@ -1394,7 +1394,7 @@
         <rdfs:label rdf:datatype="&xsd;string">Befristung</rdfs:label>
         <Meta:inhaltlicheDefinition>Be10</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#BeitraegeInterviewsInNicht-wissenschaftlichenMedien -->
@@ -1404,7 +1404,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu39</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Beschaeftigter -->
@@ -1414,7 +1414,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Person"/>
         <rdfs:comment>Personen, die in einem Beschäftigungsverhältnis sind.</rdfs:comment>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Beschaeftigung -->
@@ -1423,7 +1423,7 @@
         <rdfs:label rdf:datatype="&xsd;string">Beschäftigung</rdfs:label>
         <rdfs:comment>Konzept zur Darstellung der Eigenschaften, die mit einer Beschäftigung zusammenhängen (z.B. Befristung, Dauer, Voll/Teilzeit, etc.)</rdfs:comment>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#BibliographieDokumenttyp -->
@@ -1433,7 +1433,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Dokumenttyp"/>
         <Meta:inhaltlicheDefinition>Pu129</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#BibliographiePublikationstyp -->
@@ -1443,7 +1443,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Buch"/>
         <Meta:inhaltlicheDefinition>Pu24</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Buch -->
@@ -1453,7 +1453,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu22</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Bund -->
@@ -1463,7 +1463,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Mittelgeber"/>
         <Meta:inhaltlicheDefinition>Dr22</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Bundeslaender -->
@@ -1473,7 +1473,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Mittelgeber"/>
         <Meta:inhaltlicheDefinition>Dr23</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#DFG -->
@@ -1483,7 +1483,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Mittelgeber"/>
         <Meta:inhaltlicheDefinition>Dr21</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Datensammlung -->
@@ -1493,7 +1493,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu38</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Dissertation -->
@@ -1503,7 +1503,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Qualifikationsschrift"/>
         <Meta:inhaltlicheDefinition>Pu34</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Dokumenttyp -->
@@ -1513,7 +1513,7 @@
         <Meta:inhaltlicheDefinition>Pu101</Meta:inhaltlicheDefinition>
         <Meta:pgbid>kds.type.document</Meta:pgbid>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Drittmittel -->
@@ -1524,7 +1524,7 @@
         <Meta:inhaltlicheDefinition>Be14</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Na30</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Drittmittelprojekt -->
@@ -1534,7 +1534,7 @@
         <Meta:inhaltlicheDefinition>Dr30</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Dr2a</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#EU -->
@@ -1544,7 +1544,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;EuUndSonstigeInternationaleOrganisationen"/>
         <Meta:inhaltlicheDefinition>Dr95</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Editorial -->
@@ -1554,7 +1554,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Dokumenttyp"/>
         <Meta:inhaltlicheDefinition>Pu121</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#EuUndSonstigeInternationaleOrganisationen -->
@@ -1564,7 +1564,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Mittelgeber"/>
         <Meta:inhaltlicheDefinition>Dr20</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#FH -->
@@ -1574,7 +1574,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Promotionskooperationspartner"/>
         <Meta:inhaltlicheDefinition>Na93</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Fach -->
@@ -1587,7 +1587,7 @@
         <Meta:inhaltlicheDefinition>Dr28</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Be38</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Finanzierungsform -->
@@ -1597,7 +1597,7 @@
         <Meta:inhaltlicheDefinition>Be8</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Na14</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Format -->
@@ -1607,7 +1607,7 @@
         <Meta:pgbid>dcterms.format</Meta:pgbid>
         <Meta:inhaltlicheDefinition>Pu87</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Forschungsfeld -->
@@ -1620,7 +1620,7 @@
         <Meta:inhaltlicheDefinition>Be77</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Pu141</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Forschungsinfrastruktur -->
@@ -1629,7 +1629,7 @@
         <rdfs:label>Forschungsinfrastruktur</rdfs:label>
         <Meta:inhaltlicheDefinition>Fi2</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Forschungsinfrastrukturart -->
@@ -1638,7 +1638,7 @@
         <rdfs:label>Art der Forschungsinfrastruktur</rdfs:label>
         <Meta:inhaltlicheDefinition>Fi5</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Forschungsinfrastrukturtyp -->
@@ -1647,7 +1647,7 @@
         <rdfs:label>Typ der Forschungsinfrastruktur</rdfs:label>
         <Meta:inhaltlicheDefinition>Fi4</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#GemeinsameBerufung -->
@@ -1656,7 +1656,7 @@
         <rdfs:label rdf:datatype="&xsd;string">Gemeinsame Berufung</rdfs:label>
         <Meta:inhaltlicheDefinition>Be4a</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#GewerblicheWirtschaftUndSonstigePrivateBereiche -->
@@ -1666,7 +1666,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Mittelgeber"/>
         <Meta:inhaltlicheDefinition>Dr25</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#GrossgeraeteUndInstrumente -->
@@ -1676,7 +1676,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Forschungsinfrastrukturtyp"/>
         <Meta:inhaltlicheDefinition>Fi15</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#GrundmittelUndInstitutionelleMittel -->
@@ -1687,7 +1687,7 @@
         <Meta:inhaltlicheDefinition>Na29</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Be13</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#GruppeMitAutorenfunktion -->
@@ -1698,7 +1698,7 @@
         <Meta:pgbid>kds.creator.author.GroupName</Meta:pgbid>
         <Meta:inhaltlicheDefinition>Pu62</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#GruppeMitHerausgeberfunktion -->
@@ -1709,7 +1709,7 @@
         <Meta:inhaltlicheDefinition>Pu61</Meta:inhaltlicheDefinition>
         <Meta:pgbid>kds.creator.editor.GroupName</Meta:pgbid>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Habilitation -->
@@ -1720,7 +1720,7 @@
         <Meta:inhaltlicheDefinition>Be16</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Na44</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Habilitationsschrift -->
@@ -1730,7 +1730,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Qualifikationsschrift"/>
         <Meta:inhaltlicheDefinition>Pu35</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Habilitiert -->
@@ -1740,7 +1740,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Qualifikation"/>
         <Meta:inhaltlicheDefinition>Be16</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Hauptberuflich -->
@@ -1750,7 +1750,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Taetigkeitsart"/>
         <Meta:inhaltlicheDefinition>Be35</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#HauptberuflicheGastprofessoren -->
@@ -1760,7 +1760,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;SonstigeProfessoren"/>
         <Meta:inhaltlicheDefinition>Be30</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Herausgeber -->
@@ -1771,7 +1771,7 @@
         <Meta:pgbid>kds.creator.editor</Meta:pgbid>
         <Meta:inhaltlicheDefinition>Pu53</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#HerausgeberschaftEinesSonderheftsEinerZeitschrift -->
@@ -1781,7 +1781,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu51</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#HerausgegebenesBuch -->
@@ -1791,7 +1791,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Buch"/>
         <Meta:inhaltlicheDefinition>Pu48</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Identifier -->
@@ -1800,7 +1800,7 @@
         <rdfs:label>Identifier</rdfs:label>
         <Meta:inhaltlicheDefinition>Pu132</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#InformationsUndKommunikationsinfrastrukturen -->
@@ -1810,7 +1810,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Forschungsinfrastrukturtyp"/>
         <Meta:inhaltlicheDefinition>Fi17</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Journalartikel -->
@@ -1820,7 +1820,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Artikel"/>
         <Meta:inhaltlicheDefinition>Pu11</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Juniorprofessoren -->
@@ -1830,7 +1830,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;SonstigeProfessoren"/>
         <Meta:inhaltlicheDefinition>Be29</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#KoerperschaftMitAutorenfunktion -->
@@ -1841,7 +1841,7 @@
         <Meta:inhaltlicheDefinition>Pu59</Meta:inhaltlicheDefinition>
         <Meta:pgbid>kds.creator.author.CorporateName</Meta:pgbid>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#KoerperschaftMitHerausgeberfunktion -->
@@ -1852,7 +1852,7 @@
         <Meta:pgbid>kds.creator.editor.CorporateName</Meta:pgbid>
         <Meta:inhaltlicheDefinition>Pu60</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Konferenzposter -->
@@ -1862,7 +1862,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu26</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#LetterToTheEditor -->
@@ -1872,7 +1872,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Dokumenttyp"/>
         <Meta:inhaltlicheDefinition>Pu120</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Lokal -->
@@ -1882,7 +1882,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Forschungsinfrastrukturart"/>
         <Meta:inhaltlicheDefinition>Fi19</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#MeetingAbstract -->
@@ -1892,7 +1892,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Dokumenttyp"/>
         <Meta:inhaltlicheDefinition>Pu48</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Mischfinanzierung -->
@@ -1903,7 +1903,7 @@
         <Meta:inhaltlicheDefinition>Na90</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Be86</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Mittelgeber -->
@@ -1912,7 +1912,7 @@
         <rdfs:label rdf:datatype="&xsd;string">Mittelgeber</rdfs:label>
         <Meta:inhaltlicheDefinition>Dr12</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Monographie -->
@@ -1922,7 +1922,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Buch"/>
         <Meta:inhaltlicheDefinition>Pu13</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Nebenberuflich -->
@@ -1932,7 +1932,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Taetigkeitsart"/>
         <Meta:inhaltlicheDefinition>Be36</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#NeuerPublikationstyp -->
@@ -1942,7 +1942,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu111</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#NichtErklaert -->
@@ -1952,7 +1952,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Mittelgeber"/>
         <Meta:inhaltlicheDefinition>Dr134</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#NichtErklaertOeffentlicheMittelgeber -->
@@ -1962,7 +1962,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;NichtErklaert"/>
         <Meta:inhaltlicheDefinition>Dr136</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#NichtErklaertPrivateMittelgeber -->
@@ -1972,7 +1972,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;NichtErklaert"/>
         <Meta:inhaltlicheDefinition>Dr135</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Nutzung -->
@@ -1981,7 +1981,7 @@
         <rdfs:label>Nutzung / Nutzungsintensität</rdfs:label>
         <Meta:inhaltlicheDefinition>Fi8</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#OpenAccess -->
@@ -1991,7 +1991,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Zugangsart"/>
         <Meta:inhaltlicheDefinition>Fi24</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#OrdentlicheProfessoren -->
@@ -2001,7 +2001,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Professorenbezeichnung"/>
         <Meta:inhaltlicheDefinition>Be37</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Organisationseinheit -->
@@ -2014,7 +2014,7 @@
         <Meta:inhaltlicheDefinition>Pu140</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Pa35</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Patent -->
@@ -2024,7 +2024,7 @@
         <Meta:inhaltlicheDefinition>Pa2</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Pa25</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Person -->
@@ -2033,7 +2033,7 @@
         <rdfs:label rdf:datatype="&xsd;string">Person</rdfs:label>
         <rdfs:comment>Zusammenfassendes Konzept für die Darstellung aller personenbezogenen Eigenschaften und Attribute</rdfs:comment>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Personalkategorie -->
@@ -2042,7 +2042,7 @@
         <rdfs:label rdf:datatype="&xsd;string">Personalkategorie</rdfs:label>
         <Meta:inhaltlicheDefinition>Be11</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Professoren -->
@@ -2052,7 +2052,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;WissenschaftlichesUndKuenstlerischesPersonal"/>
         <Meta:inhaltlicheDefinition>Be19</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Professorenbezeichnung -->
@@ -2061,7 +2061,7 @@
         <rdfs:label>Bezeichnung für Professoren</rdfs:label>
         <Meta:inhaltlicheDefinition>Be41</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Promotion -->
@@ -2072,7 +2072,7 @@
         <Meta:inhaltlicheDefinition>Na43</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Be17</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Promotionskooperationspartner -->
@@ -2081,7 +2081,7 @@
         <rdfs:label>Promotionskooperationspartner</rdfs:label>
         <Meta:inhaltlicheDefinition>Na86</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Promoviert -->
@@ -2091,7 +2091,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Qualifikation"/>
         <Meta:inhaltlicheDefinition>Be17</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Publikation -->
@@ -2101,7 +2101,7 @@
         <Meta:inhaltlicheDefinition>Pu4a</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Pu1</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Publikationstyp -->
@@ -2111,7 +2111,7 @@
         <Meta:inhaltlicheDefinition>Pu6</Meta:inhaltlicheDefinition>
         <Meta:pgbid>kds.type.publication</Meta:pgbid>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Qualifikation -->
@@ -2120,7 +2120,7 @@
         <rdfs:label rdf:datatype="&xsd;string">Qualifikation</rdfs:label>
         <Meta:inhaltlicheDefinition>Be9</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Qualifikationsschrift -->
@@ -2130,7 +2130,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu146</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Qualifizierungsverfahren -->
@@ -2139,7 +2139,7 @@
         <rdfs:label>Qualifizierungsverfahren</rdfs:label>
         <Meta:inhaltlicheDefinition>Na4a</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#QuelleneditionDokumenttyp -->
@@ -2149,7 +2149,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Dokumenttyp"/>
         <Meta:inhaltlicheDefinition>Pu130</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#QuelleneditionPublikationstyp -->
@@ -2159,7 +2159,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Buch"/>
         <Meta:inhaltlicheDefinition>Pu47</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Review -->
@@ -2169,7 +2169,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Dokumenttyp"/>
         <Meta:inhaltlicheDefinition>Pu114</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Rezension -->
@@ -2179,7 +2179,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Dokumenttyp"/>
         <Meta:inhaltlicheDefinition>Pu30</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Sammelband -->
@@ -2189,7 +2189,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Buch"/>
         <Meta:inhaltlicheDefinition>Pu23</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Sammelbandbeitrag -->
@@ -2199,7 +2199,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Artikel"/>
         <Meta:inhaltlicheDefinition>Pu110</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Schoepfer -->
@@ -2209,7 +2209,7 @@
         <Meta:inhaltlicheDefinition>Pu2</Meta:inhaltlicheDefinition>
         <Meta:pgbid>dcterms.creator</Meta:pgbid>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Schoepfertyp -->
@@ -2219,7 +2219,7 @@
         <Meta:pgbid>kds.creator</Meta:pgbid>
         <Meta:inhaltlicheDefinition>Pu55</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Seniorprofessoren -->
@@ -2229,7 +2229,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;SonstigeProfessoren"/>
         <Meta:inhaltlicheDefinition>Be31</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#SharedAccess -->
@@ -2239,7 +2239,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Zugangsart"/>
         <Meta:inhaltlicheDefinition>Fi23</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Software -->
@@ -2249,7 +2249,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu45</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Sondermittel -->
@@ -2260,7 +2260,7 @@
         <Meta:inhaltlicheDefinition>Be87</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Na100</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#SonstigeDrittmittelgeber -->
@@ -2270,7 +2270,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Mittelgeber"/>
         <Meta:inhaltlicheDefinition>Dr141</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#SonstigeInternationaleOrganisationen -->
@@ -2280,7 +2280,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;EuUndSonstigeInternationaleOrganisationen"/>
         <Meta:inhaltlicheDefinition>Dr96</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#SonstigeKooperationspartner -->
@@ -2290,7 +2290,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Promotionskooperationspartner"/>
         <Meta:inhaltlicheDefinition>Na97</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#SonstigeProfessoren -->
@@ -2300,7 +2300,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Professorenbezeichnung"/>
         <Meta:inhaltlicheDefinition>Be88</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#SonstigerTyp -->
@@ -2310,7 +2310,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Forschungsinfrastrukturtyp"/>
         <Meta:inhaltlicheDefinition>Fi18</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#SonstigesPersonal -->
@@ -2321,7 +2321,7 @@
         <Meta:inhaltlicheDefinition>Fi30</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Be73</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#SonstigesWissenschaftlichesUndKuenstlerischesPersonal -->
@@ -2331,7 +2331,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;WissenschaftlichesUndKuenstlerischesPersonal"/>
         <Meta:inhaltlicheDefinition>Be85</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Stiftungsprofessoren -->
@@ -2341,7 +2341,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;SonstigeProfessoren"/>
         <Meta:inhaltlicheDefinition>Be59</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#StrukturiertesPromotionsprogramm -->
@@ -2352,7 +2352,7 @@
         <Meta:inhaltlicheDefinition>Na48</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Na6</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Taetigkeitsart -->
@@ -2361,7 +2361,7 @@
         <rdfs:label rdf:datatype="&xsd;string">Tätigkeitsart</rdfs:label>
         <Meta:inhaltlicheDefinition>Be32</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Teilzeit -->
@@ -2371,7 +2371,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Hauptberuflich"/>
         <Meta:inhaltlicheDefinition>Be56</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Unbefristet -->
@@ -2381,7 +2381,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Befristung"/>
         <Meta:inhaltlicheDefinition>Be34</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Universitaet -->
@@ -2391,7 +2391,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Promotionskooperationspartner"/>
         <Meta:inhaltlicheDefinition>Na96</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#UserAccess -->
@@ -2401,7 +2401,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Zugangsart"/>
         <Meta:inhaltlicheDefinition>Fi22</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Verlag -->
@@ -2411,7 +2411,7 @@
         <Meta:pgbid>dcterms.publisher</Meta:pgbid>
         <Meta:inhaltlicheDefinition>Pu67</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Verteilt -->
@@ -2421,7 +2421,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Forschungsinfrastrukturart"/>
         <Meta:inhaltlicheDefinition>Fi20</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Vertretungsprofessoren -->
@@ -2431,7 +2431,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;SonstigeProfessoren"/>
         <Meta:inhaltlicheDefinition>Be58</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Verwaltungspersonal -->
@@ -2441,7 +2441,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Personalkategorie"/>
         <Meta:inhaltlicheDefinition>Be28</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Virtuell -->
@@ -2451,7 +2451,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Forschungsinfrastrukturart"/>
         <Meta:inhaltlicheDefinition>Fi21</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Vollzeit -->
@@ -2461,7 +2461,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Hauptberuflich"/>
         <Meta:inhaltlicheDefinition>Be55</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#WissenschaftlicheOderKuenstlerischeHilfskraefte -->
@@ -2471,7 +2471,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;WissenschaftlichesUndKuenstlerischesPersonal"/>
         <Meta:inhaltlicheDefinition>Be18</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#WissenschaftlicheUndKuenstlerischeMitarbeiter -->
@@ -2481,7 +2481,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;WissenschaftlichesUndKuenstlerischesPersonal"/>
         <Meta:inhaltlicheDefinition>Be22</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#WissenschaftlicheVortragsfolien -->
@@ -2491,7 +2491,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Publikationstyp"/>
         <Meta:inhaltlicheDefinition>Pu44</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#WissenschaftlicherArtikel -->
@@ -2501,7 +2501,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Dokumenttyp"/>
         <Meta:inhaltlicheDefinition>Pu112</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#WissenschaftlichesUndKuenstlerischesPersonal -->
@@ -2511,7 +2511,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Personalkategorie"/>
         <Meta:inhaltlicheDefinition>Be68</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#WissenschaftsunterstuetzendesPersonal -->
@@ -2522,7 +2522,7 @@
         <Meta:inhaltlicheDefinition>Fi26</Meta:inhaltlicheDefinition>
         <Meta:inhaltlicheDefinition>Be63</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Wissensressourcen -->
@@ -2532,7 +2532,7 @@
         <rdfs:subClassOf rdf:resource="&kdsf;Forschungsinfrastrukturtyp"/>
         <Meta:inhaltlicheDefinition>Fi16</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#Zugangsart -->
@@ -2541,7 +2541,7 @@
         <rdfs:label>Art des Zugangs</rdfs:label>
         <Meta:inhaltlicheDefinition>Fi6</Meta:inhaltlicheDefinition>
     </owl:Class>
-    
+
 
 
     <!-- http://kerndatensatz-forschung.de/owl/Basis#ePaper -->

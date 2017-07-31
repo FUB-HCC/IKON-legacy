@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant_data":{"guestpath":"/vagrant_data","hostpath":"/var/www/fu/IKON/vm/shared","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/var/www/fu/IKON/vm","disabled":false,"__vagrantfile":true}}}

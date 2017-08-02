@@ -1,5 +1,10 @@
 import json
 import re
+import functools
+
+def convertUmlauteToASCII(name):
+    chars = {"ä":"ae", "ö":"oe", "ü":"ue", "ß":"ss"}
+    return functools.reduce(lambda a, kv: a.replace(*kv), chars.items(), name)
 
 def normalizeTitel(titel):
         if titel in ["Publikationen(Auswahl)", "Publications (Selection)", "Publikationen (Auswahl)", "Publikationen", "Publications", "Publications (selection)" ]:
@@ -12,7 +17,7 @@ def normalizeTitel(titel):
             return titel
 
 class Staff(object):
-    def __init__(self, name, email, telefon, fax, address, photo, skills, url):
+    def __init__(self, name, email, telefon, fax, address, photo, skills, titel, url):
         self.name = name.lstrip()
         self.email = email
         self.telefon = telefon
@@ -21,6 +26,7 @@ class Staff(object):
         self.photo = photo
         self.skills = skills
         self.url = url
+        self.titel = titel
 
     def toJSON(self):
         return json.dumps(self.__dict__, indent=4, sort_keys=True, ensure_ascii=False).encode('utf8')
@@ -46,23 +52,29 @@ class Staff(object):
         accordion = {}
         # get all accordion entries
         for element in tree.find_all('div', class_="ui styled accordion"):
-            titel = normalizeTitel(element.find('div', class_="ac_title_text").get_text().strip("\t\n ").replace("\t", "").replace("\r\n", "").lstrip("\t\r\n"))
+            titel = normalizeTitel(re.sub(r"[^\w .()]", "", element.find('div', class_="ac_title_text").get_text()).strip())
             # get the content of a list in a accordion
-            if "ul" in [elem.name for elem in element.find('div', class_="content").children]:
-                print("Liste gefunden")
-                accordion[titel] = [li.text.strip() for li in element.find('div', class_="content").find_all('li')]
+            if "ul" in [elem.name for elem in element.find('div', class_="content").descendants]:
+                #print("Liste gefunden")
+                accordion[titel] = [re.sub(r"[^\w .()]", "",li.text.strip()) for li in element.find('div', class_="content").find_all('li')]
             # get all publications and parse them by <br/>'s
             elif titel == "Publikationen" :
-                print("Publikationen gefunden")
+                #print("Publikationen gefunden")
                 for p in element.find('div', class_="content").find_all('p'):
                     for br in p.find_all("br"):
                         br.replace_with("/////")
                 tempList = [p.text.split("/////") for p in element.find('div', class_="content").find_all('p')]
-                accordion[titel] = [val for sublist in tempList for val in sublist if any(c.isalpha() for c in val)]
+                #flatten list and remove elements without any text and inline css classes, which are sometimes scraped and start with \n
+                accordion[titel] = [val.strip() for sublist in tempList for val in sublist if any(c.isalpha() for c in val) and val[0] != "\n"]
             # if nothing matches just get the text of the element
             else:
-                accordion[titel] = [element.find('div', class_="content").get_text().strip("\t\n ")]
+                accordion[titel] = [re.sub(r"[^\w .()]", "", element.find('div', class_="content").get_text().strip())]
         list.append(accordion)
+        # extract the titel from the name and the url
+        print(convertUmlauteToASCII(list[0]).split(" "))
+        print(re.findall(r"(.+?)\.(.+?)@", list[1]))
+        
+        list.append(" ")
         return list
 
 

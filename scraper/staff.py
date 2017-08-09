@@ -1,6 +1,8 @@
 import json
 import re
 import functools
+from nameparser import HumanName
+from nameparser.config import Constants
 
 def convertUmlauteToASCII(name):
     chars = {"ä":"ae", "ö":"oe", "ü":"ue", "ß":"ss"}
@@ -17,8 +19,8 @@ def normalizeTitel(titel):
             return titel
 
 class Staff(object):
-    def __init__(self, name, email, telefon, fax, address, photo, skills, titel, url):
-        self.name = name.lstrip()
+    def __init__(self, name, email, telefon, fax, address, photo, skills, url):
+        self.name = name
         self.email = email
         self.telefon = telefon
         self.fax = fax
@@ -26,7 +28,6 @@ class Staff(object):
         self.photo = photo
         self.skills = skills
         self.url = url
-        self.titel = titel
 
     def toJSON(self):
         return json.dumps(self.__dict__, indent=4, sort_keys=True, ensure_ascii=False).encode('utf8')
@@ -43,7 +44,6 @@ class Staff(object):
                 list.append(tree.find('div', class_=("views-field views-field-"+info)).find('span', class_="field-content").get_text().replace("\r\n", ","))
             except AttributeError:
                 list.append(None)
-
 
         #scrapes the photo URI
         list.append("https://www.naturkundemuseum.berlin" + tree.find('div', class_="views-field views-field-img-URL").span.img.get('src'))
@@ -71,10 +71,14 @@ class Staff(object):
                 accordion[titel] = [re.sub(r"[^\w .()]", "", element.find('div', class_="content").get_text().strip())]
         list.append(accordion)
         # extract the titel from the name and the url
-        print(convertUmlauteToASCII(list[0]).split(" "))
-        print(re.findall(r"(.+?)\.(.+?)@", list[1]))
-        
-        list.append(" ")
+        #print(convertUmlauteToASCII(list[0]).split(" "))
+        #print(re.findall(r"(.+?)\.(.+?)@", list[1]))
+
+        # set up the name parser
+        constants = Constants()
+        constants.titles.add('PD', 'Dipl.', 'des.', 'Professor', 'M.Sc.')
+        # parse the name and normalize weird writing styles for "Ph.D."
+        list[0] = HumanName(re.sub(r"Ph\. D\.", "Ph.D." ,list[0]), constants=constants).as_dict()
         return list
 
 

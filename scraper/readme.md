@@ -5,9 +5,9 @@ This program scrapes the MfN website for staff information and saves it to JSON 
 ### Prerequisites
 
 Dependencies:
-  -Python 3
-  -lxml
-  -BeautifulSoup 4
+  - Python 3
+  - lxml
+  - BeautifulSoup 4
   - nameparser
 
 ### Usage

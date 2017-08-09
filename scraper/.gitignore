@@ -3,3 +3,4 @@ PHP/mitarbeiter-data.json
 staff.json
 staff.csv
 venv/**/*
+__pycache__/

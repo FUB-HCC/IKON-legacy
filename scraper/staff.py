@@ -3,13 +3,20 @@ import re
 import functools
 from nameparser import HumanName
 from nameparser.config import Constants
+from bs4 import BeautifulSoup
+import requests
 
-def convertUmlauteToASCII(name):
-    chars = {"ä":"ae", "ö":"oe", "ü":"ue", "ß":"ss"}
-    return functools.reduce(lambda a, kv: a.replace(*kv), chars.items(), name)
+def parsePublications(subtree, name):
+    for p in subtree.find('div', class_=name).find_all('p'):
+        for br in p.find_all("br"):
+            br.replace_with("/////")
+    tempList = [p.text.split("/////") for p in subtree.find('div', class_=name).find_all('p')]
+    #flatten list and remove elements without any text and inline css classes, which are sometimes scraped and start with \n
+    return [val.strip() for sublist in tempList for val in sublist if any(c.isalpha() for c in val) and val[0] != "\n"]
+
 
 def normalizeTitel(titel):
-        if titel in ["Publikationen(Auswahl)", "Publications (Selection)", "Publikationen (Auswahl)", "Publikationen", "Publications", "Publications (selection)" ]:
+        if titel in ["Publikationen(Auswahl)", "Publikationen (Auswahl)", "Publications (Selection)", "Publikationen (Auswahl)", "Publikationen", "Publications", "Publications (selection)" ]:
             return "Publikationen"
         elif titel in ["Aufgabengebiet\n", "Aufgaben", "Tasks", "Aufgabengebiete"]:
             return "Aufgaben"
@@ -19,7 +26,7 @@ def normalizeTitel(titel):
             return titel
 
 class Staff(object):
-    def __init__(self, name, email, telefon, fax, address, photo, skills, url):
+    def __init__(self, name, email, telefon, fax, address, photo, skills, cv, url):
         self.name = name
         self.email = email
         self.telefon = telefon
@@ -28,6 +35,7 @@ class Staff(object):
         self.photo = photo
         self.skills = skills
         self.url = url
+        self.cv = cv
 
     def toJSON(self):
         return json.dumps(self.__dict__, indent=4, sort_keys=True, ensure_ascii=False).encode('utf8')
@@ -37,6 +45,7 @@ class Staff(object):
 
     def populateObjectFromHTML(tree):
         list = []
+        base_url = "https://www.naturkundemuseum.berlin"
         # scrapes the contact info section
         arguments = ['Name','Email', 'Telefon', 'Fax', 'Adresse']
         for info in arguments:
@@ -46,7 +55,7 @@ class Staff(object):
                 list.append(None)
 
         #scrapes the photo URI
-        list.append("https://www.naturkundemuseum.berlin" + tree.find('div', class_="views-field views-field-img-URL").span.img.get('src'))
+        list.append(base_url + tree.find('div', class_="views-field views-field-img-URL").span.img.get('src'))
 
         #scrapes the accordion
         accordion = {}
@@ -59,20 +68,26 @@ class Staff(object):
                 accordion[titel] = [re.sub(r"[^\w .()]", "",li.text.strip()) for li in element.find('div', class_="content").find_all('li')]
             # get all publications and parse them by <br/>'s
             elif titel == "Publikationen" :
-                #print("Publikationen gefunden")
-                for p in element.find('div', class_="content").find_all('p'):
-                    for br in p.find_all("br"):
-                        br.replace_with("/////")
-                tempList = [p.text.split("/////") for p in element.find('div', class_="content").find_all('p')]
-                #flatten list and remove elements without any text and inline css classes, which are sometimes scraped and start with \n
-                accordion[titel] = [val.strip() for sublist in tempList for val in sublist if any(c.isalpha() for c in val) and val[0] != "\n"]
+                accordion[titel] = parsePublications(element, "content")
+                #try to get additional publications
+                try:
+                    for link in tree.find('div', class_="view-display-id-single_person_sidebar_view").findAll('a', href=True, text="Publikationen"):
+                        pubTree = BeautifulSoup(requests.get(base_url+link.get('href')).text, 'lxml')
+                        accordion[titel] += parsePublications(pubTree, "faqfield-answer")
+                except AttributeError:
+                    pass
             # if nothing matches just get the text of the element
             else:
                 accordion[titel] = [re.sub(r"[^\w .()]", "", element.find('div', class_="content").get_text().strip())]
         list.append(accordion)
-        # extract the titel from the name and the url
-        #print(convertUmlauteToASCII(list[0]).split(" "))
-        #print(re.findall(r"(.+?)\.(.+?)@", list[1]))
+
+        # try to get additional publications
+        #try:
+
+        #except AttributeError as e:
+        #    pass
+
+        list.append(None)
 
         # set up the name parser
         constants = Constants()

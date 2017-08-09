@@ -28,13 +28,13 @@ workerList = htmlTree.find("div" , class_="panel-pane pane-views-panes pane-mita
 workerSet = {(link.get("href")[3:] if link.get("href").startswith("/de") else link.get("href")) for link in workerList}
 stafflist = []
 for link in workerSet:
-    workerHtmlTree = BeautifulSoup(requests.get(base_url + link).text, "lxml")
+    workerHtmlTree = BeautifulSoup(requests.get(base_url+link).text, "lxml")
     staff = Staff(*Staff.populateObjectFromHTML(workerHtmlTree), base_url+link)
     print(staff.toJSON().decode('utf8'))
     stafflist.append(staff)
 
 # determine the output format and print in the corresponding format to a file
-if len(sys.argv) > 1 and sys.argv[1   ] == "-csv":
+if len(sys.argv) > 1 and sys.argv[1] == "-csv":
     with open("staff.csv", "w+", newline = "\n") as csvout:
         writer = csv.writer(csvout, delimiter = ';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         writer.writerow(["Name", "E-Mail", "Telefon", "Fax", "Adresse", "Foto", "URL", "Nähere Informationen"])

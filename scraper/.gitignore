@@ -4,3 +4,4 @@ staff.json
 staff.csv
 venv/**/*
 __pycache__/
+results

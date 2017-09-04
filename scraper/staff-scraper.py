@@ -28,7 +28,8 @@ workerList = htmlTree.find("div" , class_="panel-pane pane-views-panes pane-mita
 workerSet = {(link.get("href")[3:] if link.get("href").startswith("/de") else link.get("href")) for link in workerList}
 stafflist = []
 for link in workerSet:
-    workerHtmlTree = BeautifulSoup(requests.get(base_url+link).text, "lxml")
+    print(base_url + link)
+    workerHtmlTree = BeautifulSoup(requests.get(base_url + link).text, "lxml")
     staff = Staff(*Staff.populateObjectFromHTML(workerHtmlTree), base_url+link)
     print(staff.toJSON().decode('utf8'))
     stafflist.append(staff)

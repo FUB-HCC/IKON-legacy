@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'CHBold'; /*a name to be used later*/
+    src: url('./res/CooperHewitt-WebFonts-public/CooperHewitt-Bold.woff'); /*URL to font*/
+}
+@font-face {
+    font-family: 'CHThin'; /*a name to be used later*/
+    src: url('./res/CooperHewitt-WebFonts-public/CooperHewitt-Thin.woff'); /*URL to font*/
+}
+
+
+body{
+	margin: 0px;
+	background-color: #434058;
+}
+
+.legend{
+	font-family: CHBold;
+}
+rect.bar{
+	fill:none;
+	stroke:#985152;
+	stroke-width:2;
+	rx:10;
+	ry:10;
+}
+.tick text{
+	fill:#88a;
+}
+
+.label{
+	word-wrap: break-word;
+}

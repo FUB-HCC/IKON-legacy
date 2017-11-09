@@ -31,26 +31,48 @@ rect.bar{
 	word-wrap: break-word;
 }
 
-/*Bipartite Graph*/
-.mainBars rect{
-  shape-rendering: auto;
-  fill-opacity: 0;
-  stroke-width: 0.5px;
-  stroke: rgb(0, 0, 0);
-  stroke-opacity: 0;
+/*sankey Graph*/
+path {
+  stroke: white;
+  stroke-width: 0.25px;
+  fill: lightgrey;
 }
-.subBars{
-	shape-rendering:crispEdges;
+
+.graph {
+	font-family: sans-serif;
+	font-size: 11px;
 }
-.edges{
-	stroke:none;
-	fill-opacity:0.5;
+
+.nodesankey rect {
+  cursor: pointer;
+  fill-opacity: .9;
+  shape-rendering: crispEdges;
 }
-.header{
-	text-anchor:middle;
-	font-size:16px;
+
+.nodesankey text {
+  pointer-events: none;
 }
-line{
-	stroke:grey;
+
+.linksankey {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .6;
 }
-/*Bipartite Graph*/
+
+.linksankey:hover {
+  stroke-opacity: .9;
+}
+
+div.tooltipsankey {
+  position: absolute;
+  text-align: left;
+  width: 95px;
+  height: 40px;
+  padding: 4px;
+  font: 11px sans-serif;
+  background: silver;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+/*sankey Graph*/

@@ -14,7 +14,7 @@ module.exports = {
 								"bundle.js": [
 										'js/jquery.min.js',
 										'js/d3.min.js',
-										'js/d3-sankey.js',
+										'js/sankey.js',
 										'js/helpFunctions.js',
 										'js/loadData.js',
 										'js/RadialChart.js',

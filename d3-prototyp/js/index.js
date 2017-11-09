@@ -1,8 +1,8 @@
 
 init(function(data){
 	var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
-	console.log(allProjects);
-	console.log(allProjects[61]);
+	//console.log(allProjects);
+	//console.log(allProjects[61]);
 	$(document).ready(function() {
 		createSvg();
 		/*var n = new Network(allProjects);

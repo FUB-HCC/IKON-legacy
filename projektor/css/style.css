@@ -1,0 +1,421 @@
+@font-face {
+    font-family: CooperHewitt-Light;
+    src: url(../assets/CooperHewitt-Light.otf);
+    font-weight:300;
+}
+@font-face {
+    font-family: CooperHewitt-LightItalic;
+    src: url(../assets/CooperHewitt-LightItalic.otf);
+    font-weight:300;
+    font-style: italic;
+}
+@font-face {
+    font-family: CooperHewitt-Book;
+    src: url(../assets/CooperHewitt-Book.otf);
+    font-weight:400;
+}
+@font-face {
+    font-family: CooperHewitt-Medium;
+    src: url(../assets/CooperHewitt-Medium.otf);
+    font-weight:500;
+}
+@font-face {
+    font-family: CooperHewitt-MediumItalic;
+    src: url(../assets/CooperHewitt-MediumItalic.otf);
+    font-weight:500;
+    font-style: italic;
+}
+
+body {
+	width: 100wh;
+	height: 100vh;
+	background: linear-gradient(60deg, #434058, #522B2C, #434058, #313B0C, #434058, #2C3315, #434058, #21222B);
+	background-size: 800% 800%;
+	-webkit-animation: Gradient 60s ease infinite;
+	-moz-animation: Gradient 60s ease infinite;
+	animation: Gradient 60s ease infinite;
+	overflow: hidden;
+}
+
+#containerTeaser {
+	width: 90%;
+    height: 90%;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    top: 130px;
+    cursor: progress;
+}
+
+#indexImg {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 300px;
+}
+
+#teaser {
+	text-align: center;
+    font-family: CooperHewitt-Light, Helvetica, sans-serif;
+    font-size: 1.3em;
+    margin-top: 80px;
+    color: #f0faf0;
+    width: 25%;
+    left: 37.5%;
+    position: absolute;
+    letter-spacing: .1em;
+}
+
+#container {
+    margin-right: auto;
+    margin-top: 80px;
+    margin-left: 30px;
+}
+
+.main {
+  height: 70%;
+  width: 50%;
+  padding: 30px;
+  display: inline-block;
+  border: 6px solid transparent;
+  background-image: linear-gradient(to right, #434058, #b3b2bc), linear-gradient(to bottom, #b3b2bc, #434058), linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to top, #b3b2bc, #434058);
+  background-origin: border-box;
+  background-size: 100% 8px, 8px 100%, 100% 8px, 8px 100%;
+  background-position: top left, top right, bottom right, bottom left;
+  background-repeat: no-repeat;
+}
+
+.project {
+  max-height: 70%;
+  width: 80%;
+  display: flex; 
+  flex-flow: wrap;
+  justify-content: stretch;
+}
+
+
+
+.projectAttribute {
+	text-align: right;
+	display: inline-flex;
+	float: right;
+	font-size: .8em;
+	text-transform: uppercase;
+	color: #7b798a;
+    font-family: CooperHewitt-Light, Helvetica, sans-serif;
+	margin-bottom: 5px;
+}
+
+.gallery {
+	height: 90%;
+	width: 32.5%;
+	margin-top: 30px;
+	display: inline-block;
+	text-align: center;
+	opacity: .33;
+	color: #f0faf0;
+	justify-content: space-between;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.gallery:hover {
+	opacity: 1.0;
+	cursor: pointer;
+}
+
+.gallery p {
+    text-align: center;
+    font-family: CooperHewitt-Light, Helvetica, sans-serif;
+    font-size: 1em;
+    letter-spacing: .1em;
+    margin-top: 50px;
+    text-align: center;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gallery img {
+	width: 90%;
+	height:auto;
+}
+
+#feature {
+    height: 70%;
+    width: 20%;
+    background: linear-gradient(45deg, #d9ef36, #8184a7);
+    background-size: 200% 200%;
+    margin-top: 80px;
+    display: inline-block;
+    padding: 30px;
+    position: absolute;
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+#navigation {
+	width: 20%;
+    height: auto;
+    top: 30px;
+    right:0px;
+    display: inline-block;
+    position: absolute;
+}
+
+#logo {
+	display: block;
+	text-align: center;
+}
+
+#menu {
+    list-style-type: none;
+    text-align: center;
+    font-size: 1em;
+    font-family: CooperHewitt-Light, Helvetica, sans-serif;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    width: auto;
+    margin-top: 50px;
+    padding: 0;
+    line-height: 2.5em;
+
+}
+
+#menu a {
+  	color: #7b798a;
+	text-decoration: none;
+}
+
+#menu a:hover {
+	color: #f0faf0;
+}
+
+#projectInteraction {
+	width: 200px;
+    height: auto;
+    /* vertical-align: bottom; */
+    display: flex;
+    /* float: right; */
+    flex-flow: wrap;
+    justify-content: space-between;
+    margin-right: 20%;
+    /* position: relative; */
+    margin-bottom: auto;
+    margin-top: 5%;
+    margin-left: auto;
+}
+
+.projectOption {
+	width: 80px;
+	height: 80px;
+    line-height: 80px;
+	border-radius: 40px;
+	text-align: center;
+    font-family: CooperHewitt-Book, Helvetica, sans-serif;
+    font-size: .8em;
+    text-transform: uppercase;
+    background-color: #f0faf0;
+    color: #7b798a;
+}
+
+.projectOption:hover {
+    background-color: #7b798a;
+    color: #f0faf0;
+    cursor: pointer;
+}
+
+#breadcrumbs {
+	text-align: center;
+    font-family: CooperHewitt-Light, Helvetica, sans-serif;
+    font-size: .8em;
+    left: 30px;
+    bottom: 50px;
+    color: #7b798a;
+    width: auto;
+    position: absolute;
+    letter-spacing: .1em;
+}
+
+.highlight {
+    color: #f0faf0;
+    text-transform: uppercase;
+}
+
+
+.nolight {
+    color: #7b798a;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.fb1 {
+    color: #7d913c;
+}
+
+.fb2 {
+    color: #D9EF36;
+}
+
+.fb3 {
+    color: #8184A7;
+}
+
+.fb4 {
+    color: #985152;
+}
+
+.system {
+	color: #7b798a;
+}
+
+.transfer {
+  	background-image: linear-gradient(to right, #434058, #b3b2bc), linear-gradient(to bottom, #b3b2bc, #434058), linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to top, #b3b2bc, #434058);
+  	background-origin: border-box;
+  	background-position: top left, top right, bottom right, bottom left;
+  	background-repeat: no-repeat;
+  	color: #f0faf0;
+}
+
+.transfer:hover {
+  	background-image: linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to bottom, #b3b2bc, #434058), linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to top, #b3b2bc, #434058);
+  	background-origin: border-box;
+  	background-position: top left, top right, bottom right, bottom left;
+  	background-repeat: no-repeat;
+  	color: #f0faf0;
+}
+
+.boxFull {
+	flex: auto;
+	border-color: inherit;
+	border: 1px solid;
+	width: auto;
+    max-width: 50%;
+    height: auto;
+    padding: 20px;
+    float: left;
+  	cursor: pointer;
+}
+
+.boxEmpty {
+	flex: auto;
+	border-color: inherit;
+	border: 6px dashed rgba(currentcolor, .2);
+	width: auto;
+    max-width: 50%;
+    height: auto;
+    padding: 20px;
+    float: left;
+  	cursor: pointer;
+}
+
+.boxTransfer {
+	flex: auto;
+	width: auto;
+    max-width: 50%;
+    height: auto;
+    text-align: center;
+    padding: 20px;
+    float: left;
+    border: 6px solid transparent;
+  	background-image: linear-gradient(to right, #434058, #b3b2bc), linear-gradient(to bottom, #b3b2bc, #434058), linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to top, #b3b2bc, #434058);
+  	background-origin: border-box;
+  	background-position: top left, top right, bottom right, bottom left;
+  	background-repeat: no-repeat;
+  	cursor: pointer;
+}
+
+h1 {
+	font-family: CooperHewitt-Book, Helvetica, sans-serif;
+	font-size: 2em;
+	letter-spacing: .1em;
+	color: #f0faf0;
+	text-align: left;
+}
+
+h1 a {
+	color: #f0faf0;
+	text-decoration: none;
+}
+
+h1 a:hover {
+	color: #434058;
+}
+
+h2 {
+	font-family: CooperHewitt-Book, Helvetica, sans-serif;
+	font-size: 1.3em;
+	letter-spacing: .1em;
+	color: #f0faf0;
+	text-align: center;
+}
+
+h3 {
+	font-family: CooperHewitt-Book, Helvetica, sans-serif;
+	font-size: 1em;
+	letter-spacing: .1em;
+	color: #f0faf0;
+	text-align: center;
+}
+
+h4 {
+	font-family: CooperHewitt-Light, Helvetica, sans-serif;
+		font-size: 1.3em;
+	letter-spacing: .1em;
+	color:   #f0faf0;
+}
+
+h4 a {
+	font-family: CooperHewitt-Light, Helvetica, sans-serif;
+		font-size: 1.3em;
+	letter-spacing: .1em;
+	color:   #f0faf0;
+	text-decoration: none;
+}
+
+p {
+	text-align: left;
+    font-family: CooperHewitt-Light, Helvetica, sans-serif;
+    font-size: 1em;
+    color: #f0faf0;
+    letter-spacing: .1em;
+}
+
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}

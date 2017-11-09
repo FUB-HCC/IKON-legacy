@@ -1,4 +1,6 @@
 
+//init(callback) - Loads the projects.json
+//				   Afterwards it executes this callback with the data as a Parameter
 init(function(data){
 	var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 	//console.log(allProjects);

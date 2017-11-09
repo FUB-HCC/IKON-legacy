@@ -18,10 +18,10 @@ body{
 }
 rect.bar{
 	fill:none;
-	stroke:#985152;
+	/*stroke:#985152;*/
 	stroke-width:2;
-	rx:10;
-	ry:10;
+	/*rx:10;
+	ry:10;*/
 }
 .tick text{
 	fill:#88a;

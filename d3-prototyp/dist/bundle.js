@@ -762,7 +762,26 @@ function createBarChart(allProjects) {
 		.attr("y", function(d) { return y(d.endDate); })
 
 		.attr("height", function(d) { return  y(d.startDate) - y(d.endDate);});
+	var d = new Date();
+	var t = new Date(new Date().getTime() + 7*24 * 60 * 60 * 1000);
+	svg.append("line")
+		.attr("stroke","#faf0fa")
+   		.attr("y1", y(d))
+   		.attr("y2", y(t))
+   		.attr("x1", -5)
+   		.attr("x2", width/2+5);
 
+   	svg.append('circle')
+   	.style("fill","#faf0fa")
+		  .attr("r", 4)
+		  .attr('cx', -5)
+		  .attr('cy', y(d))
+
+	svg.append('circle')
+			.style("fill","#faf0fa")
+		  .attr("r", 4)
+		  .attr('cx', width/2+5)
+		  .attr('cy', y(d))
 }
 
 

@@ -4,7 +4,6 @@
 	<title>MfN.projektor</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-	<link rel="stylesheet" type="text/css" href="../css/bulma.css"/>
 	<link rel="icon" 
       type="image/png" 
       href="../assets/icon.png">
@@ -16,7 +15,7 @@
 		function showInfo(i) {
 			var el = document.getElementById(i);
     		var style = window.getComputedStyle(el);
-    		if(style.display === 'none') {
+    		if(style.visibility === 'hidden') {
     			el.style.visibility = 'visible';
     		} else {
     			el.style.visibility = 'hidden';
@@ -27,25 +26,38 @@
 <body>
 	<div id="container" class="main">
 		<h1>Explore</h1>
-		<div class="gallery" onclick="goTo('cultures.html')">
+		<div class="gallery" onclick="goTo('./cultures.html')">
 			<img src="../assets/cultures.png">
 			<h2>Cultures</h2>
 			<p>See how the instution interlinks and creates knowledge both internally and externally.</p>
+			</p>
+			<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
 		</div>
-		<div class="gallery" onclick="goTo('processes.html')">
+		<div class="gallery" onclick="goTo('./processes.html')">
 			<img src="../assets/processes.png">
 			<h2>Processes</h2>
 			<p>Find out how various activities, departments and cooperations develop across various timespans.</p>
+			</p>
+			<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
 		</div>
-		<div class="gallery" onclick="goTo('discoveries.html')">
+
+		<div class="gallery" onclick="goTo('./discoveries.html')">
 			<img src="../assets/discoveries.png">
 			<h2>Discoveries</h2>
 			<p>Browse the latest in project-led discoveries, automatically generated from our database.</p>
+			</p>
+			<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
 		</div>
 	</div>
 
-	<div id="feature">
-		<h1>Featured Discovery <a href="./machine.html"><sup><i class="fa fa-question-circle" onclick="showInfo('machine-info')" style="font-size: .8em;"></i></sup></a><h1>
+	<div id="feature" onclick="goTo('./collab_a.html')">
+		<h1>Featured Discovery <h1>
+		<img src="../assets/teaser_discovery.png" width="100%" height="auto">
+		<h1 style="text-align:center;">Collaboration Opportunity.<sup><i class="fa fa-question-circle" onmouseover="showInfo('machine-info')" style="font-size: .8em; z-index:2;"></i></sup></h1>
+		</p>
+		</p>
+		<p id="machine-info" style="visibility:hidden;">We employ algorithmic automation to link information in our database. This way, previously hidden potential connections can be made visible using the power of machines.</p>
+		<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
 	</div>
 
 	<div id="navigation">

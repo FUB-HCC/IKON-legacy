@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MfN.projektor</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+	<link rel="icon" 
+      type="image/png" 
+      href="../assets/icon.png">
+	<script>
+		function goTo(i) {
+			window.location = i;
+		}
+
+		function tabOut(i) {
+			window.open(i, '_blank');
+		}
+
+		function specificAction(i) {
+			alert(i);
+		}
+	</script>
+</head>
+<body>
+	<div id="container" class="project disc34" style="justify-content: center;">
+		<img src="../assets/collab_a.png" height="auto" width="90%" style="flex: inherit;">
+	</div>
+
+	<div id="projectInteraction">
+		<div class="projectOption" onclick="specificAction('Published to Wiki!')">Publish</div>
+		<div class="projectOption" onclick="specificAction('Email sent!')">Share</div>
+	</div>
+
+	<div id="navigation">
+		<div id="logo"><a href="./main.html"><img src="../assets/mfn-projektor_logo.png" width="90" height="90" ></a></div>
+		<ul id="menu">
+			<li><a href="./cultures.html">Cultures</a></li>
+			<li><a href="./processes.html">Processes</a></li>
+			<li><a href="./discoveries.html"><span class="highlight">Discoveries</span></a></li>
+			<li><a href="./help.html">Help</a></li>
+		</ul>
+	</div>
+
+	<div id="breadcrumbs">
+		<span class="nolight" onclick="goTo('./main.html')">MAIN</span> > <span class="nolight" onclick="goTo('./discoveries.html')">Discoveries</span> > <span class="highlight">Discovery #0137</span>
+	</div>
+
+</body>
+</html>

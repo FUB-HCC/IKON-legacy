@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MfN.projektor</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+	<link rel="icon" 
+      type="image/png" 
+      href="../assets/icon.png">
+	<script>
+		function goTo(i) {
+			window.location = i;
+		}
+
+		function tabOut(i) {
+			window.open(i, '_blank');
+		}
+
+		function specificAction(i) {
+			alert(i);
+		}
+	</script>
+</head>
+<body>
+	<div id="container" class="project">
+		<div class="fb4 boxFull">
+		<h1 class="fb4">Verbundprojekt NeFo3: Unterstützung der Biodiversitätsforschung in Deutschland und ihre Einbindung in Wissenschafts-Politik-Prozesse, insbesondere in die Implementierung des IPBES-Arbeitsprogramms- Teil 2 -MfN Berlin</h1>
+		<span class="projectAttribute">Title</span>
+		</div>
+
+		
+		<div class="fb4 boxFull" onclick="goTo('./processes.html')">
+		<h2 class="fb4">Wissenskommunikation und Partizipation in Theorie und Praxis</h2>
+		<span class="projectAttribute">Maintopic</span>
+		</div>
+
+
+		<div class="fb4 boxFull" onclick="goTo('./cultures.html')">
+		<h2 class="fb4">Forschungsbereich 4</h2>
+		<span class="projectAttribute">Research Department</span>
+		</div>
+
+		<div class="fb4 boxFull" onclick="specificAction('Email sent!')">
+		<h2 class="fb4">Dr Katrin Vohland</h2>
+		<span class="projectAttribute">Project Lead</span>
+		</div>
+
+		<div class="fb4 boxFull">
+		<p class="system">NeFo3 hat das Ziel, als Serviceeinrichtung die deutsche Biodiversitätsforschung stärker in Wissenschafts-Politik-Prozesse und insbesondere in die Umsetzung des ersten IPBES-Arbeitsprogramms einzubinden und das nationale IPBES-Koordinierungsbüro im Hinblick auf die Aktivierung und Einbindung der Wissenschafts-Community zu unterstützen. Hierfür sollen die bestehenden Serviceangebote in enger Abstimmung mit dem nationalen IPBES-Koordinierungsbüro weitergeführt und insbesondere das Capacity Building ausgebaut und die pan-europäische Vernetzung gefördert werden.</p>
+		<span class="projectAttribute">Description</span>
+		</div>
+
+		<div class="fb1 boxFull" onclick="goTo('./processes.html')">
+		<h3 class="fb1">Biodiversitätsdynamik</h3>
+		<span class="projectAttribute">Subtopic</span>
+		</div>
+
+		<div class="fb2 boxFull" onclick="goTo('./processes.html')">
+		<h3 class="fb2">Integrative Biodiversitätsentdeckung</h3>
+		<span class="projectAttribute">Subtopic</span>
+		</div>
+
+
+		<div class="fb3 boxFull" onclick="goTo('./processes.html')">
+		<h3 class="fb3">Dynamische Informations- und Wissensintegration</h3>
+		<span class="projectAttribute">Subtopic</span>
+		</div>
+
+		<div class="fb4 boxFull" onclick="goTo('./processes.html')">
+		<h3 class="fb4">Wissenstransfer</h3>
+		<span class="projectAttribute">Subtopic</span>
+		</div>
+
+
+		<div class="system boxFull" onclick="goTo('./cultures.html')">
+		<h3 class="system">Bundesministerium für Bildung und Forschung</h3>
+		<span class="projectAttribute">Funder</span>
+		</div>
+
+		<div class="system boxFull" onclick="goTo('./processes.html')">
+		<h3 class="system">01.10.2014–31.07.2018</h3>
+		<span class="projectAttribute">Time Span</span>
+		</div>
+
+		<div class="system boxEmpty" onclick="tabOut('https://biowikifarm.net/v-mfn/forschungsprojekte/110038')">
+		<h5>Contribute data in Wiki!</h5>
+		<span class="projectAttribute">Region</span>
+		</div>
+
+
+		<div class="fb4 boxFull">
+		<h3 class="fb4">Informations- und Schulungsmaterialien, Publikation in Fachzeitschriften, Presse, Onlineportal</h3>
+		<span class="projectAttribute">Output</span>
+		</div>
+
+		<div class="system boxFull" onclick="tabOut('http://www.biodiersity.org')">
+		<h3 class="system"">Project Website</h3>
+		<span class="projectAttribute">Further Information</span>
+		</div>
+
+	</div>
+
+	<div id="projectInteraction">
+		<div class="projectOption" onclick="tabOut('https://biowikifarm.net/v-mfn/forschungsprojekte/110038')">Wiki</div>
+		<div class="projectOption" onclick="specificAction('Email sent!')">Share</div>
+		<div class="projectOption transfer" onclick="goTo('./graph_a.html' )">Discovery</div>
+	</div>
+
+	<div id="navigation">
+		<div id="logo"><a href="./main.html"><img src="../assets/mfn-projektor_logo.png" width="90" height="90" ></a></div>
+		<ul id="menu">
+			<li><a href="./cultures.html">Cultures</a></li>
+			<li><a href="./processes.html">Processes</a></li>
+			<li><a href="./discoveries.html">Discoveries</a></li>
+			<li><a href="./help.html">Help</a></li>
+		</ul>
+	</div>
+
+	<div id="breadcrumbs">
+		<span class="nolight" onclick="goTo('main.html')">MAIN</span> > <span class="nolight" onclick="goTo('cultures.html')">CULTURES</span> > <span class="highlight">NeFO 3</span>
+	</div>
+
+</body>
+</html>

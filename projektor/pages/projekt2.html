@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MfN.projektor</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+	<link rel="icon" 
+      type="image/png" 
+      href="../assets/icon.png">
+	<script>
+		function goTo(i) {
+			window.location = i;
+		}
+
+		function tabOut(i) {
+			window.open(i, '_blank');
+		}
+
+		function specificAction(i) {
+			alert(i);
+		}
+	</script>
+</head>
+<body>
+	<div id="container" class="project">
+		<div class="fb2 boxFull">
+		<h1 class="fb2">SO233 WALVIS II: Zeitliche und geochemische Entwicklung des Walvisrückens im Südatlantik</h1>
+		<span class="projectAttribute">Title</span>
+		</div>
+
+		<div class="system boxEmpty" onclick="tabOut('https://biowikifarm.net/v-mfn/forschungsprojekte/110036')">
+		<h5>Contribute data in Wiki!</h5>
+		<span class="projectAttribute">Maintopic</span>
+		</div>
+
+
+		<div class="fb2 boxFull" onclick="goTo('./cultures.html')">
+		<h2 class="fb2">Forschungsbereich 2</h2>
+		<span class="projectAttribute">Research Department</span>
+		</div>
+
+		<div class="fb2 boxFull" onclick="specificAction('Email sent!')">
+		<h2 class="fb2">Dr Birger Neuhaus<br>Dr Carsten Lüter</h2>
+		<span class="projectAttribute">Project Lead</span>
+		</div>
+		<div class="fb2 boxFull">
+		<p class="system">Der Schwerpunkt der FS SONNE-Reise SO-233 liegt auf einer systematischen Beprobung des magmatischen Basements des ca. 1.500 km langen östlichen Teils des Walvis-Rückens im Südostatlantik, der die Etendeka-Flutbasaltprovinz in Namibia mit dem aktiven Tristan/Gough Hostspot verbindet. Das Projekt SO-233 WALVIS II setzt unsere früheren Arbeiten am Walvis-Rücken fort und hat zum Ziel (1) eine räumliche Altersprogression des Vulkanismus zu überprüfen, (2) zwischen klassischem Hotspot- oder Bruchzonen-Vulkanismus zu unterscheiden und (3) die Herkunft sowie zeitliche und räumliche Entwicklung von Schmelzbedingungen und Quellkomponenten, insbesondere des EM-I Mantelendgliedes und die Zonierung von Mantelplumes einzugrenzen. Begleitend zu den Basementbeprobungen werden auf SO-233 biologische Beprobungen vom Museum für Naturkunde Berlin durchgeführt, um die Biodiversität im Südostatlantik besser zu erfassen.</p>
+		<span class="projectAttribute">Description</span>
+		</div>
+
+		<div class="system boxEmpty" onclick="tabOut('https://biowikifarm.net/v-mfn/forschungsprojekte/110036')">
+		<h5>Contribute data in Wiki!</h5>
+		<span class="projectAttribute">Subtopics</span>
+		</div>
+
+		<div class="disc21 boxTransfer" onclick="goTo('./graph_b.html')"">
+		<h4>Relevant competence discovered!</h4>
+		<span class="projectAttribute">Competence</span>
+		</div>
+
+		<div class="system boxFull" onclick="goTo('./cultures.html')">
+		<h3 class="system">Bundesministerium für Bildung und Forschung</h3>
+		<span class="projectAttribute">Funder</span>
+		</div>
+
+		<div class="system boxFull" onclick="goTo('./processes.html')">
+		<h3 class="system">01.01.2014–30.06.2016</h3>
+		<span class="projectAttribute">Time Span</span>
+		</div>
+
+		<div class="system boxFull" onclick="goTo('./processes.html')">
+		<h3 class="system">Namibia</h3>
+		<span class="projectAttribute">Regions</span>
+		</div>
+
+		<div class="system boxEmpty" onclick="tabOut('https://biowikifarm.net/v-mfn/forschungsprojekte/110036')">
+		<h5>Contribute data in Wiki!</h5>
+		<span class="projectAttribute">Output</span>
+		</div>
+
+
+		<div class="system boxFull" onclick="tabOut('http://www.oceanblogs.org/walvis2/about/')">
+		<h3 class="system"">Project Website</h3>
+		<span class="projectAttribute">Further Information</span>
+		</div>
+	</div>
+
+	<div id="projectInteraction">
+		<div class="projectOption" onclick="tabOut('https://biowikifarm.net/v-mfn/forschungsprojekte/110036')">Wiki</div>
+		<div class="projectOption" onclick="specificAction('Email sent!')">Share</div>
+		<div class="projectOption transfer" onclick="goTo('./graph_b.html')">Discovery</div>
+	</div>
+
+	<div id="navigation">
+		<div id="logo"><a href="./main.html"><img src="../assets/mfn-projektor_logo.png" width="90" height="90" ></a></div>
+		<ul id="menu">
+			<li><a href="./cultures.html">Cultures</a></li>
+			<li><a href="./processes.html">Processes</a></li>
+			<li><a href="./discoveries.html">Discoveries</a></li>
+			<li><a href="./help.html">Help</a></li>
+		</ul>
+	</div>
+
+	<div id="breadcrumbs">
+		<span class="nolight" onclick="goTo('main.html')">MAIN</span> > <span class="nolight" onclick="goTo('processes.html')">PROCESSES</span> > <span class="highlight">SO 233 Walvis II</span>
+	</div>
+
+</body>
+</html>

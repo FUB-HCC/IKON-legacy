@@ -88,14 +88,12 @@ body {
 }
 
 .project {
-  max-height: 70%;
+  max-height: 80%;
   width: 80%;
   display: flex; 
   flex-flow: wrap;
   justify-content: stretch;
 }
-
-
 
 .projectAttribute {
 	text-align: right;
@@ -106,6 +104,14 @@ body {
 	color: #7b798a;
     font-family: CooperHewitt-Light, Helvetica, sans-serif;
 	margin-bottom: 5px;
+}
+
+.discoveries {
+  height: auto;
+  width: 80%;
+  display: flex; 
+  flex-flow: wrap;
+  justify-content: space-evenly;
 }
 
 .gallery {
@@ -154,6 +160,11 @@ body {
     position: absolute;
     margin-left: 30px;
     margin-right: 10px;
+    cursor: pointer;
+}
+
+#feature:hover {
+    background: linear-gradient(45deg, #8184a7, #d9ef36);
 }
 
 #navigation {
@@ -194,17 +205,20 @@ body {
 }
 
 #projectInteraction {
-	width: 200px;
+    width: 17%;
     height: auto;
+/*    border: 2px #7b798a solid;
+*/    
+    padding: 1%;
     /* vertical-align: bottom; */
     display: flex;
     /* float: right; */
     flex-flow: wrap;
-    justify-content: space-between;
-    margin-right: 20%;
+    justify-content: space-evenly;
+    margin-right: 18.5%;
     /* position: relative; */
-    margin-bottom: auto;
-    margin-top: 5%;
+    /* margin-bottom: auto; */
+    margin-top: 0%;
     margin-left: auto;
 }
 
@@ -218,11 +232,11 @@ body {
     font-size: .8em;
     text-transform: uppercase;
     background-color: #f0faf0;
-    color: #7b798a;
+    color: #434058;
 }
 
 .projectOption:hover {
-    background-color: #7b798a;
+    background-color: #434058;
     color: #f0faf0;
     cursor: pointer;
 }
@@ -280,6 +294,11 @@ body {
   	color: #f0faf0;
 }
 
+.noTransfer {
+  	border: 1px dashed #f0faf0;
+  	background: transparent;
+}
+
 .transfer:hover {
   	background-image: linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to bottom, #b3b2bc, #434058), linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to top, #b3b2bc, #434058);
   	background-origin: border-box;
@@ -293,7 +312,7 @@ body {
 	border-color: inherit;
 	border: 1px solid;
 	width: auto;
-    max-width: 50%;
+    max-width: 49%;
     height: auto;
     padding: 20px;
     float: left;
@@ -303,9 +322,10 @@ body {
 .boxEmpty {
 	flex: auto;
 	border-color: inherit;
-	border: 6px dashed rgba(currentcolor, .2);
+	border: 2px;
+	border-style: ridge;
 	width: auto;
-    max-width: 50%;
+    max-width: 49%;
     height: auto;
     padding: 20px;
     float: left;
@@ -315,14 +335,108 @@ body {
 .boxTransfer {
 	flex: auto;
 	width: auto;
-    max-width: 50%;
+    max-width: 49%;
     height: auto;
     text-align: center;
     padding: 20px;
     float: left;
-    border: 6px solid transparent;
+ 	border: 6px solid transparent;
   	background-image: linear-gradient(to right, #434058, #b3b2bc), linear-gradient(to bottom, #b3b2bc, #434058), linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to top, #b3b2bc, #434058);
   	background-origin: border-box;
+  	background-size: 100% 8px, 8px 100%, 100% 8px, 8px 100%;
+  	background-position: top left, top right, bottom right, bottom left;
+  	background-repeat: no-repeat;
+  	cursor: pointer;
+}
+
+.boxTransfer:hover {
+	background-image: linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to top, #b3b2bc, #434058), linear-gradient(to right, #434058, #b3b2bc), linear-gradient(to bottom, #b3b2bc, #434058);
+}
+
+
+/* Transfer Styling */
+
+.discBox {  	
+	flex: auto;
+    max-width: 49%;
+    height: auto;
+    text-align: center;
+    padding: 20px;
+    margin: 1%;    
+    min-height: 70%;
+}
+
+/* Transfer fb 4 to fb 1 */
+
+.disc41text {  	
+	font-family: CooperHewitt-Medium, Helvetica, sans-serif;
+    background: -webkit-linear-gradient(-45deg, #985152, #7d913c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.disc41 {
+ 	border: 6px solid transparent;
+  	background-image: linear-gradient(to right, #985152, #7d913c), linear-gradient(to bottom, #7d913c, #985152), linear-gradient(to left, #985152, #7d913c), linear-gradient(to top, #7d913c, #985152);
+  	background-origin: border-box;
+  	background-size: 100% 8px, 8px 100%, 100% 8px, 8px 100%;
+  	background-position: top left, top right, bottom right, bottom left;
+  	background-repeat: no-repeat;
+  	cursor: pointer;
+}
+
+/* Transfer fb 2 to fb 1 */
+
+.disc21text {  	
+	font-family: CooperHewitt-Medium, Helvetica, sans-serif;
+    background: -webkit-linear-gradient(-45deg, #D9EF36, #7d913c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.disc21 {
+ 	border: 6px solid transparent;
+  	background-image: linear-gradient(to right, #7d913c, #D9EF36), linear-gradient(to bottom, #D9EF36, #7d913c), linear-gradient(to left, #7d913c, #D9EF36), linear-gradient(to top, #D9EF36, #7d913c);
+  	background-origin: border-box;
+  	background-size: 100% 8px, 8px 100%, 100% 8px, 8px 100%;
+  	background-position: top left, top right, bottom right, bottom left;
+  	background-repeat: no-repeat;
+  	cursor: pointer;
+}
+
+/* Transfer fb 3 to fb 4 */
+
+.disc34text {  	
+	font-family: CooperHewitt-Medium, Helvetica, sans-serif;
+    background: -webkit-linear-gradient(-45deg, #8184A7, #985152);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.disc34 {
+ 	border: 6px solid transparent;
+  	background-image: linear-gradient(to right, #8184A7, #985152), linear-gradient(to bottom, #985152, #8184A7), linear-gradient(to left, #8184A7, #985152), linear-gradient(to top, #985152, #8184A7);
+  	background-origin: border-box;
+  	background-size: 100% 8px, 8px 100%, 100% 8px, 8px 100%;
+  	background-position: top left, top right, bottom right, bottom left;
+  	background-repeat: no-repeat;
+  	cursor: pointer;
+}
+
+/* Transfer fb 2 to fb 3 */
+
+.disc23text {  	
+	font-family: CooperHewitt-Medium, Helvetica, sans-serif;
+    background: -webkit-linear-gradient(-45deg, #D9EF36, #8184A7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.disc23 {
+ 	border: 6px solid transparent;
+  	background-image: linear-gradient(to right, #D9EF36, #8184A7), linear-gradient(to bottom, #8184A7, #D9EF36), linear-gradient(to left, #D9EF36, #8184A7), linear-gradient(to top, #8184A7, #D9EF36);
+  	background-origin: border-box;
+  	background-size: 100% 8px, 8px 100%, 100% 8px, 8px 100%;
   	background-position: top left, top right, bottom right, bottom left;
   	background-repeat: no-repeat;
   	cursor: pointer;
@@ -336,13 +450,14 @@ h1 {
 	text-align: left;
 }
 
-h1 a {
+h1 sup {
 	color: #f0faf0;
 	text-decoration: none;
 }
 
-h1 a:hover {
+h1 sup:hover {
 	color: #434058;
+	cursor: pointer;
 }
 
 h2 {
@@ -376,9 +491,17 @@ h4 a {
 	text-decoration: none;
 }
 
+h5 {
+	font-family: CooperHewitt-Light, Helvetica, sans-serif;
+	font-size: .8em;
+	letter-spacing: .1em;
+	color:   #f0faf0;
+	text-align: center;
+}
+
 p {
 	text-align: left;
-    font-family: CooperHewitt-Light, Helvetica, sans-serif;
+    font-family: CooperHewitt-Book, Helvetica, sans-serif;
     font-size: 1em;
     color: #f0faf0;
     letter-spacing: .1em;
@@ -418,4 +541,3 @@ p {
 	100% {
 		background-position: 0% 50%
 	}
-}

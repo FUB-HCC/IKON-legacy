@@ -4,7 +4,6 @@
 	<title>MfN.projektor</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-	<link rel="stylesheet" type="text/css" href="../css/bulma.css"/>
 	<link rel="icon" 
       type="image/png" 
       href="../assets/icon.png">
@@ -12,6 +11,14 @@
 		function goTo(i) {
 			window.location = i;
 		}
+
+		setTimeout(function(){
+			var el = document.getElementById("teaserImg");
+			el.style.display = 'none';
+			var el = document.getElementById("teaserImg");
+			var ex = document.getElementById("hideDisc");
+			ex.style.display = 'flex';
+		}, 1250);
 
 		function showInfo(i) {
 			var el = document.getElementById(i);
@@ -25,28 +32,42 @@
 	</script>
 </head>
 <body>
-	<div id="container" class="main">
-		<h1>Explore</h1>
-		<div class="gallery" onclick="goTo('cultures.html')">
-			<img src="../assets/cultures.png">
-			<h2>Cultures</h2>
-			<p>See how the instution interlinks and creates knowledge both internally and externally.</p>
-		</div>
-		<div class="gallery" onclick="goTo('processes.html')">
-			<img src="../assets/processes.png">
-			<h2>Processes</h2>
-			<p>Find out how various activities, departments and cooperations develop across various timespans.</p>
-		</div>
-		<div class="gallery" onclick="goTo('discoveries.html')">
-			<img src="../assets/discoveries.png">
-			<h2>Discoveries</h2>
-			<p>Browse the latest in project-led discoveries, automatically generated from our database.</p>
-		</div>
-	</div>
+	<div id="container" class="discoveries">
+		<img id="teaserImg" src="../assets/teaser_discoveries.png" height="800px" width="1067px" style="flex: inherit;">
+		<div id="hideDisc" style="display:none;flex-flow: wrap;">
+			<div class="disc41 discBox" onclick="goTo('graph_a.html')">
+				<h1 class="disc41text">Transfer Solution discovered!</h1>
+				<p class="system">
+					<span class="fb1">BIORES</span> can use <span class="disc41text">Transfer Solution</span> from <span class="fb4">NeFo3</span>.
+				</p>
+				<span class="projectAttribute">#0137</span>
+			</div>
 
-	<div id="feature">
-		<h1>Featured Discovery <a href="./machine.html"><sup><i class="fa fa-question-circle" onclick="showInfo('machine-info')" style="font-size: .8em;"></i></sup></a><h1>
-		
+			<div class="disc34 discBox" onclick="goTo('collab_a.html')">
+				<h1 class="disc34text">Collaboration Opportunity discovered!</h1>
+				<p class="system">
+					<span class="fb3">Jana Hoffmann</span> and <span class="fb4">Dr Katrin Vohland</span> can collaborate on <span class="disc34text">Subtopic</span>.
+				</p>
+				<span class="projectAttribute">#0012</span>
+			</div>
+
+			<div class="disc21 discBox" onclick="goTo('graph_b.html')">
+				<h1 class="disc21text">Competence Sharing discovered!</h1>
+				<p class="system">
+					<span class="fb2">SO233 WALVIS II</span> can use <span class="disc21text">Competence</span> from <span class="fb1">MEMIN II</span>.
+				</p>
+				<span class="projectAttribute">#0045</span>
+			</div>
+
+			<div class="disc23 discBox" onclick="goTo('collab_b.html')">
+				<h1 class="disc23text">Collaboration Opportunity discovered!</h1>
+				<p class="system">
+					<span class="fb1">BIORES</span> can use <span class="disc23text">Transfer Solution</span> from <span class="fb4">NeFo3</span>.
+				</p>
+				<span class="projectAttribute">#0017</span>
+			</div>
+			<span class="projectAttribute system" style="margin-left:auto;">Updated Today, 10:00am.</span>
+		</div>
 	</div>
 
 	<div id="navigation">
@@ -54,13 +75,13 @@
 		<ul id="menu">
 			<li><a href="./cultures.html">Cultures</a></li>
 			<li><a href="./processes.html">Processes</a></li>
-			<li><a href="./discoveries.html">Discoveries</a></li>
+			<li><a href="./discoveries.html"><span class="highlight">Discoveries</span></a></li>
 			<li><a href="./help.html">Help</a></li>
 		</ul>
 	</div>
 
 	<div id="breadcrumbs">
-		<span class="highlight">MAIN</span> > 
+		<span class="nolight" onclick="goTo('main.html')">MAIN</span> > <span class="highlight">Discoveries</span>
 	</div>
 
 </body>

@@ -15,6 +15,10 @@
 		function tabOut(i) {
 			window.open(i, '_blank');
 		}
+
+		function specificAction(i) {
+			alert(i);
+		}
 	</script>
 </head>
 <body>
@@ -25,18 +29,18 @@
 		</div>
 
 		
-		<div class="fb1 boxFull">
+		<div class="fb1 boxFull" onclick="goTo('./processes.html')">
 		<h2 class="fb1">Integrative Biodiversitätsentdeckung</h2>
 		<span class="projectAttribute">Maintopic</span>
 		</div>
 
 
-		<div class="fb1 boxFull">
+		<div class="fb1 boxFull" onclick="goTo('./cultures.html')">
 		<h2 class="fb1">Forschungsbereich 1</h2>
 		<span class="projectAttribute">Research Department</span>
 		</div>
 
-		<div class="fb1 boxFull">
+		<div class="fb1 boxFull" onclick="specificAction('Email sent!')">
 		<h2 class="fb1">Dr Thomas von Rintelen</h2>
 		<span class="projectAttribute">Project Lead</span>
 		</div>
@@ -45,40 +49,40 @@
 		<span class="projectAttribute">Description</span>
 		</div>
 
-		<div class="fb4 boxFull">
+		<div class="fb4 boxFull" onclick="goTo('./cultures.html')">
 		<h3 class="fb4">Wissenschaft in der Gesellschaft</h3>
 		<span class="projectAttribute">Subtopic</span>
 		</div>
 
-		<div class="fb2 boxFull">
+		<div class="fb2 boxFull" onclick="goTo('./cultures.html')">
 		<h3 class="fb2">Biodiversitätsentdeckung</h3>
 		<span class="projectAttribute">Subtopic</span>
 		</div>
 
 
-		<div class="fb3 boxFull">
+		<div class="fb3 boxFull" onclick="goTo('./cultures.html')">
 		<h3 class="fb3">Biodiversitäts- und Geoinformatik</h3>
 		<span class="projectAttribute">Subtopic</span>
 		</div>
 
 
-		<div class="system boxFull">
+		<div class="system boxFull" onclick="goTo('./cultures.html')">
 		<h3 class="system">Bundesministerium für Bildung und Forschung</h3>
 		<span class="projectAttribute">Funder</span>
 		</div>
 
-		<div class="system boxFull" onclick="goTo('./cultures.html')">
-		<h3 class="system">1.10.2015–29.2.2016</h3>
+		<div class="system boxFull" onclick="goTo('./processes.html')">
+		<h3 class="system">01.10.2015–29.02.2016</h3>
 		<span class="projectAttribute">Time Span</span>
 		</div>
 
-		<div class="system boxFull">
+		<div class="system boxFull" onclick="goTo('./processes.html')">
 		<h3 class="system">Thailand, Philippines, Indonesia</h3>
 		<span class="projectAttribute">Regions</span>
 		</div>
 
 
-		<div class="transfer boxTransfer" onclick="goTo('./graph_a.html')">
+		<div class="disc41 boxTransfer" onclick="goTo('./graph_a.html')">
 		<h4>Transfer Solution discovered!</h4>
 		<span class="projectAttribute">Output</span>
 		</div>
@@ -87,6 +91,7 @@
 
 	<div id="projectInteraction">
 		<div class="projectOption" onclick="tabOut('https://biowikifarm.net/v-mfn/forschungsprojekte/110052#tab=_C3_9Cberblick')">Wiki</div>
+		<div class="projectOption" onclick="specificAction('Email sent!')">Share</div>
 		<div class="projectOption transfer" onclick="goTo('./graph_a.html')">Discovery</div>
 	</div>
 

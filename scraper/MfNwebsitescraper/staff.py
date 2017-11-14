@@ -9,7 +9,7 @@ from itertools import groupby
 
 def match(val):
     regexes = []
-    for word in ['Forschungsschwerpunkte', 'Interessensschwerpunkte', 'Publikationen', 'Aufgabengebiete', 'Sonstige', 'Bücher', 'Originalarbeiten und Buchkapitel', 'Abstracts', 'Peer-reviewed papers', 'Tagungsbeiträge', 'Auswahl', 'Spezialgebiete', 'Laufend', 'Abgeschlossen']:
+    for word in ['Forschungsschwerpunkte', 'Interessensschwerpunkte', 'Publikationen', 'Aufgabengebiete', 'Sonstige', 'Bücher', 'Originalarbeiten und Buchkapitel', 'Abstracts', 'Peer-reviewed papers', 'Tagungsbeiträge', 'Auswahl', 'Spezialgebiete', 'Laufend', 'Abgeschlossen', 'Unveröffentlichte Abstracts']:
         regexes.append(re.compile('.{,16}' + word + '.{,3}'))
     if any(regex.match(val) for regex in regexes):
         return True

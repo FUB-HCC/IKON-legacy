@@ -1,0 +1,4 @@
+item.json
+venv/**/*
+__pycache__/
+results

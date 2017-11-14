@@ -7,6 +7,15 @@ from bs4 import BeautifulSoup
 import requests
 from itertools import groupby
 
+def match(val):
+    regexes = []
+    for word in ['Forschungsschwerpunkte', 'Interessensschwerpunkte', 'Publikationen', 'Aufgabengebiete', 'Sonstige', 'Bücher', 'Originalarbeiten und Buchkapitel', 'Abstracts', 'Peer-reviewed papers', 'Tagungsbeiträge', 'Auswahl', 'Spezialgebiete', 'Laufend', 'Abgeschlossen']:
+        regexes.append(re.compile('.{,16}' + word + '.{,3}'))
+    if any(regex.match(val) for regex in regexes):
+        return True
+    else:
+        return False
+
 def parseInformation(subtree, name, mode):
     # just get the text
     if mode == 'text':
@@ -17,7 +26,7 @@ def parseInformation(subtree, name, mode):
             br.replace_with("/////")
     tempList = [p.text.split("/////") for p in subtree.find('div', class_=name).find_all(['p', 'li'])]
     #flatten list and remove elements without any text and inline css classes, which are sometimes scraped and start with \n
-    return [val.strip() for sublist in tempList for val in sublist if any(c.isalpha() for c in val) and val[0] != "\n"]
+    return [val.strip(' -') for sublist in tempList for val in sublist if any(c.isalpha() for c in val) and val[0] != "\n"]
 
 
 def normalizeTitel(titel):
@@ -73,7 +82,7 @@ class Staff(object):
                 accordion[titel] = parseInformation(element, "content", 'list')
             # search in the "Forschung" entry for an "Forschungsprojekte" entry to extract it
             elif titel == "Forschung":
-                templist = [re.sub(r"[^\w .()-:/]", "",li.text.strip()) for li in element.find('div', class_="content").find_all(['li', 'p'])]
+                templist = [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])]
                 secondtemplist = [list(group) for k, group in groupby(templist, lambda x: re.match(r"((.{0,15}Forschungsprojekt.*)|(.{0,15}Projekt.*))", x)) if not k]
                 if len(secondtemplist) > 1:
                     if 'Forschungsprojekte' in accordion:
@@ -85,9 +94,9 @@ class Staff(object):
             # if nothing matches just get the text of the element
             else:
                 if titel in accordion:
-                    accordion[titel] += [re.sub(r"[^\w .()-:/]", "",li.text.strip()) for li in element.find('div', class_="content").find_all(['li', 'p'])]
+                    accordion[titel] += [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])]
                 else:
-                    accordion[titel] = [re.sub(r"[^\w .()-:/]", "",li.text.strip()) for li in element.find('div', class_="content").find_all(['li', 'p'])]
+                    accordion[titel] = [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])]
         proplist.append(accordion)
 
         #try to find additional informations
@@ -115,6 +124,14 @@ class Staff(object):
                         proplist[6][titel] = parseInformation(infoTree, "faqfield-answer", 'text')
         except AttributeError:
             print('No additional information was found')
+
+
+        # delete extra headlines
+        if 'Forschung' in proplist[6]:
+            proplist[6]['Forschung'] = [val for val in proplist[6]['Forschung'] if not match(val)]
+        if 'Publikationen' in proplist[6]:
+            proplist[6]['Publikationen'] = [val for val in proplist[6]['Publikationen'] if not match(val)]
+
 
 
         # set up the name parser

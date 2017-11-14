@@ -26,7 +26,7 @@ def parseInformation(subtree, name, mode):
             br.replace_with("/////")
     tempList = [p.text.split("/////") for p in subtree.find('div', class_=name).find_all(['p', 'li'])]
     #flatten list and remove elements without any text and inline css classes, which are sometimes scraped and start with \n
-    return [val.strip(' -') for sublist in tempList for val in sublist if any(c.isalpha() for c in val) and val[0] != "\n"]
+    return [val.strip(' -') for sublist in tempList for val in sublist if any(c.isalpha() for c in val) and val[0] != "\n" and val is not ""]
 
 
 def normalizeTitel(titel):
@@ -90,13 +90,13 @@ class Staff(object):
                     else:
                         accordion['Forschungsprojekte'] = secondtemplist.pop(1)
                 if len(secondtemplist) > 0:
-                    accordion[titel] = [element for sublist in secondtemplist for element in sublist if element is not ""]
+                    accordion[titel] = [element for sublist in secondtemplist for element in sublist if element]
             # if nothing matches just get the text of the element
             else:
                 if titel in accordion:
-                    accordion[titel] += [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])]
+                    accordion[titel] += [el for el in [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])] if el]
                 else:
-                    accordion[titel] = [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])]
+                    accordion[titel] = [el for el in [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])] if el]
         proplist.append(accordion)
 
         #try to find additional informations

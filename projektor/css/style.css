@@ -241,7 +241,21 @@ body {
 	margin-bottom: 5px;
 }
 
-/* Discoveries */
+/* Cultures Page */
+
+.cultures {
+  max-height: 80%;
+  width: 80%;
+  display: flex; 
+  flex-flow: wrap;
+  justify-content: space-evenly;
+}
+
+.cultures .gallery {
+  max-width: 49%;
+}
+
+/* Discoveries Page */
 
 .discoveries {
   max-height: 80%;
@@ -249,6 +263,33 @@ body {
   display: flex; 
   flex-flow: wrap;
   justify-content: space-evenly;
+}
+
+/* Help */
+
+.help {
+    padding: 30px;
+    display: flex;
+    max-width: 80%;
+    max-height: 70%;
+    flex-flow: wrap;
+    justify-content: space-evenly;
+}
+
+.help img {
+  cursor: pointer;
+}
+
+.helpitem {
+  padding: inherit;
+  flex: auto; 
+  max-width: 25%;
+  text-align: center;
+  opacity: .33;
+}
+
+.helpitem:hover {
+  opacity: 1.0;
 }
 
 /* Interaction buttons styling */
@@ -537,7 +578,7 @@ h2 {
 
 h3 {
 	font-family: CooperHewitt-Book, Helvetica, sans-serif;
-	font-size: 1em;
+	font-size: 1.3em;
 	letter-spacing: .1em;
 	color: #f0faf0;
 	text-align: center;
@@ -545,14 +586,14 @@ h3 {
 
 h4 {
 	font-family: CooperHewitt-Light, Helvetica, sans-serif;
-		font-size: 1.3em;
+		font-size: 1.2em;
 	letter-spacing: .1em;
 	color:   #f0faf0;
 }
 
 h4 a {
 	font-family: CooperHewitt-Light, Helvetica, sans-serif;
-		font-size: 1.3em;
+		font-size: 1.2em;
 	letter-spacing: .1em;
 	color:   #f0faf0;
 	text-decoration: none;
@@ -572,6 +613,18 @@ p {
     font-size: 1em;
     color: #f0faf0;
     letter-spacing: .1em;
+}
+
+p a {
+    font-family: CooperHewitt-Light, Helvetica, sans-serif;
+    font-size: 1em;
+    color: #b3b2bc;
+    text-decoration: none;
+    letter-spacing: .1em;
+}
+
+p a:hover {
+    color: #f0faf0;
 }
 
 @-webkit-keyframes Gradient {

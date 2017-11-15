@@ -33,22 +33,22 @@
 	</script>
 </head>
 <body>
-	<div id="container" class="discoveries">
+	<div id="container" class="cultures">
 
 		<div  id="tagline">
-			<h1>Cultures<sup><i class="fa fa-question-circle" onmouseover="showInfo('culture-info')" style="font-size: .8em; z-index:2;"></i></sup></h1>
-		<p id="culture-info" style="visibility:hidden; width:49%;">We continually improve the connections of our projects both at the Museum für Naturkunde as well as externally. New cultures emerge as data grows more sophisticated.</p>
+			<h1>Cultures</h1>
+		<p id="culture-info" style="width:49%;">We continually improve the connections of our projects both at the Museum für Naturkunde as well as externally. New cultures emerge as data grows more sophisticated.</p>
 		</div>
 
-		<div id="hideDisc" style="flex-flow: wrap; justify-content: center;">
-			<div class="gallery" onclick="goTo('./culture_a.html')">
+		<div id="hideDisc" style="display: flex; justify-content: space-evenly; width:50%;">
+			<div class="gallery" style="flex:inherit;" onclick="goTo('./culture_a.html')">
 				<img src="../assets/culture_a.png"/>
-				<h2>Research Projects &frasl; Departments</h2>
+				<h3>Research Projects<br>&frasl;<br>Departments</h3>
 				<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
 			</div>
-			<div class="gallery" onclick="goTo('./culture_b.html')">
+			<div class="gallery" style="flex:inherit;" onclick="goTo('./culture_b.html')">
 				<img src="../assets/culture_b.png"/>
-				<h2>Research Projects &frasl; Funding</h2>
+				<h3>Research Projects<br>&frasl;<br>Funding</h3>
 				<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
 			</div>
 		</div>

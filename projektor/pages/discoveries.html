@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MfN.projektor</title>
+	<title>Discoveries | MfN.projektor</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
 	<link rel="icon" 
@@ -15,15 +15,17 @@
 		setTimeout(function(){
 			var el = document.getElementById("teaserImg");
 			el.style.display = 'none';
-			var el = document.getElementById("teaserImg");
 			var ex = document.getElementById("hideDisc");
+			var ey = document.getElementById("tagline");
+			ey.style.display = 'block';
 			ex.style.display = 'flex';
-		}, 1250);
+		}, 1750);
 
 		function showInfo(i) {
 			var el = document.getElementById(i);
     		var style = window.getComputedStyle(el);
-    		if(style.display === 'none') {
+    		console.log(el.style);
+    		if(el.style.visibility === 'hidden') {
     			el.style.visibility = 'visible';
     		} else {
     			el.style.visibility = 'hidden';
@@ -34,6 +36,12 @@
 <body>
 	<div id="container" class="discoveries">
 		<img id="teaserImg" src="../assets/teaser_discoveries.png" height="800px" width="1067px" style="flex: inherit;">
+
+		<div  id="tagline" style="display: none;">
+			<h1>Recent Discoveries<sup><i class="fa fa-question-circle" onmouseover="showInfo('machine-info')" style="font-size: .8em; z-index:2;"></i></sup></h1>
+		<p id="machine-info" style="visibility:hidden; width:49%;">We employ algorithmic automation to link information in our database. This way, previously hidden potential connections can be made visible using the power of machines.</p>
+		</div>
+
 		<div id="hideDisc" style="display:none;flex-flow: wrap;">
 			<div class="disc41 discBox" onclick="goTo('graph_a.html')">
 				<h1 class="disc41text">Transfer Solution discovered!</h1>
@@ -51,6 +59,14 @@
 				<span class="projectAttribute">#0012</span>
 			</div>
 
+			<div class="discS1 discBox" onclick="goTo('collab_b.html')">
+				<h1 class="discS1text">Collection Reference discovered!</h1>
+				<p class="system">
+					<span class="fb1">AMREP II</span> has a <span class="discS1text">Possible Link</span> to a <span class="discS1text">Collection</span>.
+				</p>
+				<span class="projectAttribute">#0017</span>
+			</div>
+
 			<div class="disc21 discBox" onclick="goTo('graph_b.html')">
 				<h1 class="disc21text">Competence Sharing discovered!</h1>
 				<p class="system">
@@ -59,14 +75,7 @@
 				<span class="projectAttribute">#0045</span>
 			</div>
 
-			<div class="disc23 discBox" onclick="goTo('collab_b.html')">
-				<h1 class="disc23text">Collaboration Opportunity discovered!</h1>
-				<p class="system">
-					<span class="fb1">BIORES</span> can use <span class="disc23text">Transfer Solution</span> from <span class="fb4">NeFo3</span>.
-				</p>
-				<span class="projectAttribute">#0017</span>
-			</div>
-			<span class="projectAttribute system" style="margin-left:auto;">Updated Today, 10:00am.</span>
+			<span class="projectAttribute system" style="margin-left:auto; min-width: 100%;">Updated Today, 10:00am CET.</span>
 		</div>
 	</div>
 
@@ -81,7 +90,7 @@
 	</div>
 
 	<div id="breadcrumbs">
-		<span class="nolight" onclick="goTo('main.html')">MAIN</span> > <span class="highlight">Discoveries</span>
+		<span class="nolight" onclick="goTo('main.html')">MAIN</span> > <span class="highlight">Discoveries</span> >
 	</div>
 
 </body>

@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MfN.projektor</title>
+	<title>Main | MfN.projektor</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
 	<link rel="icon" 
       type="image/png" 
       href="../assets/icon.png">
 	<script>
+		// setTimeout(function(){
+		// 	var el = document.getElementById("container");
+		// 	var choice = Math.floor(Math.random() * el.children.length);
+		// 	console.log(el.children[choice]);
+		// 	if(el.children[choice] === 'div.gallery') {
+		// 		el.children[choice].style.opacity = 1;
+		// 	}
+		// }, 100);
+
 		function goTo(i) {
 			window.location = i;
 		}
 
-		function showInfo(i) {
+		function showInfo(i, l) {
 			var el = document.getElementById(i);
+			var ex = document.getElementById(l);
     		var style = window.getComputedStyle(el);
-    		if(style.visibility === 'hidden') {
-    			el.style.visibility = 'visible';
+    		if(style.display == 'none') {
+    			el.style.display = 'block';
+    			ex.style.display = 'none';
     		} else {
-    			el.style.visibility = 'hidden';
+    			el.style.display = 'none';
+    			ex.style.display = 'block';
     		}
 		}
 	</script>
@@ -29,7 +41,7 @@
 		<div class="gallery" onclick="goTo('./cultures.html')">
 			<img src="../assets/cultures.png">
 			<h2>Cultures</h2>
-			<p>See how the instution interlinks and creates knowledge both internally and externally.</p>
+			<p>See how projects and activities interlink and create knowledge both internally and externally.</p>
 			</p>
 			<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
 		</div>
@@ -50,14 +62,21 @@
 		</div>
 	</div>
 
-	<div id="feature" onclick="goTo('./collab_a.html')">
-		<h1>Featured Discovery <h1>
-		<img src="../assets/teaser_discovery.png" width="100%" height="auto">
-		<h1 style="text-align:center;">Collaboration Opportunity.<sup><i class="fa fa-question-circle" onmouseover="showInfo('machine-info')" style="font-size: .8em; z-index:2;"></i></sup></h1>
-		</p>
-		</p>
-		<p id="machine-info" style="visibility:hidden;">We employ algorithmic automation to link information in our database. This way, previously hidden potential connections can be made visible using the power of machines.</p>
-		<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
+	<div id="features">
+		<div id="featureA" class="disc34" onclick="goTo('./collab_a.html')">
+			<h1>Featured Discovery<sup><i class="fa fa-question-circle" onmouseenter="showInfo('machine-info', 'featured')" onmouseleave="showInfo('featured', 'machine-info')"  style="font-size: .8em; z-index:2;"></i></sup></h1>
+			<!-- <img src="../assets/teaser_discovery.png" width="100%" height="auto"> -->
+			<h1 id="featured" class="disc34text" style="text-align: center;">Collaboration Opportunity for Researchers!</h1>
+			<p id="machine-info" style="display: none;">We employ algorithmic automation to link information in our database. This way, previously hidden potential connections can be made visible using the power of machines.</p>
+			<div class="projectOption" style="margin: 30px auto 0 auto;">View</div>
+		</div>
+
+		<div  class="fb2" id="featureB"  onclick="goTo('./projekt3.html')">
+			<h1>New Project</h1>
+			<!-- <img src="../assets/teaser_discovery.png" width="100%" height="auto"> -->
+			<h2 class="fb2">SO233 WALVIS II: Zeitliche und geochemische Entwicklung des Walvisrückens im Südatlantik</h2>
+			<div class="projectOption" style="margin: 30px auto 0 auto;">View</div>
+		</div>
 	</div>
 
 	<div id="navigation">

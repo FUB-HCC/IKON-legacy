@@ -17,12 +17,12 @@ function createBarChart(allProjects) {
 	for (var i = 1; i < allProjects.length; i++) {
 		var d={
 			num: 0,
-			fb: allProjects[i].fachbereich-1,
+			fb: allProjects[i].forschungsbereich-1,
 			startDate: allProjects[i].start,
 			endDate: allProjects[i].end,
 			pnum: allProjects[i].title
 		}
-		data[allProjects[i].fachbereich-1].push(d);
+		data[allProjects[i].forschungsbereich-1].push(d);
 	}
 	var tmpData = JSON.parse(JSON.stringify(data))
 	function endDateSort(a, b) {

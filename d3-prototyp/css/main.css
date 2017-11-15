@@ -38,6 +38,10 @@ path {
   fill: lightgrey;
 }
 
+.highlight{
+  stroke: url(#myGradient);
+}
+
 .graph {
 	font-family: sans-serif;
 	font-size: 11px;

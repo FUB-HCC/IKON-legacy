@@ -121,7 +121,7 @@ function processData(e,callback) {
     var pro = {
       antragsteller: antragsteller,
       end: et,
-      fachbereich: department.substring(3),
+      forschungsbereich: department.substring(3),
       geldgeber: geldgeber,
       hauptthema: hauptThema,
       id: newActivityID,
@@ -129,7 +129,7 @@ function processData(e,callback) {
       nebenthemen: ntStringArray,
       projektleiter: projektleiter,
       start: st,
-      title: title
+      titel: title
     };
 
     d = parseInt(department.replace(/^\D+/g, ""));

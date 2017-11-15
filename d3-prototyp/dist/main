@@ -77,13 +77,13 @@ init(function(data){
 	$(document).ready(function() {
 		createSvg();
 		/*var n = new Network(allProjects);
-		n.changeVisualisation("fachbereiche");
+		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {
 			n.changeVisualisation("kooperationspartner");
-		}, 3000);*/
-		//createBarChart(allProjects);
-		//createTreeMap(allProjects);
-		createBipartiteGraph();
+		}, 3000);
+		createBarChart(allProjects);
+		createTreeMap(allProjects);*/
+		createBipartiteGraph(allProjects[0],allProjects[1]);
 	});
 });
 

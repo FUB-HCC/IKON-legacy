@@ -6,9 +6,9 @@
 class Network {
 	constructor(projects) {
 		this.projects=projects;
-		this.groupBy = "fachbereiche";//fachbereiche kooperationspartner geldgeber
+		this.groupBy = "forschungsbereiche";//forschungsbereiche kooperationspartner geldgeber
 		this.groupByConfig = {
-			fachbereiche:{
+			forschungsbereiche:{
 				text:["Forschungsbereich 1","Forschungsbereich 2","Forschungsbereich 3","Forschungsbereich 4"],
 				color:["#985152","#7d913c","#8184a7","#d9ef36"]
 			},
@@ -58,7 +58,7 @@ class Network {
 		var projectCount = this.projects.length;
 		var differentGroups = 0
 		//count or set amount of differentGroups
-		if(this.groupBy==="fachbereiche"){
+		if(this.groupBy==="forschungsbereiche"){
 			differentGroups = 4;
 		} else if (this.groupBy==="geldgeber") {
 			for (var i = 0; i < projectCount; i++) {
@@ -91,10 +91,10 @@ class Network {
 		}
 		/*			SORT			*/
 		for (var i = 0; i < projectCount; i++) {
-			if(this.groupBy==="fachbereiche"){
+			if(this.groupBy==="forschungsbereiche"){
 				//counting the number of prjects
-				tmpGroups[this.projects[i].fachbereich - 1].count++;
-				tmpGroups[this.projects[i].fachbereich - 1].projects.push(this.projects[i]);
+				tmpGroups[this.projects[i].forschungsbereich - 1].count++;
+				tmpGroups[this.projects[i].forschungsbereich - 1].projects.push(this.projects[i]);
 			} else if (this.groupBy==="geldgeber") {
 				for (var j = 0; j < this.groupByConfig[this.groupBy].text.length; j++) {
 					if (this.groupByConfig[this.groupBy].text[j] === this.projects[i].geldgeber){

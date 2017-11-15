@@ -5,7 +5,7 @@ function createTreeMap(allProjects){
       children: [
         {
           head: "Titel",
-          name: tmpP.title,
+          name: tmpP.titel,
           value: 144
         },
         {
@@ -15,7 +15,7 @@ function createTreeMap(allProjects){
         },
         {
           head: "Forschungsbereich",
-          name: tmpP.fachbereich,
+          name: tmpP.forschungsbereich,
           value: 55
         },
         {

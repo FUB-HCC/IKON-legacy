@@ -74,6 +74,7 @@ rect.bar{
 
 .nodesankey text {
   pointer-events: none;
+  font: 15px CHBold;
 }
 
 .linksankey {
@@ -84,18 +85,5 @@ rect.bar{
 
 .linksankey:hover {
   stroke-opacity: .9;
-}
-
-div.tooltipsankey {
-  position: absolute;
-  text-align: left;
-  width: 95px;
-  height: 40px;
-  padding: 4px;
-  font: 11px sans-serif;
-  background: silver;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
 }
 /*sankey Graph*/

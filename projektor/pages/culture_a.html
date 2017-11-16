@@ -27,6 +27,19 @@
     			el.style.visibility = 'hidden';
     		}
 		}
+
+		var hrefGlobal = [	[
+				["BIORES","/pages/projekt1.html"],["MEMIN II","/pages/projekt3.html"],["AMREP II","/pages/projekt6.html"]
+			],
+			[
+				["WALVIS II","/pages/projekt2.html"]
+			],
+			[
+				["NK365/24","/pages/projekt5.html"]
+			],
+			[
+				["NeFo 3","/pages/projekt4.html"]
+			]];
 		init("../res/projects.json",function(data){
 			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 			$(document).ready(function() {

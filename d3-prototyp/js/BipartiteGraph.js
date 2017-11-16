@@ -97,7 +97,6 @@ function createBipartiteGraph(p1,p2){
     	}
 
     });
-    console.log(graph.nodes);
   	sankey.nodes(graph.nodes)
     		.links(graph.links)
     		.layout(32);
@@ -145,7 +144,7 @@ function createBipartiteGraph(p1,p2){
 
 	rect = node.append("rect")
 	      .attr("height", function(d) {
-	      	console.log(d.dy); return d.dy; })
+	      	 return d.dy; })
 	      .attr("width", sankey.nodeWidth())
 	      .style("fill", function(d) {
 	      	return color(d.name); });

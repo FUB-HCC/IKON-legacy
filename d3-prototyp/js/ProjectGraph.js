@@ -24,6 +24,11 @@ class ProjectGraph{
 		    .force("center", d3.forceCenter(svgGlobal.attr("width") / 2, svgGlobal.attr("height") / 2))
 		    .nodes(that.pointData)
 		    .on("tick", that.tick);
+
+		var toolTip = d3.select("body").append("div")
+    		.attr("class", "tooltip")
+    		.style("opacity", 0);
+
 		var allNodes = svgGlobal.selectAll(".nodeGroup")
 		    .data(that.pointData).enter()
 		    .append("g")
@@ -33,7 +38,6 @@ class ProjectGraph{
 		    .attr("class", "node")
 		    .attr("r", 10)
 		    .attr("fill", function(d) {
-		    	console.log(d);
 		        return d.color;
 		    })
 		    .style("stroke", "")
@@ -48,14 +52,38 @@ class ProjectGraph{
 		    	return tmpArr;
 		    })
 		    .attr("fill", function(d) {
-		    	console.log(d);
 		        return d.color;
 		    })
 		    .style("opacity", 0)
-		    .style("stroke-width", "1px");
+		    .style("stroke-width", "1px")
+		    .on("click", function(d) {
+		    	document.location.href = d.project.href;
+		    })
+		    .on("mouseover", function(d) {
+		    	d3.select(this).transition()
+	                .duration(500)
+	                .style("stroke","#fff");
+
+	            var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
+	            toolTip.transition()
+	                .duration(500)
+	                .style("opacity", .8);
+	            toolTip.html(d.project.tooltip)
+	                .style("left", (svgPos.x+d.x) + "px")
+	                .style("top", (svgPos.y+d.y - 32) + "px");
+            })
+            .on("mouseout", function(d) {
+	            d3.select(this).transition()
+	                .duration(500)
+	                .style("stroke","none");
+	            toolTip.transition()
+	                .duration(500)
+	                .style("opacity", 0);
+	        });
 		return tmpForce;
 	}
 	changeData(groups){
+		svgGlobal.selectAll(".tooltip").remove();
 	    svgGlobal.selectAll(".nodeGroup").remove();
 	    this.groups = groups;
 	    this.groupSectors = this.createGroupSectors();

@@ -1,7 +1,6 @@
 //COLOR RANGE EXAMPLE
 /*
-	    this.colorRange=d3.scaleLinear().domain([min,max])
-        				  .range(['#b3b2bc', '#f0faf0']);
+
 */
 class Network {
 	constructor(projects) {
@@ -61,20 +60,30 @@ class Network {
 		if(this.groupBy==="forschungsbereiche"){
 			differentGroups = 4;
 		} else if (this.groupBy==="geldgeber") {
+
 			for (var i = 0; i < projectCount; i++) {
 				if(this.groupByConfig[this.groupBy].text.indexOf(this.projects[i].geldgeber) === -1){
 					this.groupByConfig[this.groupBy].text.push(this.projects[i].geldgeber);
-					this.groupByConfig[this.groupBy].color.push(getRandomColor());
+
 					differentGroups++;
 				}
+			}
+			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
+        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
+				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}
 		}else if (this.groupBy==="kooperationspartner") {
 			for (var i = 0; i < projectCount; i++) {
 				if(this.groupByConfig[this.groupBy].text.indexOf(this.projects[i].kooperationspartner) === -1){
 					this.groupByConfig[this.groupBy].text.push(this.projects[i].kooperationspartner);
-					this.groupByConfig[this.groupBy].color.push(getRandomColor());
 					differentGroups++;
 				}
+			}
+			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
+        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
+				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}
 		}
 		//create Basic groups-Array
@@ -86,7 +95,9 @@ class Network {
 				percentage: 	0,
 				percentageSum: 	0,
 				color: 			this.groupByConfig[this.groupBy].color[i],
-				projects: 		[]
+				projects: 		[],
+				href: 			"",
+				tooltip: 		""
 			});
 		}
 		/*			SORT			*/
@@ -94,7 +105,11 @@ class Network {
 			if(this.groupBy==="forschungsbereiche"){
 				//counting the number of prjects
 				tmpGroups[this.projects[i].forschungsbereich - 1].count++;
+				var randomTitle = parseInt(Math.random()*(hrefGlobal[this.projects[i].forschungsbereich - 1].length));
+				this.projects[i].href = hrefGlobal[this.projects[i].forschungsbereich - 1][randomTitle][1];
+				this.projects[i].tooltip = hrefGlobal[this.projects[i].forschungsbereich - 1][randomTitle][0];
 				tmpGroups[this.projects[i].forschungsbereich - 1].projects.push(this.projects[i]);
+
 			} else if (this.groupBy==="geldgeber") {
 				for (var j = 0; j < this.groupByConfig[this.groupBy].text.length; j++) {
 					if (this.groupByConfig[this.groupBy].text[j] === this.projects[i].geldgeber){
@@ -124,7 +139,6 @@ class Network {
 	    	previousPercentSum += tmpGroups[i].percentage;
 	    	tmpGroups[i].percentageSum = previousPercentSum;
 	    }
-	    console.log(tmpGroups);
 		return tmpGroups;
 	}
 

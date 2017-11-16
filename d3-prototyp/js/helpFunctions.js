@@ -9,19 +9,16 @@ Math.degrees = function(radians) {
   return radians * 180 / Math.PI;
 };
 
-function createSvg(){
-	var width = $(window).width(),
-	    height = $(window).height()-4,
+function createSvg(selector){
+	var width = $(selector).width(),
+	    height = $(selector).height()-4,
 	    radius = (Math.min(width, height) / 2) - 10;
 
-	var svg = d3.select("body").append("svg")
+	var svg = d3.select(selector).append("svg")
+		.attr("class","svgGlobal")
 	    .attr("width", width)
 	    .attr("height", height);
 
-	svg.append("rect")
-	    .attr("width", "100%")
-	    .attr("height", "100%")
-	    .attr("fill", "#434058");
 	svg.append("g")
     	.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 

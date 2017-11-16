@@ -7,10 +7,29 @@
     src: url('./res/CooperHewitt-WebFonts-public/CooperHewitt-Thin.woff'); /*URL to font*/
 }
 
+html,body{
+	height:100%;
+  margin: 0px;
 
-body{
-	margin: 0px;
-	background-color: #434058;
+  /*background-color: #434058;*/
+}
+div.tooltip {
+    position: fixed;
+
+    text-align: center;
+    width: auto;
+    height: 16px;
+    padding: 4px;
+    font: 14px CHBold;
+    background: #434058;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+#chart{
+  width:100%;
+  height:100%;
 }
 
 .legend{

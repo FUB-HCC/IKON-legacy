@@ -319,19 +319,16 @@ Math.degrees = function(radians) {
   return radians * 180 / Math.PI;
 };
 
-function createSvg(){
-	var width = $(window).width(),
-	    height = $(window).height()-4,
+function createSvg(selector){
+	var width = $(selector).width(),
+	    height = $(selector).height()-4,
 	    radius = (Math.min(width, height) / 2) - 10;
 
-	var svg = d3.select("body").append("svg")
+	var svg = d3.select(selector).append("svg")
+		.attr("class","svgGlobal")
 	    .attr("width", width)
 	    .attr("height", height);
 
-	svg.append("rect")
-	    .attr("width", "100%")
-	    .attr("height", "100%")
-	    .attr("fill", "#434058");
 	svg.append("g")
     	.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 
@@ -393,7 +390,7 @@ function isInSector(startAngleRad,endAngleRad, radius, middle, point){
 
 }
 
-var url = "./res/projects.json";
+
 var dataset;
 var fb1 = new Array();
 var fb2 = new Array();
@@ -414,8 +411,8 @@ var hueSpeed = 0.1;
 var currentAlpha = 0;
 
 //Call before setup
-function init(callback) {
-  myLoadJSON(url,callback);
+function init(path,callback) {
+  myLoadJSON(path,callback);
 }
 
 //For CORS purposes
@@ -603,8 +600,8 @@ class RadialChart {
             .attr("transform", function (d) {
             	var angle = ( ( d.percentageSum - (d.percentage/2) ) * (2*Math.PI))
             				- ((2*Math.PI)/4);
-                return "translate("+((svgGlobal.attr("width")/2)+(320 * Math.sin(angle)))+","
-                		+((svgGlobal.attr("height")/2)-(300 * Math.cos(angle)))+")";
+                return "translate("+((svgGlobal.attr("width")/2)+(330 * Math.sin(angle)))+","
+                		+((svgGlobal.attr("height")/2)-(310 * Math.cos(angle)))+")";
                 /* ADDING this rotates the text to the middle
                 + "rotate("+(((angle* 180) / Math.PI))+")"*/
             })
@@ -688,6 +685,11 @@ class ProjectGraph{
 		    .force("center", d3.forceCenter(svgGlobal.attr("width") / 2, svgGlobal.attr("height") / 2))
 		    .nodes(that.pointData)
 		    .on("tick", that.tick);
+
+		var toolTip = d3.select("body").append("div")
+    		.attr("class", "tooltip")
+    		.style("opacity", 0);
+
 		var allNodes = svgGlobal.selectAll(".nodeGroup")
 		    .data(that.pointData).enter()
 		    .append("g")
@@ -697,7 +699,6 @@ class ProjectGraph{
 		    .attr("class", "node")
 		    .attr("r", 10)
 		    .attr("fill", function(d) {
-		    	console.log(d);
 		        return d.color;
 		    })
 		    .style("stroke", "")
@@ -712,14 +713,38 @@ class ProjectGraph{
 		    	return tmpArr;
 		    })
 		    .attr("fill", function(d) {
-		    	console.log(d);
 		        return d.color;
 		    })
 		    .style("opacity", 0)
-		    .style("stroke-width", "1px");
+		    .style("stroke-width", "1px")
+		    .on("click", function(d) {
+		    	document.location.href = d.project.href;
+		    })
+		    .on("mouseover", function(d) {
+		    	d3.select(this).transition()
+	                .duration(500)
+	                .style("stroke","#fff");
+
+	            var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
+	            toolTip.transition()
+	                .duration(500)
+	                .style("opacity", .8);
+	            toolTip.html(d.project.tooltip)
+	                .style("left", (svgPos.x+d.x) + "px")
+	                .style("top", (svgPos.y+d.y - 32) + "px");
+            })
+            .on("mouseout", function(d) {
+	            d3.select(this).transition()
+	                .duration(500)
+	                .style("stroke","none");
+	            toolTip.transition()
+	                .duration(500)
+	                .style("opacity", 0);
+	        });
 		return tmpForce;
 	}
 	changeData(groups){
+		svgGlobal.selectAll(".tooltip").remove();
 	    svgGlobal.selectAll(".nodeGroup").remove();
 	    this.groups = groups;
 	    this.groupSectors = this.createGroupSectors();
@@ -850,8 +875,7 @@ class ProjectGraph{
 
 //COLOR RANGE EXAMPLE
 /*
-	    this.colorRange=d3.scaleLinear().domain([min,max])
-        				  .range(['#b3b2bc', '#f0faf0']);
+
 */
 class Network {
 	constructor(projects) {
@@ -911,20 +935,30 @@ class Network {
 		if(this.groupBy==="forschungsbereiche"){
 			differentGroups = 4;
 		} else if (this.groupBy==="geldgeber") {
+
 			for (var i = 0; i < projectCount; i++) {
 				if(this.groupByConfig[this.groupBy].text.indexOf(this.projects[i].geldgeber) === -1){
 					this.groupByConfig[this.groupBy].text.push(this.projects[i].geldgeber);
-					this.groupByConfig[this.groupBy].color.push(getRandomColor());
+
 					differentGroups++;
 				}
+			}
+			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
+        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
+				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}
 		}else if (this.groupBy==="kooperationspartner") {
 			for (var i = 0; i < projectCount; i++) {
 				if(this.groupByConfig[this.groupBy].text.indexOf(this.projects[i].kooperationspartner) === -1){
 					this.groupByConfig[this.groupBy].text.push(this.projects[i].kooperationspartner);
-					this.groupByConfig[this.groupBy].color.push(getRandomColor());
 					differentGroups++;
 				}
+			}
+			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
+        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
+				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}
 		}
 		//create Basic groups-Array
@@ -936,7 +970,9 @@ class Network {
 				percentage: 	0,
 				percentageSum: 	0,
 				color: 			this.groupByConfig[this.groupBy].color[i],
-				projects: 		[]
+				projects: 		[],
+				href: 			"",
+				tooltip: 		""
 			});
 		}
 		/*			SORT			*/
@@ -944,7 +980,11 @@ class Network {
 			if(this.groupBy==="forschungsbereiche"){
 				//counting the number of prjects
 				tmpGroups[this.projects[i].forschungsbereich - 1].count++;
+				var randomTitle = parseInt(Math.random()*(hrefGlobal[this.projects[i].forschungsbereich - 1].length));
+				this.projects[i].href = hrefGlobal[this.projects[i].forschungsbereich - 1][randomTitle][1];
+				this.projects[i].tooltip = hrefGlobal[this.projects[i].forschungsbereich - 1][randomTitle][0];
 				tmpGroups[this.projects[i].forschungsbereich - 1].projects.push(this.projects[i]);
+
 			} else if (this.groupBy==="geldgeber") {
 				for (var j = 0; j < this.groupByConfig[this.groupBy].text.length; j++) {
 					if (this.groupByConfig[this.groupBy].text[j] === this.projects[i].geldgeber){
@@ -974,7 +1014,6 @@ class Network {
 	    	previousPercentSum += tmpGroups[i].percentage;
 	    	tmpGroups[i].percentageSum = previousPercentSum;
 	    }
-	    console.log(tmpGroups);
 		return tmpGroups;
 	}
 
@@ -1048,7 +1087,7 @@ function createBarChart(allProjects) {
 		return sortedData;
 	}
 	data2 = orderArr(data[0]).concat(orderArr(data[1])).concat(orderArr(data[2])).concat(orderArr(data[3]));
-	console.log(tmpData);
+
 	var prevfb=0
 	data=[];
 	for (var i = 0; i < data2.length ; i++) {
@@ -1069,7 +1108,7 @@ function createBarChart(allProjects) {
 	}
 
 	data = data.concat(data2);
-	console.log(data);
+
 	var res =[];
 	var lastCut=-1;
 	data.sort(numSort);
@@ -1251,7 +1290,6 @@ function createTreeMap(allProjects){
 			.style("outline","0.2px solid #985152 ");
 
 	setTimeout(function(){
-		console.log(treemap);
 		treemap.transition()
         	.duration(1500);
 	},3000)
@@ -1356,7 +1394,6 @@ function createBipartiteGraph(p1,p2){
     	}
 
     });
-    console.log(graph.nodes);
   	sankey.nodes(graph.nodes)
     		.links(graph.links)
     		.layout(32);
@@ -1404,7 +1441,7 @@ function createBipartiteGraph(p1,p2){
 
 	rect = node.append("rect")
 	      .attr("height", function(d) {
-	      	console.log(d.dy); return d.dy; })
+	      	 return d.dy; })
 	      .attr("width", sankey.nodeWidth())
 	      .style("fill", function(d) {
 	      	return color(d.name); });
@@ -1457,12 +1494,20 @@ function createBipartiteGraph(p1,p2){
 
 //init(callback) - Loads the projects.json
 //				   Afterwards it executes this callback with the data as a Parameter
-init(function(data){
+
+var hrefGlobal = [	[["BIORES","/pages/projekt1.html"],["MEMIN II","/pages/projekt3.html"],["AMREP II","/pages/projekt6.html"]],
+					[["WALVIS II","/pages/projekt2.html"]],
+					[["NK365/24","/pages/projekt5.html"]],
+					[["NeFo 3","/pages/projekt4.html"]],
+				];
+/*init("./res/projects.json",function(data){
 	var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 	//console.log(allProjects);
 	//console.log(allProjects[61]);
 	$(document).ready(function() {
-		createSvg();
+
+		createSvg("#chart");
+		$("#chart").css('background-color', "#434058");
 		var n = new Network(allProjects);
 		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {
@@ -1472,6 +1517,6 @@ init(function(data){
 		//createTreeMap(allProjects);
 		//createBipartiteGraph(allProjects[0],allProjects[1]);
 	});
-});
+});*/
 
 

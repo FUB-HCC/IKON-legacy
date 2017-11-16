@@ -43,8 +43,8 @@ class RadialChart {
             .attr("transform", function (d) {
             	var angle = ( ( d.percentageSum - (d.percentage/2) ) * (2*Math.PI))
             				- ((2*Math.PI)/4);
-                return "translate("+((svgGlobal.attr("width")/2)+(320 * Math.sin(angle)))+","
-                		+((svgGlobal.attr("height")/2)-(300 * Math.cos(angle)))+")";
+                return "translate("+((svgGlobal.attr("width")/2)+(330 * Math.sin(angle)))+","
+                		+((svgGlobal.attr("height")/2)-(310 * Math.cos(angle)))+")";
                 /* ADDING this rotates the text to the middle
                 + "rotate("+(((angle* 180) / Math.PI))+")"*/
             })

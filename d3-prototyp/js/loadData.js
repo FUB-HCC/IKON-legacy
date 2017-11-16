@@ -1,4 +1,4 @@
-var url = "./res/projects.json";
+
 var dataset;
 var fb1 = new Array();
 var fb2 = new Array();
@@ -19,8 +19,8 @@ var hueSpeed = 0.1;
 var currentAlpha = 0;
 
 //Call before setup
-function init(callback) {
-  myLoadJSON(url,callback);
+function init(path,callback) {
+  myLoadJSON(path,callback);
 }
 
 //For CORS purposes

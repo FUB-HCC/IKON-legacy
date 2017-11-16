@@ -109,7 +109,6 @@ function createTreeMap(allProjects){
 			.style("outline","0.2px solid #985152 ");
 
 	setTimeout(function(){
-		console.log(treemap);
 		treemap.transition()
         	.duration(1500);
 	},3000)

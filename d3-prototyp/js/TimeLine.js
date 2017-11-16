@@ -66,7 +66,7 @@ function createBarChart(allProjects) {
 		return sortedData;
 	}
 	data2 = orderArr(data[0]).concat(orderArr(data[1])).concat(orderArr(data[2])).concat(orderArr(data[3]));
-	console.log(tmpData);
+
 	var prevfb=0
 	data=[];
 	for (var i = 0; i < data2.length ; i++) {
@@ -87,7 +87,7 @@ function createBarChart(allProjects) {
 	}
 
 	data = data.concat(data2);
-	console.log(data);
+
 	var res =[];
 	var lastCut=-1;
 	data.sort(numSort);

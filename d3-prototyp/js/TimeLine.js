@@ -15,12 +15,15 @@ function createBarChart(allProjects) {
 	var data = [[],[],[],[]];
 
 	for (var i = 1; i < allProjects.length; i++) {
+		var randomTitle = parseInt(Math.random()*(hrefGlobal[allProjects[i].forschungsbereich - 1].length));
 		var d={
 			num: 0,
 			fb: allProjects[i].forschungsbereich-1,
 			startDate: allProjects[i].start,
 			endDate: allProjects[i].end,
-			pnum: allProjects[i].title
+			pnum: allProjects[i].title,
+			href: hrefGlobal[allProjects[i].forschungsbereich - 1][randomTitle][1],
+			tooltip: hrefGlobal[allProjects[i].forschungsbereich - 1][randomTitle][0]
 		}
 		data[allProjects[i].forschungsbereich-1].push(d);
 	}
@@ -118,7 +121,9 @@ function createBarChart(allProjects) {
 	g.select(".domain").remove();
   	g.selectAll(".tick line").attr("stroke", "#88a").attr("stroke-dasharray", "2,2");
   	g.selectAll(".tick text").attr("x", Number(g.select(".tick text").attr("x"))+20);
-
+  	var toolTip = d3.select("body").append("div")
+    		.attr("class", "tooltip")
+    		.style("opacity", 0);
 	// append the rectangles for the bar chart
 	svg.selectAll(".bar")
 		.data(data)
@@ -133,8 +138,35 @@ function createBarChart(allProjects) {
 		.attr("x", function(d) { return x(d.num); })
 		.attr("width", x.bandwidth()-3)
 		.attr("y", function(d) { return y(d.endDate); })
+		.attr("height", function(d) { return  y(d.startDate) - y(d.endDate);})
+		.on("click", function(d) {
+	    	document.location.href = d.href;
+	    })
+	    .on("mouseover", function(d) {
+	    	d3.select(this).transition()
+                .duration(500)
+                .style("stroke","#fff")
+                .style("fill","#fff");
 
-		.attr("height", function(d) { return  y(d.startDate) - y(d.endDate);});
+            var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
+            toolTip.transition()
+                .duration(500)
+                .style("opacity", .8);
+            toolTip.html(d.tooltip)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 32) + "px");
+        })
+        .on("mouseout", function(d) {
+            d3.select(this).transition()
+                .duration(500)
+                .style("stroke",colors[d.fb])
+                .style("fill",colors[d.fb]);
+            toolTip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
+
+
 	var d = new Date();
 	var t = new Date(new Date().getTime() + 7*24 * 60 * 60 * 1000);
 	svg.append("line")

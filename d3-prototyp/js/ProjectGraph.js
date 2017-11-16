@@ -54,6 +54,9 @@ class ProjectGraph{
 		    .attr("fill", function(d) {
 		        return d.color;
 		    })
+		    .attr("stroke", function(d) {
+		        return d.color;
+		    })
 		    .style("opacity", 0)
 		    .style("stroke-width", "1px")
 		    .on("click", function(d) {
@@ -62,7 +65,8 @@ class ProjectGraph{
 		    .on("mouseover", function(d) {
 		    	d3.select(this).transition()
 	                .duration(500)
-	                .style("stroke","#fff");
+	                .style("stroke","#fff")
+	                .style("fill","#fff");
 
 	            var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
 	            toolTip.transition()
@@ -75,7 +79,8 @@ class ProjectGraph{
             .on("mouseout", function(d) {
 	            d3.select(this).transition()
 	                .duration(500)
-	                .style("stroke","none");
+	                .style("stroke",d.color)
+	                .style("fill", d.color);
 	            toolTip.transition()
 	                .duration(500)
 	                .style("opacity", 0);

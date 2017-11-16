@@ -2,10 +2,14 @@
 <html>
 <head>
 	<title>Cultures | MfN.projektor</title>
+
+	<link rel="stylesheet" href="../bundle.css"/>
+	<script type="text/javascript" src="../bundle.js"/></script>
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-	<link rel="icon" 
-      type="image/png" 
+	<link rel="icon"
+      type="image/png"
       href="../assets/icon.png">
 	<script>
 		function goTo(i) {
@@ -21,6 +25,16 @@
     			el.style.visibility = 'hidden';
     		}
 		}
+		init("../res/projects.json",function(data){
+			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
+			$(document).ready(function() {
+
+				createSvg("#container");
+				var n = new Network(allProjects);
+				n.changeVisualisation("kooperationspartner");
+
+			});
+		});
 	</script>
 </head>
 <body>

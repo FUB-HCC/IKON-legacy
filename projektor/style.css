@@ -226,7 +226,7 @@ body {
 .project {
   max-height: 80%;
   width: 80%;
-  display: flex; 
+  display: flex;
   flex-flow: row wrap;
   justify-content: stretch;
 }
@@ -246,7 +246,7 @@ body {
 .discoveries {
   max-height: 80%;
   width: 80%;
-  display: flex; 
+  display: flex;
   flex-flow: wrap;
   justify-content: space-evenly;
 }
@@ -268,7 +268,7 @@ body {
 
 .helpitem {
   padding: inherit;
-  flex: auto; 
+  flex: auto;
   max-width: 25%;
   text-align: center;
   opacity: .33;
@@ -285,7 +285,7 @@ body {
     width: 20%;
     height: auto;
 /*    border: 2px #7b798a solid;
-*/    
+*/
     padding: 1%;
     /* vertical-align: bottom; */
     display: flex;
@@ -367,13 +367,13 @@ body {
 
 /* Transfer Styling */
 
-.discBox {  	
+.discBox {
 	flex: auto;
     max-width: 49%;
     height: auto;
     text-align: center;
     padding: 20px;
-    margin: 1%;    
+    margin: 1%;
     min-height: 49%;
 }
 
@@ -384,7 +384,7 @@ body {
 
 /* Transfer system to fb 1 */
 
-.discS1text {   
+.discS1text {
   font-family: CooperHewitt-Medium, Helvetica, sans-serif;
     background: -webkit-linear-gradient(-45deg, #c6c5cc, #7d913c);
   -webkit-background-clip: text;
@@ -403,7 +403,7 @@ body {
 
 /* Transfer fb 4 to fb 1 */
 
-.disc41text {  	
+.disc41text {
 	font-family: CooperHewitt-Medium, Helvetica, sans-serif;
     background: -webkit-linear-gradient(-45deg, #985152, #7d913c);
   -webkit-background-clip: text;
@@ -422,7 +422,7 @@ body {
 
 /* Transfer fb 2 to fb 1 */
 
-.disc21text {  	
+.disc21text {
 	font-family: CooperHewitt-Medium, Helvetica, sans-serif;
     background: -webkit-linear-gradient(-45deg, #D9EF36, #7d913c);
   -webkit-background-clip: text;
@@ -441,7 +441,7 @@ body {
 
 /* Transfer fb 3 to fb 4 */
 
-.disc34text {  	
+.disc34text {
 	font-family: CooperHewitt-Medium, Helvetica, sans-serif;
     background: -webkit-linear-gradient(-45deg, #8184A7, #985152);
   -webkit-background-clip: text;
@@ -460,7 +460,7 @@ body {
 
 /* Transfer fb 2 to fb 3 */
 
-.disc23text {  	
+.disc23text {
 	font-family: CooperHewitt-Medium, Helvetica, sans-serif;
     background: -webkit-linear-gradient(-45deg, #D9EF36, #8184A7);
   -webkit-background-clip: text;

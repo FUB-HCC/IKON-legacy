@@ -8,43 +8,73 @@ class ProjectGraph{
 		//poiintData [{color:"", groupNum: 0, project:{},sector:{}},...]
 		this.pointData = null;
 		this.force = null;
+		this.counter =0;
 	}
 	createForceSimulation(){
 		//also creates the nodes
 		var that = this;
+		var scaleX = d3.scaleLinear()
+		        .domain([-30,30])
+		        .range([0,600]);
+		var scaleY = d3.scaleLinear()
+		        .domain([0,50])
+		        .range([500,0]);
 		var tmpForce = d3.forceSimulation()
 		    .force("collide", d3.forceCollide(19))
 		    .force("center", d3.forceCenter(svgGlobal.attr("width") / 2, svgGlobal.attr("height") / 2))
 		    .nodes(that.pointData)
 		    .on("tick", that.tick);
-
-		svgGlobal.selectAll(".node")
+		var allNodes = svgGlobal.selectAll(".nodeGroup")
 		    .data(that.pointData).enter()
-		    .append("circle")
+		    .append("g")
+		    	.attr("class","nodeGroup");
+
+		allNodes.append("circle")
 		    .attr("class", "node")
 		    .attr("r", 10)
 		    .attr("fill", function(d) {
+		    	console.log(d);
 		        return d.color;
 		    })
 		    .style("stroke", "")
 		    .style("opacity", 0)
 		    .style("stroke-width", "1px");
+		allNodes.append("polygon")
+		    .attr("points",function(d){
+		    	var tmpArr = []
+		    	for (var i = 0; i < d.polygon.length; i++) {
+		    		tmpArr.push([scaleX(d.polygon[i].x),scaleY(d.polygon[i].y)].join(","));
+		    	}
+		    	return tmpArr;
+		    })
+		    .attr("fill", function(d) {
+		    	console.log(d);
+		        return d.color;
+		    })
+		    .style("opacity", 0)
+		    .style("stroke-width", "1px");
 		return tmpForce;
 	}
 	changeData(groups){
-	    svgGlobal.selectAll(".node").remove();
+	    svgGlobal.selectAll(".nodeGroup").remove();
 	    this.groups = groups;
 	    this.groupSectors = this.createGroupSectors();
 		this.pointData = this.createPointData();
-		this.force = this.createForceSimulation();//TODO
+		this.force = this.createForceSimulation();
 	}
 	fadeOut(animationTime){
-		svgGlobal.selectAll(".node").transition()
+		svgGlobal.selectAll(".nodeGroup .node").transition()
+	 		.duration(animationTime)
+	 		.style("opacity", 0);
+	 	svgGlobal.selectAll(".nodeGroup polygon").transition()
 	 		.duration(animationTime)
 	 		.style("opacity", 0);
 	}
 	fadeIn(animationTime){
-		svgGlobal.selectAll(".node").transition()
+		svgGlobal.selectAll(".nodeGroup .node").transition()
+	 		.duration(animationTime)
+	 		.style("opacity", 0.15);
+		svgGlobal.selectAll(".nodeGroup polygon").transition()
 	 		.duration(animationTime)
 	 		.style("opacity", 1);
 
@@ -75,6 +105,15 @@ class ProjectGraph{
 	}
 	createPointData(){
 		var pointData = [];
+		var scale = 3.5;
+		var poly = [{"x":-3*scale, "y":-1*scale},
+		        {"x":-3*scale,"y":1*scale},
+		        {"x":-1*scale,"y":3*scale},
+		        {"x":1*scale,"y":3*scale},
+		        {"x":3*scale,"y":1*scale},
+		        {"x":3*scale,"y":-1*scale},
+		        {"x":1*scale,"y":-3*scale},
+		        {"x":-1*scale,"y":-3*scale}];
 		for (var i = 0; i < this.groups.length; i++) {
 			for (var j = 0; j < this.groups[i].projects.length; j++) {
 				var point = {};
@@ -84,13 +123,15 @@ class ProjectGraph{
 		    	point.sector = this.groupSectors[i];
 		    	point.time = 0;
 		    	point.timeOutside = 0;
+		    	point.polygon = poly;
 		    	pointData.push(point);
 			}
 		}
 		return pointData;
 	}
 	tick() {
-		/* Called on every tick in the force simulation. */
+		/* Remove Circles ? Was first used instead of polygons and contains the x y computation.
+			Possible dependency with Force simulation.*/
         svgGlobal.selectAll('.node').attr("cx", function(d) {
     			if(!isInSector(d.sector.startAngle+ Math.radians(6),
     					d.sector.endAngle - Math.radians(6),
@@ -98,8 +139,8 @@ class ProjectGraph{
     					d.sector.circleMiddle,
     					d)){
     				d.timeOutside++;
-    				d.vx += (d.sector.flowPoint.x-d.x)/(10+(100000*((d.time*d.time)/100000000))-(100000*((d.timeOutside
-    					*d.timeOutside)/100000000))) ;
+    				d.vx += (d.sector.flowPoint.x-d.x)/(7+(100000*((d.time*d.time)/100000000))-(400000*((d.timeOutside
+    					*d.timeOutside)/400000000))) ;
 				}
 				d.time++;
 				if(d.time>10000){
@@ -117,14 +158,27 @@ class ProjectGraph{
     					d.sector.outerRadius,
     					d.sector.circleMiddle,
     					d)){
-					d.vy += (d.sector.flowPoint.y-d.y)/(15+(1000*((d.time*d.time)/10000000))) ;
+					d.vy += (d.sector.flowPoint.y-d.y)/(3+(100000*((d.time*d.time)/100000000))-(400000*((d.timeOutside
+    					*d.timeOutside)/400000000))) ;
 				}
 				d.time++;
 				if(d.time>10000){
 					d.time=10000;
 				}
                 return d.y;
-            })
+            });
+
+        //set polygon xy to circle xy
+        svgGlobal.selectAll('.nodeGroup polygon').attr("points",function(d) {
+        	var tmpArr = []
+        	var nodeX = d3.select(this.parentNode).selectAll("circle").attr("cx");
+        	var nodeY = d3.select(this.parentNode).selectAll("circle").attr("cy");
+	    	for (var i = 0; i < d.polygon.length; i++) {
+	    		tmpArr.push([d.polygon[i].x+Number(nodeX)
+	    			,d.polygon[i].y+Number(nodeY)].join(","));
+	    	}
+	    	return tmpArr;
+        });
     }
 
 }

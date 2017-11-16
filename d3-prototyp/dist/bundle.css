@@ -32,11 +32,11 @@ rect.bar{
 }
 
 /*sankey Graph*/
-path {
+/*path {
   stroke: white;
   stroke-width: 0.25px;
   fill: lightgrey;
-}
+}*/
 
 .highlight{
   stroke: url(#myGradient);

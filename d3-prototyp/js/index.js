@@ -7,13 +7,13 @@ init(function(data){
 	//console.log(allProjects[61]);
 	$(document).ready(function() {
 		createSvg();
-		/*var n = new Network(allProjects);
+		var n = new Network(allProjects);
 		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {
-			n.changeVisualisation("kooperationspartner");
+			//n.changeVisualisation("kooperationspartner");
 		}, 3000);
-		createBarChart(allProjects);
-		createTreeMap(allProjects);*/
-		createBipartiteGraph(allProjects[0],allProjects[1]);
+		//createBarChart(allProjects);
+		//createTreeMap(allProjects);
+		//createBipartiteGraph(allProjects[0],allProjects[1]);
 	});
 });

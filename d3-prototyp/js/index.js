@@ -25,6 +25,7 @@ init("./res/projects.json",function(data){
 		}, 3000);*/
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);
-		createBipartiteGraph(allProjects[0],allProjects[1]);
+		console.log(allProjects);
+		createBipartiteGraph(allProjects[84],allProjects[61]);
 	});
 });

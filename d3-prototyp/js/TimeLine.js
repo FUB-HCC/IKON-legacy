@@ -2,7 +2,7 @@
 function createBarChart(allProjects) {
 	var width = svgGlobal.attr("width"),
 		height = svgGlobal.attr("height");
-	var colors = ["#985152","#7d913c","#8184a7","#d9ef36"];
+	var colors = ["#7d913c","#d9ef36","#8184a7","#985152"];
 	//var parseTime = d3.timeParse("%d-%b-%y");
 	var x = d3.scaleBand()
 			  .range([0, width/2])
@@ -143,20 +143,23 @@ function createBarChart(allProjects) {
 	    	document.location.href = d.href;
 	    })
 	    .on("mouseover", function(d) {
+	    	d3.select(this).style("cursor", "pointer");
 	    	d3.select(this).transition()
                 .duration(500)
-                .style("stroke","#fff")
-                .style("fill","#fff");
+                .style("stroke","#f0faf0")
+                .style("fill","#f0faf0");
 
             var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
             toolTip.transition()
                 .duration(500)
                 .style("opacity", .8);
             toolTip.html(d.tooltip)
+            	.style("color","#f0faf0")
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 32) + "px");
         })
         .on("mouseout", function(d) {
+        	d3.select(this).style("cursor", "default");
             d3.select(this).transition()
                 .duration(500)
                 .style("stroke",colors[d.fb])
@@ -170,20 +173,20 @@ function createBarChart(allProjects) {
 	var d = new Date();
 	var t = new Date(new Date().getTime() + 7*24 * 60 * 60 * 1000);
 	svg.append("line")
-		.attr("stroke","#faf0fa")
+		.attr("stroke","#f0faf0")
    		.attr("y1", y(d))
    		.attr("y2", y(t))
    		.attr("x1", -5)
    		.attr("x2", width/2+5);
 
    	svg.append('circle')
-   	.style("fill","#faf0fa")
+   	.style("fill","#f0faf0")
 		  .attr("r", 4)
 		  .attr('cx', -5)
 		  .attr('cy', y(d))
 
 	svg.append('circle')
-			.style("fill","#faf0fa")
+			.style("fill","#f0faf0")
 		  .attr("r", 4)
 		  .attr('cx', width/2+5)
 		  .attr('cy', y(d))

@@ -592,7 +592,7 @@ class RadialChart {
 	    }
 
 	    //create New Labels
-	    var tmpTextLabels=svgGlobal.selectAll()
+	    /*var tmpTextLabels=svgGlobal.selectAll()
             .data(this.sectors)
             .enter()
             .append("text")
@@ -603,7 +603,7 @@ class RadialChart {
                 return "translate("+((svgGlobal.attr("width")/2)+(330 * Math.sin(angle)))+","
                 		+((svgGlobal.attr("height")/2)-(310 * Math.cos(angle)))+")";
                 /* ADDING this rotates the text to the middle
-                + "rotate("+(((angle* 180) / Math.PI))+")"*/
+                + "rotate("+(((angle* 180) / Math.PI))+")"
             })
             .attr("dy", ".4em")
             .attr("text-anchor", "middle")
@@ -614,7 +614,7 @@ class RadialChart {
             	return d.color;
             })
             .style("opacity",0);
-    	return tmpTextLabels;
+    	return tmpTextLabels;*/
     }
 
     fadeIn(animationTime){
@@ -627,11 +627,11 @@ class RadialChart {
 	      						-((2*Math.PI)/4),((that.sectors[i].percentageSum-that.sectors[i].percentage)*(2*Math.PI))
 	      						-((2*Math.PI)/4)));
 	 	}
-		setTimeout(function() {
+		/*setTimeout(function() {
     		that.textLabels.transition()
 		 		.duration(animationTime)
 		 		.style("opacity", 1);
-		}, animationTime/1.5);
+		}, animationTime/1.5);*/
     }
     fadeOut(animationTime){
 	 	var that = this;
@@ -640,9 +640,9 @@ class RadialChart {
 	      		.duration(animationTime)
 	      		.attrTween("d", that.arcTween(-((2*Math.PI))/4,-((2*Math.PI))/4));
 	 	}
- 		this.textLabels.transition()
+ 		/*this.textLabels.transition()
 	 		.duration(animationTime)
-	 		.style("opacity", 0);
+	 		.style("opacity", 0);*/
     }
     arcTween(newEndAngle,newStartAngle) {
     	var that = this;
@@ -724,20 +724,23 @@ class ProjectGraph{
 		    	document.location.href = d.project.href;
 		    })
 		    .on("mouseover", function(d) {
+		    	d3.select(this).style("cursor", "pointer");
 		    	d3.select(this).transition()
 	                .duration(500)
-	                .style("stroke","#fff")
-	                .style("fill","#fff");
+	                .style("stroke","#f0faf0")
+	                .style("fill","#f0faf0");
 
 	            var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
 	            toolTip.transition()
 	                .duration(500)
 	                .style("opacity", .8);
 	            toolTip.html(d.project.tooltip)
+	            	.style("color","#f0faf0")
 	                .style("left", (svgPos.x+d.x) + "px")
 	                .style("top", (svgPos.y+d.y - 32) + "px");
             })
             .on("mouseout", function(d) {
+	            d3.select(this).style("cursor", "default");
 	            d3.select(this).transition()
 	                .duration(500)
 	                .style("stroke",d.color)
@@ -767,7 +770,7 @@ class ProjectGraph{
 	fadeIn(animationTime){
 		svgGlobal.selectAll(".nodeGroup .node").transition()
 	 		.duration(animationTime)
-	 		.style("opacity", 0.15);
+	 		.style("opacity", 0);
 		svgGlobal.selectAll(".nodeGroup polygon").transition()
 	 		.duration(animationTime)
 	 		.style("opacity", 1);
@@ -889,7 +892,7 @@ class Network {
 		this.groupByConfig = {
 			forschungsbereiche:{
 				text:["Forschungsbereich 1","Forschungsbereich 2","Forschungsbereich 3","Forschungsbereich 4"],
-				color:["#985152","#7d913c","#8184a7","#d9ef36"]
+				color:["#7d913c","#d9ef36","#8184a7","#985152"]
 			},
 			kooperationspartner:{
 				text:[],
@@ -1028,7 +1031,7 @@ class Network {
 function createBarChart(allProjects) {
 	var width = svgGlobal.attr("width"),
 		height = svgGlobal.attr("height");
-	var colors = ["#985152","#7d913c","#8184a7","#d9ef36"];
+	var colors = ["#7d913c","#d9ef36","#8184a7","#985152"];
 	//var parseTime = d3.timeParse("%d-%b-%y");
 	var x = d3.scaleBand()
 			  .range([0, width/2])
@@ -1169,20 +1172,23 @@ function createBarChart(allProjects) {
 	    	document.location.href = d.href;
 	    })
 	    .on("mouseover", function(d) {
+	    	d3.select(this).style("cursor", "pointer");
 	    	d3.select(this).transition()
                 .duration(500)
-                .style("stroke","#fff")
-                .style("fill","#fff");
+                .style("stroke","#f0faf0")
+                .style("fill","#f0faf0");
 
             var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
             toolTip.transition()
                 .duration(500)
                 .style("opacity", .8);
             toolTip.html(d.tooltip)
+            	.style("color","#f0faf0")
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 32) + "px");
         })
         .on("mouseout", function(d) {
+        	d3.select(this).style("cursor", "default");
             d3.select(this).transition()
                 .duration(500)
                 .style("stroke",colors[d.fb])
@@ -1196,20 +1202,20 @@ function createBarChart(allProjects) {
 	var d = new Date();
 	var t = new Date(new Date().getTime() + 7*24 * 60 * 60 * 1000);
 	svg.append("line")
-		.attr("stroke","#faf0fa")
+		.attr("stroke","#f0faf0")
    		.attr("y1", y(d))
    		.attr("y2", y(t))
    		.attr("x1", -5)
    		.attr("x2", width/2+5);
 
    	svg.append('circle')
-   	.style("fill","#faf0fa")
+   	.style("fill","#f0faf0")
 		  .attr("r", 4)
 		  .attr('cx', -5)
 		  .attr('cy', y(d))
 
 	svg.append('circle')
-			.style("fill","#faf0fa")
+			.style("fill","#f0faf0")
 		  .attr("r", 4)
 		  .attr('cx', width/2+5)
 		  .attr('cy', y(d))
@@ -1336,20 +1342,24 @@ data1 = [{
 			source: 	"forschungsbereich",
 			target: 	"forschungsbereich",
 			value: 		10,
-		},
-		{
+		},{
 			source: 	"forschungsbereich",
 			target: 	"hauptthema",
 			value: 		7,
 		},
 		{
-			source: 	"geldgeber",
-			target: 	"kooperationspartner",
+			source: 	"hauptthema",
+			target: 	"hauptthema",
 			value: 		7,
 		},
 		{
-			source: 	"nebenthemen",
-			target: 	"nebenthemen",
+			source: 	"geldgeber",
+			target: 	"nebenthemen1",
+			value: 		7,
+		},
+		{
+			source: 	"nebenthemen0",
+			target: 	"nebenthemen0",
 			value: 		7,
 		},
 		{
@@ -1359,6 +1369,10 @@ data1 = [{
 		}]
 
 function createBipartiteGraph(p1,p2){
+	var fbFields=[["Evolution und Geoprozesse","Mikroevolution","Evolutionäre Morphologie","Diversitätsdynamik","Impakt- und Meteoritenforschung"],
+		["Sammlungsentwicklung und Biodiversitätsentdeckung","Biodiversitätsentdeckung","Sammlungsentwicklung","Kompetenzzentrum Sammlung"],
+		["Digitale Welt und Informationswissenschaft","IT- Forschungsinfrastrukturen","Wissenschaftsdatenmanagement","Biodiversitäts- und Geoinformatik"],
+		["Wissenschaftskommunikation und Wissensforschung","Ausstellung und Wissenstransfer","Bildung und Vermittlung","Wissenschaft in der Gesellschaft","Perspektiven auf Natur - PAN","Historische Arbeitsstelle"]];
 	/*var svgDefs = svgGlobal.append('defs');
 
     var mainGradient = svgDefs.append('linearGradient')
@@ -1374,8 +1388,8 @@ function createBipartiteGraph(p1,p2){
         .attr('stop-color','#3f51b5')
         .attr('offset', '1');*/
 
-	var height = svgGlobal.attr("height")/2,
-	    width = svgGlobal.attr("width")/2;
+	var height = svgGlobal.attr("height")*3/4,
+	    width = svgGlobal.attr("width")/4;
 
 	var format = function(d) { return d + " Stimmen"; },
 	    color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -1385,7 +1399,7 @@ function createBipartiteGraph(p1,p2){
 					    .attr("height", height)
 						.attr("class", "svgchart")
 						.attr("transform",
-						 	 "translate(" + (width/2) + "," + (height/2) + ")");
+						 	 "translate(" + (svgGlobal.attr("width")*1.5/4) + "," + (svgGlobal.attr("height")/8) + ")");
 
 	var sankey = d3.sankey()
 	    .nodeWidth(30)
@@ -1393,27 +1407,52 @@ function createBipartiteGraph(p1,p2){
 	    .size([width, height]);
 
 	var path = sankey.link();
+	var fbColor = ["#7d913c","#d9ef36","#8184a7","#985152"];
+	function parseFb(neben){
+		if(neben === null || neben === undefined){
+			return "#f0faf0";
+		}else{
 
+			for (var i = 0; i < fbFields.length; i++) {
+				if(fbFields[i].indexOf(neben) > -1){
+					return fbColor[i];
+				}
+			}
+			console.log("Evolutionäre Morphologie");
+			console.log(neben);
+			console.log("What");
+			return "#99aaff";
+		}
+
+	}
 	/*var div = d3.select("body").append("div")
 	    .attr("class", "tooltip")
 	    .style("opacity", 0);*/
-
 	var color = d3.scaleOrdinal()
-	    .domain(["forschungsbereich",".forschungsbereich","hauptthema",".hauptthema","nebenthemen",".nebenthemen","start",".start","geldgeber",".geldgeber","kooperationspartner",".kooperationspartner"])
-	    .range(["#985152","#985152", "#7d913c", "#7d913c", "#8184a7","#8184a7", "#d9ef36","#d9ef36","#985152","#985152", "#7d913c","#7d913c"]);
-	    // , "grey","#985152","#7d913c","#8184a7","#d9ef36"
+	    .domain(["forschungsbereich",".forschungsbereich","hauptthema",".hauptthema","projektleiter",".projektleiter","titel",".titel"
+	    	,"nebenthemen0",".nebenthemen0","nebenthemen1",".nebenthemen1","nebenthemen2",".nebenthemen2","nebenthemen3",".nebenthemen3"
+	    	,"start",".start","geldgeber",".geldgeber","kooperationspartner",".kooperationspartner"])
+	    .range([fbColor[p1.forschungsbereich-1],fbColor[p2.forschungsbereich-1], fbColor[p1.forschungsbereich-1], fbColor[p2.forschungsbereich-1], fbColor[p1.forschungsbereich-1], fbColor[p2.forschungsbereich-1], fbColor[p1.forschungsbereich-1], fbColor[p2.forschungsbereich-1]
+	    	, parseFb(p1.nebenthemen[0]), parseFb(p2.nebenthemen[0]), parseFb(p1.nebenthemen[1]), parseFb(p2.nebenthemen[1]), parseFb(p1.nebenthemen[2]), parseFb(p2.nebenthemen[2]), parseFb(p1.nebenthemen[3]), parseFb(p2.nebenthemen[3])
+	    	, "#f0faf0","#f0faf0","#f0faf0","#f0faf0", "#f0faf0","#f0faf0"]);
+	    // ["#7d913c","#d9ef36","#8184a7","#985152"]
 
 	var rect;
 	var node;
 	var link;
 
-	var nodeNames = ["forschungsbereich",".forschungsbereich","hauptthema",".hauptthema",
-			"nebenthemen",".nebenthemen","start",".start","end",".end","geldgeber",".geldgeber",
-			"kooperationspartner",".kooperationspartner","antragsteller",".antragsteller",
-			"projektleiter",".projektleiter","titel",".titel"];
+	var nodeNames = ["titel",".titel","projektleiter",".projektleiter","forschungsbereich",".forschungsbereich",
+			"hauptthema",".hauptthema","nebenthemen",".nebenthemen","start",".start","geldgeber",".geldgeber",
+			"kooperationspartner",".kooperationspartner"];
 
 	graph = {"nodes" : [{"name":"junk"},{"name":".junk"}],
 			 "links" : []};
+
+
+	graph.links.push({  "source": "junk",
+						"target": ".junk",
+						"color": "none",
+                    	"value": 0.01});
 
 	data1.forEach(function (d) {
 		graph.links.push({  "source": d.source,
@@ -1422,56 +1461,134 @@ function createBipartiteGraph(p1,p2){
                         	"value": +d.value });
     });
 
-
-
 	nodeNames.forEach(function (d) {
-    	graph.nodes.push({"name":d})
-    	//if( !graph.links.some(item => item.source === d.substring(1))
-    	//	&& !graph.links.some(item => item.target === d)){
-	    	if(d.substring(0,1)=="."){
+		if(d.substring(1)==="nebenthemen"){
+			for (var i = 0; i < p2.nebenthemen.length; i++) {
+				graph.nodes.push({"name":".nebenthemen"+i});
+	    		graph.links.push({  "source": "junk",
+								"target": ".nebenthemen"+i,
+								"color": "none",
+	                        	"value": 0.01});
+
+			}
+		}else if(d==="nebenthemen"){
+			for (var i = 0; i < p1.nebenthemen.length; i++) {
+				graph.nodes.push({"name":"nebenthemen"+i});
+	    		graph.links.push({  "source": "nebenthemen"+i,
+								"target": ".junk",
+								"color": "none",
+	                        	"value": 0.01});
+			}
+		}else{
+    		graph.nodes.push({"name":d});
+    		if(d.substring(0,1)=="."){
 	    		graph.links.push({  "source": "junk",
 								"target": d,
 								"color": "none",
-	                        	"value": 5});
-	    	}else{
+	                        	"value": 0.01});
+			}else{
 	    		graph.links.push({  "source": d,
 								"target": ".junk",
 								"color": "none",
-	                        	"value": 5});
+	                        	"value": 0.01});
 	    	}
-    	//}
+    	}
+
+
 
 	});
-
 
     graph.nodes = d3.keys(d3.nest()
     		.key(function (d) { return d.name; })
     		.object(graph.nodes));
+
     graph.links.forEach(function (d, i) {
     	graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
     	graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
     });
     graph.nodes.forEach(function (d, i) {
-    	if(d.substring(0,1)==="."){
-    		graph.nodes[i] = { "name": d, "text": p1[d.substring(1)]};
-    	}else{
-    		graph.nodes[i] = { "name": d, "text": p2[d]};
-    	}
-
+    	if(d.substring(1,12)==="nebenthemen"){
+    		graph.nodes[i] = { "name": d, "text": p2.nebenthemen[d.substring(12)]};
+		}else if(d.substring(0,11)==="nebenthemen"){
+			graph.nodes[i] = { "name": d, "text": p1.nebenthemen[d.substring(11)]};
+		}else{
+	    	if(d.substring(0,1)==="."){
+	    		graph.nodes[i] = { "name": d, "text": p2[d.substring(1)]};
+	    	}else{
+	    		graph.nodes[i] = { "name": d, "text": p1[d]};
+	    	}
+	    }
+    	var n = graph.nodes[i];
+    	if(n.name=="junk"||n.name==".junk"){
+      		n.text = "";
+      	}else if (n.name == "titel"||n.name == ".titel"){
+      		n.text = n.text.substring(0,40)+" ..."
+      	}else if(n.name == "forschungsbereich"||n.name == ".forschungsbereich"){
+      		n.text = "Forschungsbereich "+ n.text;
+      	}else if (n.name == "start"||n.name == ".start"){
+      		var nt = n.text;
+      		if(n.name.substring(0,1)==="."){
+      			var n2t = p1["end"];
+      		}else{
+      			var n2t = p2["end"];
+      		}
+      		n.text = nt.getDate() + "." + (nt.getMonth() + 1) + "." + nt.getFullYear()+" - "+
+      				n2t.getDate() + "." + (n2t.getMonth() + 1) + "." + n2t.getFullYear();
+      	}
     });
     console.log(graph);
   	sankey.nodes(graph.nodes)
     		.links(graph.links)
-    		.layout(32);
-
+    		.layout(0);
 	link = gAll.append("g").selectAll(".link")
 		      .data(graph.links)
 		    .enter().append("path")
 		      .attr("class", "linksankey")
-		      .attr("d", path)
+		      .attr("d",function(d) {
+		      	if(d.sy - d.ty === 0) {
+		      	  //gradient does not render when path horizontal
+			   	  d.sy += 0.00001;
+			    }
+			    return path(d);
+		      })
 			  .attr("id", function(d) { return "link" + d.source.name; })
 		      .style("stroke-width", function(d) { return Math.max(1, d.dy); })
-			  .style("stroke", function(d) { return d.color; });
+			//  .style("stroke", function(d) { return d.color; });
+			  .style('stroke', function(d) {
+
+		          var sourceColor = color(d.source.name).replace("#", "");
+		          var targetColor = color(d.target.name).replace("#", "");
+		          var id = 'c-' + sourceColor + '-to-' + targetColor;
+		          if (svgGlobal.select("#"+id).empty()) {
+		            //append the gradient def
+		            //append a gradient
+		            var gradient = svgGlobal.append('defs')
+		              .append('linearGradient')
+		              .attr('id', id)
+		              .attr('x1', '0%')
+		              .attr('y1', '0%')
+		              .attr('x2', '100%')
+		              .attr('y2', '0%')
+		              .attr('spreadMethod', 'pad');
+
+		            gradient.append('stop')
+		              .attr('offset', '0%')
+		              .attr('stop-color', "#" + sourceColor)
+		              .attr('stop-opacity', 1);
+
+		            gradient.append('stop')
+		              .attr('offset', '100%')
+		              .attr('stop-color', "#" + targetColor)
+		              .attr('stop-opacity', 1);
+		            //gradient.attr('gradientUnits', "userSpaceOnUse")
+		          }
+
+
+		          if(d.color === "none"){
+		          	return "none";
+		          }
+		          return "url(#" + id + ")";
+		        });
 	link.on("mouseover", function(d) {
             /*div.transition()
                 .duration(200)
@@ -1513,9 +1630,9 @@ function createBipartiteGraph(p1,p2){
 	      	if(d.name=="junk"||d.name==".junk"){
 	      		return 0;
 	      	}
-	      	/*if(d.dy == 0){
+	      	if(d.dy < 0.5){
 	      		return 10;
-	      	}*/
+	      	}
 	      	return d.dy;
 	      })
 	      .attr("width", sankey.nodeWidth())
@@ -1546,15 +1663,6 @@ function createBipartiteGraph(p1,p2){
 	      	return color(d.name);
 	      })
 	      .text(function(d) {
-	      	if(d.name=="junk"||d.name==".junk"){
-	      		return "";
-	      	}
-	      	if(d.name == "forschungsbereich"||d.name == ".forschungsbereich"){
-	      		return "Forschungsbereich "+ d.text;
-	      	}else if (d.name == "start"||d.name == ".start"||d.name == "end"||d.name == ".end"){
-	      		var dt = d.text;
-	      		return  dt.getDate() + "." + (dt.getMonth() + 1) + "." + dt.getFullYear();
-	      	}
 	      	return d.text; })
 		  .attr("class", "graph")
 	    .filter(function(d) { return d.x < width / 2; })
@@ -1606,7 +1714,8 @@ init("./res/projects.json",function(data){
 		}, 3000);*/
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);
-		createBipartiteGraph(allProjects[0],allProjects[1]);
+		console.log(allProjects);
+		createBipartiteGraph(allProjects[84],allProjects[61]);
 	});
 });
 

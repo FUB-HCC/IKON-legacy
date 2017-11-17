@@ -69,7 +69,7 @@ class Network {
 				}
 			}
 			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
-        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+        				  .range(['#666284','#b3b2bc', '#f0faf0']);
 			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
 				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}
@@ -81,7 +81,7 @@ class Network {
 				}
 			}
 			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
-        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+        				  .range(['#666284','#b3b2bc', '#f0faf0']);
 			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
 				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}

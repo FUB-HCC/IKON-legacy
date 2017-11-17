@@ -2,10 +2,15 @@
 <html>
 <head>
 	<title>Discoveries | MfN.projektor</title>
+
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../bundle.css"/>
+    <script type="text/javascript" src="../bundle.js" charset="UTF-8"/></script>
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-	<link rel="icon" 
-      type="image/png" 
+	<link rel="icon"
+      type="image/png"
       href="../assets/icon.png">
 	<script>
 		function goTo(i) {
@@ -19,6 +24,42 @@
 		function specificAction(i) {
 			alert(i);
 		}
+		var linksGlobal = [{
+			source: 	"forschungsbereich",
+			target: 	"forschungsbereich",
+			value: 		10,
+		},
+		{
+			source: 	"hauptthema",
+			target: 	"hauptthema",
+			value: 		5,
+		},
+		{
+			source: 	"geldgeber",
+			target: 	"nebenthemen1",
+			value: 		5,
+		},
+		{
+			source: 	"nebenthemen0",
+			target: 	"nebenthemen0",
+			value: 		5,
+		},
+		{
+			source: 	"start",
+			target: 	"start",
+			value: 		15,
+		}];
+		init("../res/projects.json",function(data){
+			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
+			//console.log(allProjects);
+			//console.log(allProjects[61]);
+			$(document).ready(function() {
+
+				createSvg("#container");
+				//33 meminII 41 walvis
+				createBipartiteGraph(allProjects[84],allProjects[61]);
+			});
+		});
 	</script>
 </head>
 <body>

@@ -10,7 +10,7 @@ var hrefGlobal = [	[["BIORES","/pages/projekt1.html"],["MEMIN II","/pages/projek
 //maybe instead of Netwrork use a data class
 
 
-init("./res/projects.json",function(data){
+/*init("./res/projects.json",function(data){
 	var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 	//console.log(allProjects);
 	//console.log(allProjects[61]);
@@ -22,10 +22,10 @@ init("./res/projects.json",function(data){
 		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {
 			//n.changeVisualisation("kooperationspartner");
-		}, 3000);*/
+		}, 3000);
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);
-		console.log(allProjects);
+		//33 meminII 41 walvis
 		createBipartiteGraph(allProjects[84],allProjects[61]);
 	});
-});
+});*/

@@ -952,7 +952,7 @@ class Network {
 				}
 			}
 			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
-        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+        				  .range(['#666284','#b3b2bc', '#f0faf0']);
 			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
 				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}
@@ -964,7 +964,7 @@ class Network {
 				}
 			}
 			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
-        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+        				  .range(['#666284','#b3b2bc', '#f0faf0']);
 			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
 				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}
@@ -1338,7 +1338,7 @@ function createTreeMap(allProjects){
 	},3000)
 }
 
-data1 = [{
+linksGlobal = [{
 			source: 	"forschungsbereich",
 			target: 	"forschungsbereich",
 			value: 		10,
@@ -1366,7 +1366,7 @@ data1 = [{
 			source: 	"start",
 			target: 	"start",
 			value: 		15,
-		}]
+		}];
 
 function createBipartiteGraph(p1,p2){
 	var fbFields=[["Evolution und Geoprozesse","Mikroevolution","Evolutionäre Morphologie","Diversitätsdynamik","Impakt- und Meteoritenforschung"],
@@ -1388,7 +1388,7 @@ function createBipartiteGraph(p1,p2){
         .attr('stop-color','#3f51b5')
         .attr('offset', '1');*/
 
-	var height = svgGlobal.attr("height")*3/4,
+	var height = svgGlobal.attr("height")/2,
 	    width = svgGlobal.attr("width")/4;
 
 	var format = function(d) { return d + " Stimmen"; },
@@ -1399,7 +1399,7 @@ function createBipartiteGraph(p1,p2){
 					    .attr("height", height)
 						.attr("class", "svgchart")
 						.attr("transform",
-						 	 "translate(" + (svgGlobal.attr("width")*1.5/4) + "," + (svgGlobal.attr("height")/8) + ")");
+						 	 "translate(" + (svgGlobal.attr("width")/4) + "," + (svgGlobal.attr("height")/8) + ")");
 
 	var sankey = d3.sankey()
 	    .nodeWidth(30)
@@ -1418,9 +1418,6 @@ function createBipartiteGraph(p1,p2){
 					return fbColor[i];
 				}
 			}
-			console.log("Evolutionäre Morphologie");
-			console.log(neben);
-			console.log("What");
 			return "#99aaff";
 		}
 
@@ -1454,7 +1451,7 @@ function createBipartiteGraph(p1,p2){
 						"color": "none",
                     	"value": 0.01});
 
-	data1.forEach(function (d) {
+	linksGlobal.forEach(function (d) {
 		graph.links.push({  "source": d.source,
 							"target": "."+d.target,
 							"color": "#faf0fa",
@@ -1536,7 +1533,6 @@ function createBipartiteGraph(p1,p2){
       				n2t.getDate() + "." + (n2t.getMonth() + 1) + "." + n2t.getFullYear();
       	}
     });
-    console.log(graph);
   	sankey.nodes(graph.nodes)
     		.links(graph.links)
     		.layout(0);
@@ -1545,9 +1541,12 @@ function createBipartiteGraph(p1,p2){
 		    .enter().append("path")
 		      .attr("class", "linksankey")
 		      .attr("d",function(d) {
-		      	if(d.sy - d.ty === 0) {
+		      	console.log(d.sy - d.ty);
+		      	if(d.sy - d.ty <= 0.1 ||d.sy - d.ty >= -0.1) {
 		      	  //gradient does not render when path horizontal
-			   	  d.sy += 0.00001;
+
+			   	  d.sy += 0.001;
+			   	  //d.ty -= 0.01;
 			    }
 			    return path(d);
 		      })
@@ -1699,7 +1698,7 @@ var hrefGlobal = [	[["BIORES","/pages/projekt1.html"],["MEMIN II","/pages/projek
 //maybe instead of Netwrork use a data class
 
 
-init("./res/projects.json",function(data){
+/*init("./res/projects.json",function(data){
 	var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 	//console.log(allProjects);
 	//console.log(allProjects[61]);
@@ -1711,12 +1710,12 @@ init("./res/projects.json",function(data){
 		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {
 			//n.changeVisualisation("kooperationspartner");
-		}, 3000);*/
+		}, 3000);
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);
-		console.log(allProjects);
+		//33 meminII 41 walvis
 		createBipartiteGraph(allProjects[84],allProjects[61]);
 	});
-});
+});*/
 
 

@@ -63,20 +63,23 @@ class ProjectGraph{
 		    	document.location.href = d.project.href;
 		    })
 		    .on("mouseover", function(d) {
+		    	d3.select(this).style("cursor", "pointer");
 		    	d3.select(this).transition()
 	                .duration(500)
-	                .style("stroke","#fff")
-	                .style("fill","#fff");
+	                .style("stroke","#f0faf0")
+	                .style("fill","#f0faf0");
 
 	            var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
 	            toolTip.transition()
 	                .duration(500)
 	                .style("opacity", .8);
 	            toolTip.html(d.project.tooltip)
+	            	.style("color","#f0faf0")
 	                .style("left", (svgPos.x+d.x) + "px")
 	                .style("top", (svgPos.y+d.y - 32) + "px");
             })
             .on("mouseout", function(d) {
+	            d3.select(this).style("cursor", "default");
 	            d3.select(this).transition()
 	                .duration(500)
 	                .style("stroke",d.color)
@@ -106,7 +109,7 @@ class ProjectGraph{
 	fadeIn(animationTime){
 		svgGlobal.selectAll(".nodeGroup .node").transition()
 	 		.duration(animationTime)
-	 		.style("opacity", 0.15);
+	 		.style("opacity", 0);
 		svgGlobal.selectAll(".nodeGroup polygon").transition()
 	 		.duration(animationTime)
 	 		.style("opacity", 1);

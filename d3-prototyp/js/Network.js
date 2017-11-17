@@ -9,7 +9,7 @@ class Network {
 		this.groupByConfig = {
 			forschungsbereiche:{
 				text:["Forschungsbereich 1","Forschungsbereich 2","Forschungsbereich 3","Forschungsbereich 4"],
-				color:["#985152","#7d913c","#8184a7","#d9ef36"]
+				color:["#7d913c","#d9ef36","#8184a7","#985152"]
 			},
 			kooperationspartner:{
 				text:[],

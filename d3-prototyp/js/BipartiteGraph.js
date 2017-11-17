@@ -26,13 +26,18 @@ linksGlobal = [{
 			source: 	"start",
 			target: 	"start",
 			value: 		15,
+		},
+		{
+			source: 	"transfer",
+			target: 	"transfer",
+			value: 		30,
 		}];
 
-function createBipartiteGraph(p1,p2){
-	var fbFields=[["Evolution und Geoprozesse","Mikroevolution","Evolutionäre Morphologie","Diversitätsdynamik","Impakt- und Meteoritenforschung"],
-		["Sammlungsentwicklung und Biodiversitätsentdeckung","Biodiversitätsentdeckung","Sammlungsentwicklung","Kompetenzzentrum Sammlung"],
+function createBipartiteGraph(p1,p2,transfer){
+	var fbFields=[["Evolution und Geoprozesse","Mikroevolution","Evolutionäre Morphologie","Diversitätsdynamik","Impakt- und Meteoritenforschung","Integrative Biodiversitätsentdeckung"],
+		["Sammlungsentwicklung und Biodiversitätsentdeckung","Biodiversitätsentdeckung","Sammlungsentwicklung","Kompetenzzentrum Sammlung","Biodiversitätsdynamik"],
 		["Digitale Welt und Informationswissenschaft","IT- Forschungsinfrastrukturen","Wissenschaftsdatenmanagement","Biodiversitäts- und Geoinformatik"],
-		["Wissenschaftskommunikation und Wissensforschung","Ausstellung und Wissenstransfer","Bildung und Vermittlung","Wissenschaft in der Gesellschaft","Perspektiven auf Natur - PAN","Historische Arbeitsstelle"]];
+		["Wissenschaftskommunikation und Wissensforschung","Ausstellung und Wissenstransfer","Bildung und Vermittlung","Wissenschaft in der Gesellschaft","Perspektiven auf Natur - PAN","Historische Arbeitsstelle","Dynamische Informations- und Wissensintegration","Wissenstransfer"]];
 	/*var svgDefs = svgGlobal.append('defs');
 
     var mainGradient = svgDefs.append('linearGradient')
@@ -59,7 +64,7 @@ function createBipartiteGraph(p1,p2){
 					    .attr("height", height)
 						.attr("class", "svgchart")
 						.attr("transform",
-						 	 "translate(" + (svgGlobal.attr("width")/4) + "," + (svgGlobal.attr("height")/8) + ")");
+						 	 "translate(" + (svgGlobal.attr("width")/3) + "," + (svgGlobal.attr("height")/4) + ")");
 
 	var sankey = d3.sankey()
 	    .nodeWidth(30)
@@ -88,18 +93,20 @@ function createBipartiteGraph(p1,p2){
 	var color = d3.scaleOrdinal()
 	    .domain(["forschungsbereich",".forschungsbereich","hauptthema",".hauptthema","projektleiter",".projektleiter","titel",".titel"
 	    	,"nebenthemen0",".nebenthemen0","nebenthemen1",".nebenthemen1","nebenthemen2",".nebenthemen2","nebenthemen3",".nebenthemen3"
-	    	,"start",".start","geldgeber",".geldgeber","kooperationspartner",".kooperationspartner"])
+	    	,"start",".start","geldgeber",".geldgeber","kooperationspartner",".kooperationspartner"
+	    	,"transfer",".transfer"])
 	    .range([fbColor[p1.forschungsbereich-1],fbColor[p2.forschungsbereich-1], fbColor[p1.forschungsbereich-1], fbColor[p2.forschungsbereich-1], fbColor[p1.forschungsbereich-1], fbColor[p2.forschungsbereich-1], fbColor[p1.forschungsbereich-1], fbColor[p2.forschungsbereich-1]
 	    	, parseFb(p1.nebenthemen[0]), parseFb(p2.nebenthemen[0]), parseFb(p1.nebenthemen[1]), parseFb(p2.nebenthemen[1]), parseFb(p1.nebenthemen[2]), parseFb(p2.nebenthemen[2]), parseFb(p1.nebenthemen[3]), parseFb(p2.nebenthemen[3])
-	    	, "#f0faf0","#f0faf0","#f0faf0","#f0faf0", "#f0faf0","#f0faf0"]);
+	    	, "#f0faf0","#f0faf0","#f0faf0","#f0faf0", "#f0faf0","#f0faf0"
+	    	,"#f0faf0",fbColor[p2.forschungsbereich-1]]);
 	    // ["#7d913c","#d9ef36","#8184a7","#985152"]
 
 	var rect;
 	var node;
 	var link;
 
-	var nodeNames = ["titel",".titel","projektleiter",".projektleiter","forschungsbereich",".forschungsbereich",
-			"hauptthema",".hauptthema","nebenthemen",".nebenthemen","start",".start","geldgeber",".geldgeber",
+	var nodeNames = [/*"titel",".titel",*/"projektleiter",".projektleiter","forschungsbereich",".forschungsbereich",
+			"hauptthema",".hauptthema","nebenthemen",".nebenthemen","transfer",".transfer","start",".start","geldgeber",".geldgeber",
 			"kooperationspartner",".kooperationspartner"];
 
 	graph = {"nodes" : [{"name":"junk"},{"name":".junk"}],
@@ -180,6 +187,8 @@ function createBipartiteGraph(p1,p2){
       		n.text = "";
       	}else if (n.name == "titel"||n.name == ".titel"){
       		n.text = n.text.substring(0,40)+" ..."
+      	}else if(n.name == ".transfer"){
+      		n.text = transfer;
       	}else if(n.name == "forschungsbereich"||n.name == ".forschungsbereich"){
       		n.text = "Forschungsbereich "+ n.text;
       	}else if (n.name == "start"||n.name == ".start"){
@@ -201,7 +210,6 @@ function createBipartiteGraph(p1,p2){
 		    .enter().append("path")
 		      .attr("class", "linksankey")
 		      .attr("d",function(d) {
-		      	console.log(d.sy - d.ty);
 		      	if(d.sy - d.ty <= 0.1 ||d.sy - d.ty >= -0.1) {
 		      	  //gradient does not render when path horizontal
 

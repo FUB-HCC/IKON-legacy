@@ -24,31 +24,78 @@
 		function specificAction(i) {
 			alert(i);
 		}
-		var linksGlobal = [{
-			source: 	"forschungsbereich",
-			target: 	"forschungsbereich",
-			value: 		10,
-		},
-		{
-			source: 	"hauptthema",
-			target: 	"hauptthema",
-			value: 		5,
-		},
+		var linksGlobal = [
 		{
 			source: 	"geldgeber",
-			target: 	"nebenthemen1",
+			target: 	"geldgeber",
 			value: 		5,
+		},
+		{
+			source: 	"kooperationspartner",
+			target: 	"kooperationspartner",
+			value: 		5,
+		},{
+			source: 	"geldgeber",
+			target: 	"kooperationspartner",
+			value: 		5,
+		},
+		{
+			source: 	"kooperationspartner",
+			target: 	"geldgeber",
+			value: 		5,
+		},{
+			source: 	"hauptthema",
+			target: 	"nebenthemen1",
+			value: 		3,
+		},
+		{
+			source: 	"forschungsbereich",
+			target: 	"nebenthemen1",
+			value: 		3,
+		},
+		{
+			source: 	"projektleiter",
+			target: 	"nebenthemen1",
+			value: 		3,
 		},
 		{
 			source: 	"nebenthemen0",
+			target: 	"projektleiter",
+			value: 		2,
+		},{
+			source: 	"nebenthemen0",
+			target: 	"forschungsbereich",
+			value: 		2,
+		},
+		{
+			source: 	"nebenthemen0",
+			target: 	"nebenthemen2",
+			value: 		2,
+		},{
+			source: 	"nebenthemen0",
+			target: 	"nebenthemen3",
+			value: 		2,
+		},
+		{
+			source: 	"nebenthemen1",
 			target: 	"nebenthemen0",
-			value: 		5,
+			value: 		7,
+		},{
+			source: 	"nebenthemen2",
+			target: 	"nebenthemen0",
+			value: 		7,
 		},
 		{
 			source: 	"start",
 			target: 	"start",
 			value: 		15,
+		},
+		{
+			source: 	"transfer",
+			target: 	"transfer",
+			value: 		30,
 		}];
+
 		init("../res/projects.json",function(data){
 			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 			//console.log(allProjects);
@@ -56,8 +103,9 @@
 			$(document).ready(function() {
 
 				createSvg("#container");
-				//33 meminII 41 walvis
-				createBipartiteGraph(allProjects[84],allProjects[61]);
+				//console.log(searchProjekt(allProjects,"110038"));
+				createBipartiteGraph(searchProjekt(allProjects,"110052"),
+					searchProjekt(allProjects,"110038"),"Informations- und Schulungsmaterialien");
 			});
 		});
 	</script>

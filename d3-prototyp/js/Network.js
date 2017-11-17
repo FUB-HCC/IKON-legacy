@@ -32,7 +32,7 @@ class Network {
 		var that = this;
 		if(this.isOpen){
 			this.radialChart.fadeOut(this.animationTime);
-			this.projectGraph.fadeOut(this.animationTime);
+			this.projectGraph.fadeOut(this.animationTime*2);
 			setTimeout(function() {
 				that.isOpen=false;
 				that.changeVisualisation(groupBy);

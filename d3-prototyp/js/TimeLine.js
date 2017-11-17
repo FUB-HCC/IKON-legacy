@@ -140,6 +140,9 @@ function createBarChart(allProjects) {
 		.attr("y", function(d) { return y(d.endDate); })
 		.attr("height", function(d) { return  y(d.startDate) - y(d.endDate);})
 		.on("click", function(d) {
+	    	/*var url = window.location.href;
+			url = url.substring(0, url.lastIndexOf("/") + 1);
+	    	document.location.href = url + d.href;*/
 	    	document.location.href = d.href;
 	    })
 	    .on("mouseover", function(d) {

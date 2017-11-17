@@ -659,7 +659,55 @@ class RadialChart {
 }
 
 
-
+var linksP = [{
+			source: 	"110048",
+			target: 	"130119",
+			value: 		9
+		},{
+			source: 	"130119",
+			target: 	"170000",
+			value: 		9
+		},
+		{
+			source: 	"170000",
+			target: 	"130116",
+			value: 		9
+		},
+		{
+			source: 	"170000",
+			target: 	"140019",
+			value: 		9
+		},
+		{
+			source: 	"170000",
+			target: 	"130108",
+			value: 		9
+		},
+		{
+			source: 	"130108",
+			target: 	"130116",
+			value: 		9
+		},
+		{
+			source: 	"160012",
+			target: 	"130116",
+			value: 		9
+		},
+		{
+			source: 	"110050",
+			target: 	"110046",
+			value: 		9
+		},
+		{
+			source: 	"110046",
+			target: 	"160016",
+			value: 		9
+		},
+		{
+			source: 	"110050",
+			target: 	"110048",
+			value: 		9
+		}];
 class ProjectGraph{
 	constructor() {
 		//groups [{text:"",percentage:0,percentageSum:0,color:"",projects:[]},...]
@@ -671,6 +719,7 @@ class ProjectGraph{
 		this.force = null;
 		this.counter =0;
 	}
+
 	createForceSimulation(){
 		//also creates the nodes
 		var that = this;
@@ -681,15 +730,29 @@ class ProjectGraph{
 		        .domain([0,50])
 		        .range([500,0]);
 		var tmpForce = d3.forceSimulation()
+			.force("link", d3.forceLink().id(function(d) { return d.project.id; }))
 		    .force("collide", d3.forceCollide(19))
-		    .force("center", d3.forceCenter(svgGlobal.attr("width") / 2, svgGlobal.attr("height") / 2))
-		    .nodes(that.pointData)
-		    .on("tick", that.tick);
+		    .force("center", d3.forceCenter(svgGlobal.attr("width") / 2, svgGlobal.attr("height") / 2));
+		svgGlobal.append('circle')
+				.attr("class","background")
+   				.style("fill","#f0faf0")
+		  		.style("opacity",0)
+		  		.attr("r", 220)
+		  		.attr('cx', svgGlobal.attr("width") / 2)
+		  		.attr('cy', svgGlobal.attr("height") / 2);
 
 		var toolTip = d3.select("body").append("div")
     		.attr("class", "tooltip")
     		.style("opacity", 0);
 
+
+    	var link = svgGlobal.append("g")
+				      .attr("class", "links")
+				    .selectAll("line")
+				    .data(linksP)
+				    .enter().append("line")
+				      .attr("stroke-width", function(d) { return Math.sqrt(d.value); })
+				      .style("opacity", 0);
 		var allNodes = svgGlobal.selectAll(".nodeGroup")
 		    .data(that.pointData).enter()
 		    .append("g")
@@ -721,6 +784,9 @@ class ProjectGraph{
 		    .style("opacity", 0)
 		    .style("stroke-width", "1px")
 		    .on("click", function(d) {
+		    	/*var url = window.location.href;
+				url = url.substring(0, url.lastIndexOf("/") + 1);
+		    	document.location.href = url + d.project.href;*/
 		    	document.location.href = d.project.href;
 		    })
 		    .on("mouseover", function(d) {
@@ -749,18 +815,26 @@ class ProjectGraph{
 	                .duration(500)
 	                .style("opacity", 0);
 	        });
+		tmpForce.nodes(that.pointData)
+		    .on("tick", that.tick);
+		tmpForce.force("link")
+      			.links(linksP);
 		return tmpForce;
 	}
 	changeData(groups){
 		svgGlobal.selectAll(".tooltip").remove();
 	    svgGlobal.selectAll(".nodeGroup").remove();
+	    svgGlobal.selectAll(".links").remove()
 	    this.groups = groups;
 	    this.groupSectors = this.createGroupSectors();
 		this.pointData = this.createPointData();
 		this.force = this.createForceSimulation();
 	}
 	fadeOut(animationTime){
-		svgGlobal.selectAll(".nodeGroup .node").transition()
+	 	svgGlobal.selectAll(".background").transition()
+	 		.duration(animationTime)
+	 		.style("opacity", 0);
+	 	svgGlobal.selectAll(".links line").transition()
 	 		.duration(animationTime)
 	 		.style("opacity", 0);
 	 	svgGlobal.selectAll(".nodeGroup polygon").transition()
@@ -768,12 +842,18 @@ class ProjectGraph{
 	 		.style("opacity", 0);
 	}
 	fadeIn(animationTime){
-		svgGlobal.selectAll(".nodeGroup .node").transition()
-	 		.duration(animationTime)
-	 		.style("opacity", 0);
 		svgGlobal.selectAll(".nodeGroup polygon").transition()
-	 		.duration(animationTime)
+	 		.duration(animationTime/2)
 	 		.style("opacity", 1);
+	 	svgGlobal.selectAll(".background").transition()
+	 		.duration(animationTime/2)
+	 		.style("opacity", 0.04);
+	 	setTimeout(function() {
+	 		svgGlobal.selectAll(".links line").transition()
+	 			.duration(animationTime/2)
+	 			.style("opacity", 1);
+		}, animationTime/2);
+
 
 	}
 	createGroupSectors(){
@@ -826,7 +906,12 @@ class ProjectGraph{
 		}
 		return pointData;
 	}
-	tick() {
+	tick(that) {
+		svgGlobal.selectAll(".links line").attr("x1", function(d) { return d.source.x; })
+        							 .attr("y1", function(d) { return d.source.y; })
+        							 .attr("x2", function(d) { return d.target.x; })
+        							 .attr("y2", function(d) { return d.target.y; });
+
 		/* Remove Circles ? Was first used instead of polygons and contains the x y computation.
 			Possible dependency with Force simulation.*/
         svgGlobal.selectAll('.node').attr("cx", function(d) {
@@ -915,7 +1000,7 @@ class Network {
 		var that = this;
 		if(this.isOpen){
 			this.radialChart.fadeOut(this.animationTime);
-			this.projectGraph.fadeOut(this.animationTime);
+			this.projectGraph.fadeOut(this.animationTime*2);
 			setTimeout(function() {
 				that.isOpen=false;
 				that.changeVisualisation(groupBy);
@@ -1169,6 +1254,9 @@ function createBarChart(allProjects) {
 		.attr("y", function(d) { return y(d.endDate); })
 		.attr("height", function(d) { return  y(d.startDate) - y(d.endDate);})
 		.on("click", function(d) {
+	    	/*var url = window.location.href;
+			url = url.substring(0, url.lastIndexOf("/") + 1);
+	    	document.location.href = url + d.href;*/
 	    	document.location.href = d.href;
 	    })
 	    .on("mouseover", function(d) {
@@ -1366,13 +1454,18 @@ linksGlobal = [{
 			source: 	"start",
 			target: 	"start",
 			value: 		15,
+		},
+		{
+			source: 	"transfer",
+			target: 	"transfer",
+			value: 		30,
 		}];
 
-function createBipartiteGraph(p1,p2){
-	var fbFields=[["Evolution und Geoprozesse","Mikroevolution","Evolutionäre Morphologie","Diversitätsdynamik","Impakt- und Meteoritenforschung"],
-		["Sammlungsentwicklung und Biodiversitätsentdeckung","Biodiversitätsentdeckung","Sammlungsentwicklung","Kompetenzzentrum Sammlung"],
+function createBipartiteGraph(p1,p2,transfer){
+	var fbFields=[["Evolution und Geoprozesse","Mikroevolution","Evolutionäre Morphologie","Diversitätsdynamik","Impakt- und Meteoritenforschung","Integrative Biodiversitätsentdeckung"],
+		["Sammlungsentwicklung und Biodiversitätsentdeckung","Biodiversitätsentdeckung","Sammlungsentwicklung","Kompetenzzentrum Sammlung","Biodiversitätsdynamik"],
 		["Digitale Welt und Informationswissenschaft","IT- Forschungsinfrastrukturen","Wissenschaftsdatenmanagement","Biodiversitäts- und Geoinformatik"],
-		["Wissenschaftskommunikation und Wissensforschung","Ausstellung und Wissenstransfer","Bildung und Vermittlung","Wissenschaft in der Gesellschaft","Perspektiven auf Natur - PAN","Historische Arbeitsstelle"]];
+		["Wissenschaftskommunikation und Wissensforschung","Ausstellung und Wissenstransfer","Bildung und Vermittlung","Wissenschaft in der Gesellschaft","Perspektiven auf Natur - PAN","Historische Arbeitsstelle","Dynamische Informations- und Wissensintegration","Wissenstransfer"]];
 	/*var svgDefs = svgGlobal.append('defs');
 
     var mainGradient = svgDefs.append('linearGradient')
@@ -1399,7 +1492,7 @@ function createBipartiteGraph(p1,p2){
 					    .attr("height", height)
 						.attr("class", "svgchart")
 						.attr("transform",
-						 	 "translate(" + (svgGlobal.attr("width")/4) + "," + (svgGlobal.attr("height")/8) + ")");
+						 	 "translate(" + (svgGlobal.attr("width")/3) + "," + (svgGlobal.attr("height")/4) + ")");
 
 	var sankey = d3.sankey()
 	    .nodeWidth(30)
@@ -1428,18 +1521,20 @@ function createBipartiteGraph(p1,p2){
 	var color = d3.scaleOrdinal()
 	    .domain(["forschungsbereich",".forschungsbereich","hauptthema",".hauptthema","projektleiter",".projektleiter","titel",".titel"
 	    	,"nebenthemen0",".nebenthemen0","nebenthemen1",".nebenthemen1","nebenthemen2",".nebenthemen2","nebenthemen3",".nebenthemen3"
-	    	,"start",".start","geldgeber",".geldgeber","kooperationspartner",".kooperationspartner"])
+	    	,"start",".start","geldgeber",".geldgeber","kooperationspartner",".kooperationspartner"
+	    	,"transfer",".transfer"])
 	    .range([fbColor[p1.forschungsbereich-1],fbColor[p2.forschungsbereich-1], fbColor[p1.forschungsbereich-1], fbColor[p2.forschungsbereich-1], fbColor[p1.forschungsbereich-1], fbColor[p2.forschungsbereich-1], fbColor[p1.forschungsbereich-1], fbColor[p2.forschungsbereich-1]
 	    	, parseFb(p1.nebenthemen[0]), parseFb(p2.nebenthemen[0]), parseFb(p1.nebenthemen[1]), parseFb(p2.nebenthemen[1]), parseFb(p1.nebenthemen[2]), parseFb(p2.nebenthemen[2]), parseFb(p1.nebenthemen[3]), parseFb(p2.nebenthemen[3])
-	    	, "#f0faf0","#f0faf0","#f0faf0","#f0faf0", "#f0faf0","#f0faf0"]);
+	    	, "#f0faf0","#f0faf0","#f0faf0","#f0faf0", "#f0faf0","#f0faf0"
+	    	,"#f0faf0",fbColor[p2.forschungsbereich-1]]);
 	    // ["#7d913c","#d9ef36","#8184a7","#985152"]
 
 	var rect;
 	var node;
 	var link;
 
-	var nodeNames = ["titel",".titel","projektleiter",".projektleiter","forschungsbereich",".forschungsbereich",
-			"hauptthema",".hauptthema","nebenthemen",".nebenthemen","start",".start","geldgeber",".geldgeber",
+	var nodeNames = [/*"titel",".titel",*/"projektleiter",".projektleiter","forschungsbereich",".forschungsbereich",
+			"hauptthema",".hauptthema","nebenthemen",".nebenthemen","transfer",".transfer","start",".start","geldgeber",".geldgeber",
 			"kooperationspartner",".kooperationspartner"];
 
 	graph = {"nodes" : [{"name":"junk"},{"name":".junk"}],
@@ -1520,6 +1615,8 @@ function createBipartiteGraph(p1,p2){
       		n.text = "";
       	}else if (n.name == "titel"||n.name == ".titel"){
       		n.text = n.text.substring(0,40)+" ..."
+      	}else if(n.name == ".transfer"){
+      		n.text = transfer;
       	}else if(n.name == "forschungsbereich"||n.name == ".forschungsbereich"){
       		n.text = "Forschungsbereich "+ n.text;
       	}else if (n.name == "start"||n.name == ".start"){
@@ -1541,7 +1638,6 @@ function createBipartiteGraph(p1,p2){
 		    .enter().append("path")
 		      .attr("class", "linksankey")
 		      .attr("d",function(d) {
-		      	console.log(d.sy - d.ty);
 		      	if(d.sy - d.ty <= 0.1 ||d.sy - d.ty >= -0.1) {
 		      	  //gradient does not render when path horizontal
 
@@ -1692,6 +1788,14 @@ var hrefGlobal = [	[["BIORES","/pages/projekt1.html"],["MEMIN II","/pages/projek
 					[["NK365/24","/pages/projekt5.html"]],
 					[["NeFo 3","/pages/projekt4.html"]],
 				];
+function searchProjekt(data,id){
+	for (var i = 0; i < data.length; i++) {
+		if(data[i].id === id ){
+			return data[i];
+		}
+	}
+	return null;
+}
 //init(callback) - Loads the projects.json
 //				   Afterwards it executes this callback with the data as a Parameter
 
@@ -1707,14 +1811,21 @@ var hrefGlobal = [	[["BIORES","/pages/projekt1.html"],["MEMIN II","/pages/projek
 		createSvg("#chart");
 		$("#chart").css('background-color', "#434058");
 		/*var n = new Network(allProjects);
-		n.changeVisualisation("forschungsbereiche");
+		n.changeVisualisation("geldgeber");
 		setTimeout(function() {
-			//n.changeVisualisation("kooperationspartner");
+			n.changeVisualisation("geldgeber");
 		}, 3000);
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);
-		//33 meminII 41 walvis
-		createBipartiteGraph(allProjects[84],allProjects[61]);
+		//"130114" meminII
+		//"110036" walvis
+		//110038 nefo3
+		//110052 biores
+		//createBipartiteGraph(searchProjekt(allProjects,"130114"),searchProjekt(allProjects,"110036"));
+		var url = window.location.href;
+		url = url.substring(0, url.lastIndexOf("/") + 1);
+		console.log(url);
+		createBipartiteGraph(searchProjekt(allProjects,"110038"),searchProjekt(allProjects,"110052"),"test");
 	});
 });*/
 

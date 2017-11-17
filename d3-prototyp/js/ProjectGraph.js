@@ -1,4 +1,52 @@
-
+var linksP = [{
+			source: 	"110048",
+			target: 	"130119",
+			value: 		9
+		},{
+			source: 	"130119",
+			target: 	"170000",
+			value: 		9
+		},
+		{
+			source: 	"170000",
+			target: 	"130116",
+			value: 		9
+		},
+		{
+			source: 	"170000",
+			target: 	"140019",
+			value: 		9
+		},
+		{
+			source: 	"170000",
+			target: 	"130108",
+			value: 		9
+		},
+		{
+			source: 	"130108",
+			target: 	"130116",
+			value: 		9
+		},
+		{
+			source: 	"160012",
+			target: 	"130116",
+			value: 		9
+		},
+		{
+			source: 	"110050",
+			target: 	"110046",
+			value: 		9
+		},
+		{
+			source: 	"110046",
+			target: 	"160016",
+			value: 		9
+		},
+		{
+			source: 	"110050",
+			target: 	"110048",
+			value: 		9
+		}];
 class ProjectGraph{
 	constructor() {
 		//groups [{text:"",percentage:0,percentageSum:0,color:"",projects:[]},...]
@@ -10,6 +58,7 @@ class ProjectGraph{
 		this.force = null;
 		this.counter =0;
 	}
+
 	createForceSimulation(){
 		//also creates the nodes
 		var that = this;
@@ -20,15 +69,29 @@ class ProjectGraph{
 		        .domain([0,50])
 		        .range([500,0]);
 		var tmpForce = d3.forceSimulation()
+			.force("link", d3.forceLink().id(function(d) { return d.project.id; }))
 		    .force("collide", d3.forceCollide(19))
-		    .force("center", d3.forceCenter(svgGlobal.attr("width") / 2, svgGlobal.attr("height") / 2))
-		    .nodes(that.pointData)
-		    .on("tick", that.tick);
+		    .force("center", d3.forceCenter(svgGlobal.attr("width") / 2, svgGlobal.attr("height") / 2));
+		svgGlobal.append('circle')
+				.attr("class","background")
+   				.style("fill","#f0faf0")
+		  		.style("opacity",0)
+		  		.attr("r", 220)
+		  		.attr('cx', svgGlobal.attr("width") / 2)
+		  		.attr('cy', svgGlobal.attr("height") / 2);
 
 		var toolTip = d3.select("body").append("div")
     		.attr("class", "tooltip")
     		.style("opacity", 0);
 
+
+    	var link = svgGlobal.append("g")
+				      .attr("class", "links")
+				    .selectAll("line")
+				    .data(linksP)
+				    .enter().append("line")
+				      .attr("stroke-width", function(d) { return Math.sqrt(d.value); })
+				      .style("opacity", 0);
 		var allNodes = svgGlobal.selectAll(".nodeGroup")
 		    .data(that.pointData).enter()
 		    .append("g")
@@ -60,6 +123,9 @@ class ProjectGraph{
 		    .style("opacity", 0)
 		    .style("stroke-width", "1px")
 		    .on("click", function(d) {
+		    	/*var url = window.location.href;
+				url = url.substring(0, url.lastIndexOf("/") + 1);
+		    	document.location.href = url + d.project.href;*/
 		    	document.location.href = d.project.href;
 		    })
 		    .on("mouseover", function(d) {
@@ -88,18 +154,26 @@ class ProjectGraph{
 	                .duration(500)
 	                .style("opacity", 0);
 	        });
+		tmpForce.nodes(that.pointData)
+		    .on("tick", that.tick);
+		tmpForce.force("link")
+      			.links(linksP);
 		return tmpForce;
 	}
 	changeData(groups){
 		svgGlobal.selectAll(".tooltip").remove();
 	    svgGlobal.selectAll(".nodeGroup").remove();
+	    svgGlobal.selectAll(".links").remove()
 	    this.groups = groups;
 	    this.groupSectors = this.createGroupSectors();
 		this.pointData = this.createPointData();
 		this.force = this.createForceSimulation();
 	}
 	fadeOut(animationTime){
-		svgGlobal.selectAll(".nodeGroup .node").transition()
+	 	svgGlobal.selectAll(".background").transition()
+	 		.duration(animationTime)
+	 		.style("opacity", 0);
+	 	svgGlobal.selectAll(".links line").transition()
 	 		.duration(animationTime)
 	 		.style("opacity", 0);
 	 	svgGlobal.selectAll(".nodeGroup polygon").transition()
@@ -107,12 +181,18 @@ class ProjectGraph{
 	 		.style("opacity", 0);
 	}
 	fadeIn(animationTime){
-		svgGlobal.selectAll(".nodeGroup .node").transition()
-	 		.duration(animationTime)
-	 		.style("opacity", 0);
 		svgGlobal.selectAll(".nodeGroup polygon").transition()
-	 		.duration(animationTime)
+	 		.duration(animationTime/2)
 	 		.style("opacity", 1);
+	 	svgGlobal.selectAll(".background").transition()
+	 		.duration(animationTime/2)
+	 		.style("opacity", 0.04);
+	 	setTimeout(function() {
+	 		svgGlobal.selectAll(".links line").transition()
+	 			.duration(animationTime/2)
+	 			.style("opacity", 1);
+		}, animationTime/2);
+
 
 	}
 	createGroupSectors(){
@@ -165,7 +245,12 @@ class ProjectGraph{
 		}
 		return pointData;
 	}
-	tick() {
+	tick(that) {
+		svgGlobal.selectAll(".links line").attr("x1", function(d) { return d.source.x; })
+        							 .attr("y1", function(d) { return d.source.y; })
+        							 .attr("x2", function(d) { return d.target.x; })
+        							 .attr("y2", function(d) { return d.target.y; });
+
 		/* Remove Circles ? Was first used instead of polygons and contains the x y computation.
 			Possible dependency with Force simulation.*/
         svgGlobal.selectAll('.node').attr("cx", function(d) {

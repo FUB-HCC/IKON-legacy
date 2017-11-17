@@ -24,41 +24,45 @@
 		function specificAction(i) {
 			alert(i);
 		}
-		linksGlobal = [{
-			source: 	"forschungsbereich",
-			target: 	"forschungsbereich",
-			value: 		10,
+		var linksGlobal = [{
+			source: 	"kooperationspartner",
+			target: 	"kooperationspartner",
+			value: 		5,
 		},{
-			source: 	"forschungsbereich",
-			target: 	"hauptthema",
-			value: 		25,
-		},
-		{
-			source: 	"hauptthema",
-			target: 	"hauptthema",
-			value: 		25,
-		},
-		{
 			source: 	"geldgeber",
-			target: 	"nebenthemen1",
-			value: 		25,
-		},
+			target: 	"kooperationspartner",
+			value: 		5,
+		},,
 		{
-			source: 	"nebenthemen0",
-			target: 	"nebenthemen0",
-			value: 		25,
+			source: 	"nebenthemen2",
+			target: 	"projektleiter",
+			value: 		7,
+		},{
+			source: 	"nebenthemen2",
+			target: 	"forschungsbereich",
+			value: 		7,
+		},{
+			source: 	"nebenthemen2",
+			target: 	"hauptthema",
+			value: 		7,
 		},
 		{
 			source: 	"start",
 			target: 	"start",
 			value: 		15,
+		},
+		{
+			source: 	"transfer",
+			target: 	"transfer",
+			value: 		30,
 		}];
 		init("../res/projects.json",function(data){
 			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 			$(document).ready(function() {
 
 				createSvg("#container");
-				createBipartiteGraph(allProjects[33],allProjects[41]);
+				createBipartiteGraph(searchProjekt(allProjects,"110036"),
+					searchProjekt(allProjects,"130114"),"Digitale Makroskopie Diagnostik");
 			});
 		});
 	</script>

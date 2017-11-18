@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<title>Cultures | MfN.projektor</title>
 
 	<meta charset="utf-8">
@@ -30,7 +31,7 @@
 			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 			$(document).ready(function() {
 
-				createSvg("#container");
+				createSvg("#svg");
 				var n = new Network(allProjects);
 				n.changeVisualisation("kooperationspartner");
 
@@ -39,7 +40,9 @@
 	</script>
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="cultures">
+
+		<div id="svg"></div>
 		<!--D3 Kreisgrafik Geldgeber hier-->
 	</div>
 
@@ -54,7 +57,7 @@
 	</div>
 
 	<div id="breadcrumbs">
-		<span class="nolight" onclick="goTo('./main.html')">MAIN</span> > <span class="nolight" onclick="goTo('./cultures.html')">Cultures</span> > <span class="highlight">Projects &frasl; Funding</span> >
+		<span class="nolight" onclick="goTo('./main.html')">MAIN</span> > <span class="nolight" onclick="goTo('./cultures.html')">Cultures</span> > <span class="highlight">Projects &frasl; Cooperation Partners</span> >
 	</div>
 
 </body>

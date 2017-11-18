@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<title>Processes | MfN.projektor</title>
 
 	<link rel="stylesheet" href="../bundle.css"/>
@@ -29,7 +30,7 @@
 			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 			$(document).ready(function() {
 
-				createSvg("#container");
+				createSvg("#svg");
 				createBarChart(allProjects);
 
 			});
@@ -37,7 +38,8 @@
 	</script>
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="cultures">
+		<div id="svg"></div>
 		<!-- D3 Time HERE -->
 	</div>
 

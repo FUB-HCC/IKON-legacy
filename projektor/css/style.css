@@ -40,10 +40,10 @@ body {
 /* PAGE STYLING */
 
 #container {
-    height: 100%;
-    width: 100%;
+/*    height: 100%;
+    width: 100%;*/
     margin-right: auto;
-    margin-top: 80px;
+    margin-top: 30px;
     margin-left: 30px;
 }
 
@@ -93,7 +93,7 @@ body {
     font-family: CooperHewitt-Light, Helvetica, sans-serif;
     font-size: .8em;
     left: 30px;
-    bottom: 50px;
+    bottom: 30px;
     color: #7b798a;
     width: auto;
     position: absolute;
@@ -136,10 +136,12 @@ body {
 /* Main */
 
 .main {
-  height: 70%;
+  max-height: 70%;
   width: 50%;
-  padding: 30px;
-  display: inline-block;
+  padding: 10px 10px 10px 10px;
+  display: inline-flex;
+  flex-flow: wrap;
+  justify-content: baseline;
   border: 6px solid transparent;
   background-image: linear-gradient(to right, #434058, #b3b2bc), linear-gradient(to bottom, #b3b2bc, #434058), linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to top, #b3b2bc, #434058);
   background-origin: border-box;
@@ -151,8 +153,9 @@ body {
 .gallery {
   height: 90%;
   width: 32.5%;
-  margin-top: 30px;
-  display: inline-block;
+  margin-top: 30px;    
+  display: flex;
+  flex-flow: column;
   text-align: center;
   opacity: .33;
   color: #f0faf0;
@@ -167,13 +170,12 @@ body {
 }
 
 .gallery p {
-    text-align: center;
     font-family: CooperHewitt-Light, Helvetica, sans-serif;
     font-size: 1em;
     letter-spacing: .1em;
-    margin-top: 50px;
+    /* margin-top: 50px; */
     text-align: center;
-    width: 75%;
+    /* width: 75%; */
     margin-left: auto;
     margin-right: auto;
 }
@@ -226,11 +228,12 @@ body {
 /* Project pages */
 
 .project {
-  max-height: 80%;
+  height: 75%;
   width: 80%;
   display: flex;
   flex-flow: row wrap;
   justify-content: stretch;
+  overflow-y: scroll;
 }
 
 .projectAttribute {
@@ -246,7 +249,7 @@ body {
 /* Cultures Page */
 
 .cultures {
-  max-height: 80%;
+  height: 80%;
   width: 80%;
   display: flex;
   flex-flow: wrap;
@@ -255,6 +258,13 @@ body {
 
 .cultures .gallery {
   max-width: 49%;
+}
+
+/* D3-SVGs */
+
+#svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* Discoveries Page */
@@ -270,9 +280,10 @@ body {
 /* Help */
 
 .help {
-    padding: 30px;
+  padding: 10px;
+    overflow-y: scroll;
     display: flex;
-    max-width: 80%;
+    max-width: 70%;
     max-height: 70%;
     flex-flow: wrap;
     justify-content: space-evenly;
@@ -285,7 +296,7 @@ body {
 .helpitem {
   padding: inherit;
   flex: auto;
-  max-width: 25%;
+  min-width: 25%;
   text-align: center;
   opacity: .33;
 }
@@ -296,12 +307,9 @@ body {
 
 /* Interaction buttons styling */
 
-
 #projectInteraction {
-    width: 20%;
-    height: auto;
-/*    border: 2px #7b798a solid;
-*/
+    max-width: 25%;
+    /* border: 2px #7b798a solid; */
     padding: 1%;
     /* vertical-align: bottom; */
     display: flex;
@@ -309,24 +317,26 @@ body {
     flex-flow: wrap;
     justify-content: space-evenly;
     margin-right: 18.5%;
-    /* position: relative; */
+    position: absolute;
     /* margin-bottom: auto; */
-    margin-top: 0%;
-    margin-left: auto;
+    bottom: 5%;
+    right: 0%;
+    /* margin-left: auto; */
 }
 
 .projectOption {
-	width: 64px;
-	height: 64px;
-  line-height: 64px;
-	border-radius: 32px;
-	text-align: center;
-  font-family: CooperHewitt-Book, Helvetica, sans-serif;
-  font-size: .8em;
-  text-transform: uppercase;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    border-radius: 24px;
+    text-align: center;
+    font-family: CooperHewitt-Medium, Helvetica, sans-serif;
+    font-size: .6em;
+    text-transform: uppercase;
     background-color: #434058;
     color: #f0faf0;
 }
+
 
 .projectOption:hover {
 
@@ -341,8 +351,8 @@ body {
 	flex: auto;
 	border-color: inherit;
 	border: 1px solid;
-  max-width: 48.5%;
-  max-height: 20%;
+  width: auto;
+  /*max-height: 20%;*/
   padding: 10px;
   cursor: pointer;
 }
@@ -352,7 +362,7 @@ body {
 	border-color: inherit;
 	border: 2px;
 	border-style: ridge;
-  max-width: 48.5%;
+  width: auto;
   max-height: 20%;
   padding: 10px;
   float: left;
@@ -362,8 +372,8 @@ body {
 .boxTransfer {
 	flex: auto;
 	width: auto;
-    max-width: 49%;
-    height: auto;
+  width: auto;
+  /*max-height: 20%;*/
     text-align: center;
     padding: 20px;
     float: left;
@@ -384,13 +394,13 @@ body {
 /* Transfer Styling */
 
 .discBox {
-	flex: auto;
-    max-width: 49%;
+    flex: auto;
+    max-width: 40%;
     height: auto;
     text-align: center;
     padding: 20px;
     margin: 1%;
-    min-height: 49%;
+    max-height: 40%;
 }
 
 .discBox:hover {
@@ -612,7 +622,7 @@ h5 {
 p {
 	text-align: left;
     font-family: CooperHewitt-Book, Helvetica, sans-serif;
-    font-size: 1em;
+    font-size: .8em;
     color: #f0faf0;
     letter-spacing: .1em;
 }
@@ -663,3 +673,16 @@ p a:hover {
 	100% {
 		background-position: 0% 50%
 	}
+
+  @media(device-width: 768px) and (device-height: 1024px){
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+    }
+    ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+    }
+}
+

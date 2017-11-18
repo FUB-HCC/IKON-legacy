@@ -847,11 +847,11 @@ class ProjectGraph{
 	 		.style("opacity", 1);
 	 	svgGlobal.selectAll(".background").transition()
 	 		.duration(animationTime/2)
-	 		.style("opacity", 0.04);
+	 		.style("opacity", 0.075);
 	 	setTimeout(function() {
 	 		svgGlobal.selectAll(".links line").transition()
 	 			.duration(animationTime/2)
-	 			.style("opacity", 1);
+	 			.style("opacity", .9);
 		}, animationTime/2);
 
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<title>Cultures | MfN.projektor</title>
 
 	<meta charset="utf-8">
@@ -41,11 +42,12 @@
 			[
 				["NeFo 3","/pages/projekt4.html"]
 			]];
+
 		init("../res/projects.json",function(data){
 			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 			$(document).ready(function() {
 				console.log(allProjects);
-				createSvg("#container");
+				createSvg("#svg");
 				var n = new Network(allProjects);
 				n.changeVisualisation("forschungsbereiche");
 
@@ -54,8 +56,9 @@
 	</script>
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="cultures">
 
+		<div id="svg"></div>
 		<!--D3 Kreisgrafik Forschungsbereiche hier-->
 	</div>
 

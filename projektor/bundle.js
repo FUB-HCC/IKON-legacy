@@ -1046,6 +1046,7 @@ class Network {
 				if(this.groupByConfig[this.groupBy].text.indexOf(this.projects[i].kooperationspartner) === -1){
 					this.groupByConfig[this.groupBy].text.push(this.projects[i].kooperationspartner);
 					differentGroups++;
+					console.log(this.projects[i].kooperationspartner);
 				}
 			}
 			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])

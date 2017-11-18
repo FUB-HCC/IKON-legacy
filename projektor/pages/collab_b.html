@@ -29,7 +29,7 @@
 		function showInfo(i) {
 			var el = document.getElementById(i);
     		var style = window.getComputedStyle(el);
-    		if(style.display === 'none') {
+    		if(style.visibility === 'hidden') {
     			el.style.visibility = 'visible';
     		} else {
     			el.style.visibility = 'hidden';
@@ -38,8 +38,15 @@
 	</script>
 </head>
 <body>
-	<div id="container" class="project discS1" style="justify-content: center;">		
-		<img id="standIn" src="../assets/collab_b.png" onmouseenter="show('../assets/collab_b_hover.png', 'standIn')"  onclick="show('../assets/collab_b_detail.png', 'standIn')" onmouseleave="show('../assets/collab_b.png', 'standIn')" height="auto" width="90%" style="flex: inherit;">
+	<div id="container" class="project discS1" style="justify-content: center;">	
+		<div  id="tagline" style="padding: 30px;z-index: 2;display: inline-block;width: 75%;position: absolute;">
+			<h2 style="float: left;" class="system">
+					<span class="fb1">AMREP II</span> has a <span class="discS1text">Possible Link</span> to <span class="discS1text">Zentrum für Rieskrater- und Impaktforschung</span>.<sup><i class="fa fa-question-circle" onmouseover="showInfo('machine-info')" style="font-size: .8em; z-index:2;"></i></sup>
+			</h2>
+			<p id="machine-info" style="visibility: hidden; width:33%; float: right; text-align: right; display: inline-block;">Our algorithms have detected a logical connection between a project and a collection. Explore the graph and use the options to publish or share this discovery with your colleagues.</p>
+		</div>	
+
+		<img id="standIn" src="../assets/collab_b.png" onmouseenter="show('../assets/collab_b_hover.png', 'standIn')"  onclick="show('../assets/collab_b_detail.png', 'standIn')" onmouseleave="show('../assets/collab_b.png', 'standIn')" height="100%" width="auto" style="flex: inherit; z-index: 1;">
 	</div>
 
 	<div id="projectInteraction">

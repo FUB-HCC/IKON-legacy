@@ -135,19 +135,25 @@ body {
 
 /* Main */
 
-.main {
+.systemGrad {
   max-height: 70%;
   width: 50%;
-  padding: 10px 10px 10px 10px;
-  display: inline-flex;
-  flex-flow: wrap;
-  justify-content: baseline;
+  display: inline-block;
   border: 6px solid transparent;
   background-image: linear-gradient(to right, #434058, #b3b2bc), linear-gradient(to bottom, #b3b2bc, #434058), linear-gradient(to left, #434058, #b3b2bc), linear-gradient(to top, #b3b2bc, #434058);
   background-origin: border-box;
   background-size: 100% 8px, 8px 100%, 100% 8px, 8px 100%;
   background-position: top left, top right, bottom right, bottom left;
   background-repeat: no-repeat;
+}
+
+#main {
+  width: auto;
+  height:auto;
+  padding: 10px 10px 10px 10px;
+  display: inline-flex;
+  flex-flow: wrap;
+  justify-content: baseline;
 }
 
 .gallery {
@@ -190,7 +196,7 @@ body {
   display: inline-flex;
   flex-flow: wrap;
   width: 22%;
-  margin-top: 80px;
+  margin-top: 30px;
   position: absolute;
   margin-left: 30px;
   margin-right: 10px;
@@ -201,7 +207,7 @@ body {
     min-height: 43%;
     width: 100%;
     flex: auto;
-    padding: 30px;
+    padding: 0px;
 /*    background: linear-gradient(45deg, #985152, #8184a7);
     background-size: 200% 200%;*/
 }
@@ -214,8 +220,8 @@ body {
     min-height: 43%;
     width: 100%;
     flex: auto;
-    padding: 30px;
-    border-color:inherit;
+    padding: 0px;
+    border-color: inherit;
     border: 8px solid;
     margin-top: 8%;
     /*background: #7d913c;*/
@@ -267,10 +273,22 @@ body {
   height: 100%;
 }
 
+#svgCultures {
+  width: 75%;
+  height: 100%;
+  float: right;
+}
+
+/* D3 HACKS */
+
+#svgCultures > svg > g.links {
+  display: none;
+}
+
 /* Discoveries Page */
 
 .discoveries {
-  max-height: 80%;
+  height: 80%;
   width: 80%;
   display: flex;
   flex-flow: wrap;
@@ -296,7 +314,7 @@ body {
 .helpitem {
   padding: inherit;
   flex: auto;
-  min-width: 25%;
+  max-width: 25%;
   text-align: center;
   opacity: .33;
 }
@@ -363,7 +381,7 @@ body {
 	border: 2px;
 	border-style: ridge;
   width: auto;
-  max-height: 20%;
+  min-height: 20%;
   padding: 10px;
   float: left;
   cursor: pointer;
@@ -598,14 +616,14 @@ h3 {
 
 h4 {
 	font-family: CooperHewitt-Light, Helvetica, sans-serif;
-		font-size: 1.2em;
+		font-size: 1em;
 	letter-spacing: .1em;
 	color:   #f0faf0;
 }
 
 h4 a {
 	font-family: CooperHewitt-Light, Helvetica, sans-serif;
-		font-size: 1.2em;
+		font-size: 1em;
 	letter-spacing: .1em;
 	color:   #f0faf0;
 	text-decoration: none;
@@ -617,6 +635,14 @@ h5 {
 	letter-spacing: .1em;
 	color:   #f0faf0;
 	text-align: center;
+}
+
+h6 {
+  font-family: CooperHewitt-Book, Helvetica, sans-serif;
+  font-size: .5em;
+  letter-spacing: .1em;
+  color:   #f0faf0;
+  text-align: center;
 }
 
 p {

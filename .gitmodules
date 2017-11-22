@@ -1,17 +1,17 @@
 [submodule "WebVOWL"]
-	path = WebVOWL
+	path = tools/WebVOWL
 	url = https://github.com/joetm/WebVOWL.git
 [submodule "SemanticMediaWiki"]
-	path = SemanticMediaWiki
+	path = tools/SemanticMediaWiki
 	url = https://github.com/SemanticMediaWiki/SemanticMediaWiki.git
 [submodule "LODE"]
-	path = LODE
+	path = tools/LODE
 	url = https://github.com/joetm/LODE.git
 [submodule "VocabularyMatchingTool"]
-	path = VocabularyMatchingTool
+	path = tools/VocabularyMatchingTool
 	url = https://github.com/cbinding/VocabularyMatchingTool.git
 [submodule "dbpedia-spotlight"]
-	path = dbpedia-spotlight
+	path = tools/dbpedia-spotlight
 	url = https://github.com/dbpedia-spotlight/dbpedia-spotlight.git
 [submodule "citation-parse/anystyle-parser"]
 	path = citation-parse/anystyle-parser

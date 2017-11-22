@@ -35,7 +35,7 @@ class RadialChart {
 	    }
 
 	    //create New Labels
-	    var tmpTextLabels=svgGlobal.selectAll()
+	    /*var tmpTextLabels=svgGlobal.selectAll()
             .data(this.sectors)
             .enter()
             .append("text")
@@ -46,7 +46,7 @@ class RadialChart {
                 return "translate("+((svgGlobal.attr("width")/2)+(330 * Math.sin(angle)))+","
                 		+((svgGlobal.attr("height")/2)-(310 * Math.cos(angle)))+")";
                 /* ADDING this rotates the text to the middle
-                + "rotate("+(((angle* 180) / Math.PI))+")"*/
+                + "rotate("+(((angle* 180) / Math.PI))+")"
             })
             .attr("dy", ".4em")
             .attr("text-anchor", "middle")
@@ -57,7 +57,7 @@ class RadialChart {
             	return d.color;
             })
             .style("opacity",0);
-    	return tmpTextLabels;
+    	return tmpTextLabels;*/
     }
 
     fadeIn(animationTime){
@@ -70,11 +70,11 @@ class RadialChart {
 	      						-((2*Math.PI)/4),((that.sectors[i].percentageSum-that.sectors[i].percentage)*(2*Math.PI))
 	      						-((2*Math.PI)/4)));
 	 	}
-		setTimeout(function() {
+		/*setTimeout(function() {
     		that.textLabels.transition()
 		 		.duration(animationTime)
 		 		.style("opacity", 1);
-		}, animationTime/1.5);
+		}, animationTime/1.5);*/
     }
     fadeOut(animationTime){
 	 	var that = this;
@@ -83,9 +83,9 @@ class RadialChart {
 	      		.duration(animationTime)
 	      		.attrTween("d", that.arcTween(-((2*Math.PI))/4,-((2*Math.PI))/4));
 	 	}
- 		this.textLabels.transition()
+ 		/*this.textLabels.transition()
 	 		.duration(animationTime)
-	 		.style("opacity", 0);
+	 		.style("opacity", 0);*/
     }
     arcTween(newEndAngle,newStartAngle) {
     	var that = this;

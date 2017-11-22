@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<title>Processes | MfN.projektor</title>
 
 	<link rel="stylesheet" href="../bundle.css"/>
@@ -25,20 +26,71 @@
     			el.style.visibility = 'hidden';
     		}
 		}
-		init("../res/projects.json",function(data){
-			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
-			$(document).ready(function() {
 
-				createSvg("#container");
-				createBarChart(allProjects);
+		var hrefGlobal = [[
+				["BIORES","/pages/projekt1.html"],["MEMIN II","/pages/projekt3.html"],["AMREP II","/pages/projekt6.html"],["PermianTriassic","/pages/projekt9.html"],["FCM","/pages/projekt12.html"]
+			],
+			[
+				["WALVIS II","/pages/projekt2.html"],["USS","/pages/projekt11.html"],["EU ColComp","/pages/projekt13.html"]
+			],
+			[
+				["NK365/24","/pages/projekt5.html"],["AMW","/pages/projekt7.html"],["DUET","/pages/projekt10.html"]
+			],
+			[
+				["NeFo 3","/pages/projekt4.html"],["Citizen Science","/pages/projekt8.html"],["V&amp;K","/pages/projekt14.html"]
+		]];
 
+		setTimeout(function(){
+			var el = document.getElementById("imgTeas");
+			var ek = document.getElementById("container");
+			el.style.display = 'none';
+			ek.style.display = 'flex';
+
+			init("../res/projects.json",function(data){
+				var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
+				$(document).ready(function() {
+					createSvg("#svg");
+					createBarChart(allProjects);
+				});
 			});
-		});
+		}, 2500);
 	</script>
 </head>
 <body>
-	<div id="container">
-		<!-- D3 Time HERE -->
+	<div id="imgTeas" style="width: 80%; height:80%; display: block; margin-right: auto; margin-top: 30px; margin-left: 30px;">
+		<img id="teaserImg" src="../assets/processes_intro.png" height="100%" width="auto" style="margin-left: auto; margin-right: auto;">
+	</div>
+
+	<div id="container" class="cultures" style="display: none;">
+			<div  id="tagline" style="z-index: 2;display: inline-block;max-width: 25%;position: absolute; float: left; left:30px;">
+				<h2 style="text-align: left;" class="system">Projects &times; Time</h2>
+					<ul style="text-align: right; list-style: none;">
+						<li><h4>Currently active:</h4>
+							<li>
+							<h4 class="fb1" style="text-align: right; font-family: CooperHewitt-Book;">
+								<span style="font-size: .8em;">
+									<a class="fb1" href="/pages/projekt1.html">BIORES</a><br>
+									<a class="fb1" href="/pages/projekt3.html">AMREP II</a><br>
+									<a class="fb1" href="/pages/projekt6.html">MEMIN II</a>
+								</span>
+							</h4>
+							<h4 class="fb4" style="text-align: right; font-family: CooperHewitt-Book;">
+								<span style="font-size: .8em;">
+									<a class="fb4" href="/pages/projekt4.html">NeFo 3</a><br>
+									<a class="fb4" href="/pages/projekt3.html">AMREP II</a><br>
+									<a class="fb4" href="/pages/projekt6.html">MEMIN II</a>
+								</span>
+							</h4>
+							</li>
+						</li>
+					</ul>
+			</div>
+			<!-- D3 Time HERE -->
+			<div id="svg"></div>
+			<!-- D3 Time HERE -->
+			<div  id="legend" style="padding: 25px;z-index: 2;display: inline-block;width: 75%;bottom: 20%;font-size: .8em;position: absolute;vertical-align: unset;">
+				<p id="machine-info" style="width:75%; float: left; text-align: left; display: inline-block;"> <span class="system">Legend:</span> <span class="fb1">Forschungsbereich 1</span> <span class="fb2">Forschungsbereich 2</span> <span class="fb3">Forschungsbereich 3</span> <span class="fb4">Forschungsbereich 4</span></p>
+			</div>
 	</div>
 
 	<div id="navigation">
@@ -52,7 +104,7 @@
 	</div>
 
 	<div id="breadcrumbs">
-		<span class="nolight" onclick="goTo('./main.html')">MAIN</span> > <span class="nolight" onclick="goTo('./processes.html')">Processes</span> > <span class="highlight">Project &frasl; Department &times; Time</span>
+		<span class="nolight" onclick="goTo('./main.html')">MAIN</span> > <span class="nolight" onclick="goTo('./processes.html')">Processes</span> > <span class="highlight">Projects &frasl; Department &times; Time</span>
 	</div>
 
 </body>

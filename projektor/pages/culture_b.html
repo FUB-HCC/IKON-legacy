@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<title>Cultures | MfN.projektor</title>
 
+	<meta charset="utf-8">
 	<link rel="stylesheet" href="../bundle.css"/>
 	<script type="text/javascript" src="../bundle.js"/></script>
 
@@ -25,11 +27,25 @@
     			el.style.visibility = 'hidden';
     		}
 		}
+		
+		var hrefGlobal = [[
+				["BIORES","/pages/projekt1.html"],["MEMIN II","/pages/projekt3.html"],["AMREP II","/pages/projekt6.html"],["PermianTriassic","/pages/projekt9.html"],["FCM","/pages/projekt12.html"]
+			],
+			[
+				["WALVIS II","/pages/projekt2.html"],["USS","/pages/projekt11.html"],["EU ColComp","/pages/projekt13.html"]
+			],
+			[
+				["NK365/24","/pages/projekt5.html"],["AMW","/pages/projekt7.html"],["DUET","/pages/projekt10.html"]
+			],
+			[
+				["NeFo 3","/pages/projekt4.html"],["Citizen Science","/pages/projekt8.html"],["V&amp;K","/pages/projekt14.html"]
+		]];
+
 		init("../res/projects.json",function(data){
 			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 			$(document).ready(function() {
-
-				createSvg("#container");
+				console.log(allProjects);
+				createSvg("#svgCultures");
 				var n = new Network(allProjects);
 				n.changeVisualisation("kooperationspartner");
 
@@ -38,8 +54,36 @@
 	</script>
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="cultures">
+		<div  id="tagline" style="z-index: 2;display: inline-block;max-width: 25%;position: absolute; float: left; left:30px;">
+			<h2 style="text-align: left;" class="system">Cooperation Partners</h2>
+			<ul style="list-style: none;">
+					<li>
+						<li>
+							<h4 style="text-align: left; font-family: CooperHewitt-Book; color: rgb(102, 98, 132);" >Leibniz Gemeinschaft<br><span style="font-size: .8em;">24 Projects</span></h4>
+						</li>
+						<li >
+							<h4 style="text-align: left; font-family: CooperHewitt-Book;; color: rgb(115, 111, 141);">HTW Berlin<br><span style="font-size: .8em;">9 Projects</span></h4>	
+						</li>
+						<li>
+							<h4 style="text-align: left; font-family: CooperHewitt-Book; color: rgb(128, 125, 151);">Humboldt Universität Berlin<br><span style="font-size: .8em;">22 Projects</span></h4>
+						</li>
+						<li >
+							<h4 style="text-align: left; font-family: CooperHewitt-Book; color: rgb(166, 165, 179);">Fraunhofer Institut<br><span style="font-size: .8em;">15 Projects</span></h4>
+						</li>
+						<li >
+							<h4 style="text-align: left; font-family: CooperHewitt-Book;  color: rgb(141, 138, 160);">Wissenschaft im Dialog<br><span style="font-size: .8em;">16 Projects</span></h4>
+						</li>
+						<li >
+							<h4 style="text-align: left; font-family: CooperHewitt-Book; color: rgb(153, 151, 169);">Freie Universität Berlin<br><span style="font-size: .8em;">12 Projects</span></h4>
+						</li>
+					</li>
+			</ul>
+		</div>
+
+		<div id="svgCultures"></div>
 		<!--D3 Kreisgrafik Geldgeber hier-->
+		<div class="projectOption" style="font-size: 1em;float: right;max-width: 10%;position: absolute;cursor: pointer;bottom: 15%;" title="Switch to other Culture" onclick="goTo('./culture_a.html')"><i class="fa fa-refresh" aria-hidden="true"></i></div>
 	</div>
 
 	<div id="navigation">
@@ -53,7 +97,7 @@
 	</div>
 
 	<div id="breadcrumbs">
-		<span class="nolight" onclick="goTo('./main.html')">MAIN</span> > <span class="nolight" onclick="goTo('./cultures.html')">Cultures</span> > <span class="highlight">Projects &frasl; Funding</span> >
+		<span class="nolight" onclick="goTo('./main.html')">MAIN</span> > <span class="nolight" onclick="goTo('./cultures.html')">Cultures</span> > <span class="highlight">Projects &times; Cooperation Partners</span> >
 	</div>
 
 </body>

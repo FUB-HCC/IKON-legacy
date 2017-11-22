@@ -9,7 +9,7 @@ class Network {
 		this.groupByConfig = {
 			forschungsbereiche:{
 				text:["Forschungsbereich 1","Forschungsbereich 2","Forschungsbereich 3","Forschungsbereich 4"],
-				color:["#985152","#7d913c","#8184a7","#d9ef36"]
+				color:["#7d913c","#d9ef36","#8184a7","#985152"]
 			},
 			kooperationspartner:{
 				text:[],
@@ -32,7 +32,7 @@ class Network {
 		var that = this;
 		if(this.isOpen){
 			this.radialChart.fadeOut(this.animationTime);
-			this.projectGraph.fadeOut(this.animationTime);
+			this.projectGraph.fadeOut(this.animationTime*2);
 			setTimeout(function() {
 				that.isOpen=false;
 				that.changeVisualisation(groupBy);
@@ -69,7 +69,7 @@ class Network {
 				}
 			}
 			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
-        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+        				  .range(['#666284','#b3b2bc', '#f0faf0']);
 			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
 				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}
@@ -81,7 +81,7 @@ class Network {
 				}
 			}
 			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
-        				  .range(['#434058','#b3b2bc', '#f0faf0']);
+        				  .range(['#666284','#b3b2bc', '#f0faf0']);
 			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
 				this.groupByConfig[this.groupBy].color.push(colorRange(i));
 			}

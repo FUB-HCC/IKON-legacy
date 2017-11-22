@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<meta charset="utf-8">
 	<title>Cultures | MfN.projektor</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -13,14 +14,9 @@
 			window.location = i;
 		}
 
-		// setTimeout(function(){
-		// 	var el = document.getElementById("teaserImg");
-		// 	el.style.display = 'none';
-		// 	var ex = document.getElementById("hideDisc");
-		// 	var ey = document.getElementById("tagline");
-		// 	ey.style.display = 'block';
-		// 	ex.style.display = 'flex';
-		// }, 1750);
+		setTimeout(function(){
+			window.location = "./culture_a.html";
+		}, 2500);
 
 		function showInfo(i) {
 			var el = document.getElementById(i);
@@ -35,24 +31,7 @@
 </head>
 <body>
 	<div id="container" class="cultures">
-
-		<div  id="tagline">
-			<h1>Cultures</h1>
-		<p id="culture-info" style="width:49%;">We continually improve the connections of our projects both at the Museum für Naturkunde as well as externally. New cultures emerge as data grows more sophisticated.</p>
-		</div>
-
-		<div id="hideDisc" style="display: flex; justify-content: space-evenly; width:50%;">
-			<div class="gallery" style="flex:inherit;" onclick="goTo('./culture_a.html')">
-				<img src="../assets/culture_a.png"/>
-				<h3>Research Projects<br>&frasl;<br>Departments</h3>
-				<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
-			</div>
-			<div class="gallery" style="flex:inherit;" onclick="goTo('./culture_b.html')">
-				<img src="../assets/culture_b.png"/>
-				<h3>Research Projects<br>&frasl;<br>Funding</h3>
-				<div class="projectOption" style="margin: 0 auto 0 auto;">View</div>
-			</div>
-		</div>
+		<img id="teaserImg" src="../assets/cultures_intro.png" height="100%" width="auto" style="flex: inherit;">
 	</div>
 
 	<div id="navigation">

@@ -1,10 +1,17 @@
 @font-face {
-    font-family: 'CHBold'; /*a name to be used later*/
-    src: url('./res/CooperHewitt-WebFonts-public/CooperHewitt-Bold.woff'); /*URL to font*/
+    font-family: 'CHMed'; /*a name to be used later*/
+    src: url('./res/CooperHewitt-WebFonts-public/CooperHewitt-Medium.woff'); /*URL to font*/
 }
+
 @font-face {
-    font-family: 'CHThin'; /*a name to be used later*/
-    src: url('./res/CooperHewitt-WebFonts-public/CooperHewitt-Thin.woff'); /*URL to font*/
+    font-family: 'CHBook'; /*a name to be used later*/
+    src: url('./res/CooperHewitt-WebFonts-public/CooperHewitt-Book.woff'); /*URL to font*/
+}
+
+
+@font-face {
+    font-family: 'CHLight'; /*a name to be used later*/
+    src: url('./res/CooperHewitt-WebFonts-public/CooperHewitt-Light.woff'); /*URL to font*/
 }
 
 html,body{
@@ -13,6 +20,10 @@ html,body{
 
   /*background-color: #434058;*/
 }
+.links line{
+  stroke: #f0faf0;
+}
+
 div.tooltip {
     position: fixed;
 
@@ -20,7 +31,7 @@ div.tooltip {
     width: auto;
     height: 16px;
     padding: 4px;
-    font: 14px CHBold;
+    font: 14px CHMed;
     background: #434058;
     border: 0px;
     border-radius: 8px;
@@ -33,7 +44,7 @@ div.tooltip {
 }
 
 .legend{
-	font-family: CHBold;
+	font-family: CHMed;
 }
 rect.bar{
 	fill:none;
@@ -74,6 +85,7 @@ rect.bar{
 
 .nodesankey text {
   pointer-events: none;
+  font: 15px CHLight;
 }
 
 .linksankey {
@@ -84,19 +96,6 @@ rect.bar{
 
 .linksankey:hover {
   stroke-opacity: .9;
-}
-
-div.tooltipsankey {
-  position: absolute;
-  text-align: left;
-  width: 95px;
-  height: 40px;
-  padding: 4px;
-  font: 11px sans-serif;
-  background: silver;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
 }
 /*sankey Graph*/
 

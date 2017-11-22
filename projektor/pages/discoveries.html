@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<title>Discoveries | MfN.projektor</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
@@ -35,16 +36,16 @@
 </head>
 <body>
 	<div id="container" class="discoveries">
-		<img id="teaserImg" src="../assets/teaser_discoveries.png" height="800px" width="1067px" style="flex: inherit;">
+		<img id="teaserImg" src="../assets/teaser_discoveries.png" height="100%" width="auto" style="flex: inherit;">
 
 		<div  id="tagline" style="display: none;">
-			<h1>Recent Discoveries<sup><i class="fa fa-question-circle" onmouseover="showInfo('machine-info')" style="font-size: .8em; z-index:2;"></i></sup></h1>
-		<p id="machine-info" style="visibility:hidden; width:49%;">We employ algorithmic automation to link information in our database. This way, previously hidden potential connections can be made visible using the power of machines.</p>
+			<h1 style="float: left;">Recent Discoveries<sup><i class="fa fa-question-circle" onmouseover="showInfo('machine-info')" style="font-size: .8em; z-index:2;"></i></sup></h1>
+		<p id="machine-info" style="visibility:hidden; width:33%; float: right; text-align: right; display: inline-block;">We employ algorithmic automation to link information in our database. This way, previously hidden potential connections can be made visible using the power of machines.</p>
 		</div>
 
-		<div id="hideDisc" style="display:none;flex-flow: wrap;">
+		<div id="hideDisc" style="display:none;flex-flow: row wrap;">
 			<div class="disc41 discBox" onclick="goTo('graph_a.html')">
-				<h1 class="disc41text">Transfer Solution discovered!</h1>
+				<h2 class="disc41text" style="text-align: left;">Transfer Solution discovered!</h2>
 				<p class="system">
 					<span class="fb1">BIORES</span> can use <span class="disc41text">Transfer Solution</span> from <span class="fb4">NeFo3</span>.
 				</p>
@@ -52,7 +53,7 @@
 			</div>
 
 			<div class="disc34 discBox" onclick="goTo('collab_a.html')">
-				<h1 class="disc34text">Collaboration Opportunity discovered!</h1>
+				<h2 class="disc34text" style="text-align: left;">Collaboration Opportunity discovered!</h2>
 				<p class="system">
 					<span class="fb3">Jana Hoffmann</span> and <span class="fb4">Dr Katrin Vohland</span> can collaborate on <span class="disc34text">Subtopic</span>.
 				</p>
@@ -60,7 +61,7 @@
 			</div>
 
 			<div class="discS1 discBox" onclick="goTo('collab_b.html')">
-				<h1 class="discS1text">Collection Reference discovered!</h1>
+				<h2 class="discS1text" style="text-align: left;">Collection Reference discovered!</h2>
 				<p class="system">
 					<span class="fb1">AMREP II</span> has a <span class="discS1text">Possible Link</span> to a <span class="discS1text">Collection</span>.
 				</p>
@@ -68,7 +69,7 @@
 			</div>
 
 			<div class="disc21 discBox" onclick="goTo('graph_b.html')">
-				<h1 class="disc21text">Competence Sharing discovered!</h1>
+				<h2 class="disc21text" style="text-align: left;">Competence Sharing discovered!</h2>
 				<p class="system">
 					<span class="fb2">SO233 WALVIS II</span> can use <span class="disc21text">Competence</span> from <span class="fb1">MEMIN II</span>.
 				</p>

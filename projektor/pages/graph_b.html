@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<title>Discoveries | MfN.projektor</title>
+
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../bundle.css"/>
+    <script type="text/javascript" src="../bundle.js" charset="UTF-8"/></script>
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-	<link rel="icon" 
-      type="image/png" 
+	<link rel="icon"
+      type="image/png"
       href="../assets/icon.png">
 	<script>
 		function goTo(i) {
@@ -19,11 +25,75 @@
 		function specificAction(i) {
 			alert(i);
 		}
+
+		function showInfo(i) {
+			var el = document.getElementById(i);
+    		var style = window.getComputedStyle(el);
+    		console.log(el.style);
+    		if(el.style.visibility === 'hidden') {
+    			el.style.visibility = 'visible';
+    		} else {
+    			el.style.visibility = 'hidden';
+    		}
+		}
+
+		var linksGlobal = [{
+			source: 	"kooperationspartner",
+			target: 	"kooperationspartner",
+			value: 		5,
+		},{
+			source: 	"geldgeber",
+			target: 	"kooperationspartner",
+			value: 		5,
+		},,
+		{
+			source: 	"nebenthemen2",
+			target: 	"projektleiter",
+			value: 		7,
+		},{
+			source: 	"nebenthemen2",
+			target: 	"forschungsbereich",
+			value: 		7,
+		},{
+			source: 	"nebenthemen2",
+			target: 	"hauptthema",
+			value: 		7,
+		},
+		{
+			source: 	"start",
+			target: 	"start",
+			value: 		15,
+		},
+		{
+			source: 	"transfer",
+			target: 	"transfer",
+			value: 		30,
+		}];
+		init("../res/projects.json",function(data){
+			var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
+			$(document).ready(function() {
+
+				createSvg("#svg");
+				createBipartiteGraph(searchProjekt(allProjects,"110036"),
+					searchProjekt(allProjects,"130114"),"Digitale Makroskopie Diagnostik");
+			});
+		});
 	</script>
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="project disc21">
+		<div  id="tagline" style="padding: 30px;z-index: 2;display: inline-block;width: 75%;position: absolute;">
+			<h2 style="float: left;" class="system">
+					<span class="fb2">SO233 WALVIS II</span> can use <span class="disc21text">Digitale Makroskopie Diagnostik</span> from <span class="fb1">MEMIN II</span>.<sup><i class="fa fa-question-circle" onmouseover="showInfo('machine-info')" style="font-size: .8em; z-index:2;"></i></sup>
+			</h2>
+			<p id="machine-info" style="visibility: hidden; width:33%; float: right; text-align: right; display: inline-block;">Our algorithms have detected a logical connection between these projects. Explore the graph and use the options to publish or share this discovery with your colleagues.</p>
+		</div>
 		<!-- D3 BIPARTITE HERE -->
+		<div id="svg"></div>
+		<!-- D3 BIPARTITE HERE -->
+		<div  id="legend" style="padding: 25px;z-index: 2;display: inline-block;width: 75%;bottom: 20%;font-size: .8em;position: absolute;vertical-align: unset;">
+			<p id="machine-info" style="width:75%; float: left; text-align: left; display: inline-block;"> <span class="system">Legend:</span> <span class="fb1">Forschungsbereich 1</span> <span class="fb2">Forschungsbereich 2</span> <span class="fb3">Forschungsbereich 3</span> <span class="fb4">Forschungsbereich 4</span></p>
+		</div>
 	</div>
 
 	<div id="projectInteraction">

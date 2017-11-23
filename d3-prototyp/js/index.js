@@ -18,7 +18,7 @@ function searchProjekt(data,id){
 //maybe instead of Netwrork use a data class
 
 
-/*init("./res/projects.json",function(data){
+init("./res/projects.json",function(data){
 	var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 	//console.log(allProjects);
 	//console.log(allProjects[61]);
@@ -30,17 +30,10 @@ function searchProjekt(data,id){
 		n.changeVisualisation("geldgeber");
 		setTimeout(function() {
 			n.changeVisualisation("geldgeber");
-		}, 3000);
+		}, 3000);*/
+		createStreamGraph();
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);
-		//"130114" meminII
-		//"110036" walvis
-		//110038 nefo3
-		//110052 biores
-		//createBipartiteGraph(searchProjekt(allProjects,"130114"),searchProjekt(allProjects,"110036"));
-		var url = window.location.href;
-		url = url.substring(0, url.lastIndexOf("/") + 1);
-		console.log(url);
-		createBipartiteGraph(searchProjekt(allProjects,"110038"),searchProjekt(allProjects,"110052"),"test");
+		//createBipartiteGraph(searchProjekt(allProjects,"130114"),searchProjekt(allProjects,"110036"),"Test");
 	});
-});*/
+});

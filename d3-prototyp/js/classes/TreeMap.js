@@ -1,3 +1,4 @@
+//Should be made into a Class
 function createTreeMap(allProjects){
 	var tmpP = allProjects[0];
 	var data = {

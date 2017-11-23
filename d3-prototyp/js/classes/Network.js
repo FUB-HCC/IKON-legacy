@@ -1,7 +1,3 @@
-//COLOR RANGE EXAMPLE
-/*
-
-*/
 class Network {
 	constructor(projects) {
 		this.projects=projects;

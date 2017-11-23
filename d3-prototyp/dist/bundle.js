@@ -308,253 +308,6 @@ d3.sankey = function() {
   return sankey;
 };
 
-var svgGlobal =null;
-
-Math.radians = function(degrees) {
-  return degrees * Math.PI / 180;
-};
-
-// Converts from radians to degrees.
-Math.degrees = function(radians) {
-  return radians * 180 / Math.PI;
-};
-
-function createSvg(selector){
-	var width = $(selector).width(),
-	    height = $(selector).height()-4,
-	    radius = (Math.min(width, height) / 2) - 10;
-
-	var svg = d3.select(selector).append("svg")
-		.attr("class","svgGlobal")
-	    .attr("width", width)
-	    .attr("height", height);
-
-	svg.append("g")
-    	.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
-
-    svgGlobal = svg
-}
-
-function getRandomColor() {
-	var letters = '0123456789ABCDEF';
-	var color = '#';
-	for (var i = 0; i < 6; i++) {
-		color += letters[Math.floor(Math.random() * 16)];
-	}
-	return color;
-}
-
-function vecMinus(v1,v2){
-	return {x:(v1.x-v2.x),y:(v1.y-v2.y)};
-}
-
-function distance(p1,p2){
-	return Math.sqrt(Math.pow(p1.x-p2.x,2)+Math.pow(p1.y-p2.y,2));
-}
-
-//0° ist oben
-function radBetweenVectors(v1,v2){
-	var dot = v1.x*v2.x + v1.y*v2.y;
-	var det = v1.x*v2.y - v1.y*v2.x;
-	var angle = Math.atan2(det, dot);// -180, 180
-	angle= -angle;
-	if(angle<0){
-		angle+=Math.PI*2;
-	}
-	return angle;
-
-}
-
-
-function isInSector(startAngleRad,endAngleRad, radius, middle, point){
-    //startAngle 0° entspricht -90°
-    //endAngle 360° entspricht 270°
-	//point = {x:double,y:double}
-    //(startAngleRad, endAngleRad, radius, middle) definiert den Sector und seine Position
-
-    // result :  Boolean
-	//			true  Point ist in dem Sector
-	//			false Point ist außerhalb des Sektors
-
-	var angle = radBetweenVectors(vecMinus(point,middle),{x:0,y:-1});
-
-	//angle drehen, sodass 0° links ist
-	angle = Math.radians((Math.degrees(angle)+90)%360);
-	var dist = distance(middle,point);
-	if(startAngleRad <= angle && angle <= endAngleRad && dist <= radius){
-		return true;
-	}else{
-		return false;
-	}
-
-
-}
-
-
-var dataset;
-var fb1 = new Array();
-var fb2 = new Array();
-var fb3 = new Array();
-var fb4 = new Array();
-var all = new Array();
-var angles = [];
-var years = new Array();
-var colors = new Array();
-var colorsSys = new Array();
-var start = false;
-var scenario = 1;
-var numProjects = 0;
-
-var departments, activities;
-var currentHue = 0;
-var hueSpeed = 0.1;
-var currentAlpha = 0;
-
-//Call before setup
-function init(path,callback) {
-  myLoadJSON(path,callback);
-}
-
-//For CORS purposes
-function myLoadJSON(url,callback) {
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var data = JSON.parse(xmlhttp.responseText);
-      processData(data,callback);
-    }
-  };
-  xmlhttp.open("GET", url, true);
-  xmlhttp.setRequestHeader('Content-type', 'text/plain; charset=ISO-8859-1');
-  xmlhttp.overrideMimeType('text/plain; charset=ISO-8859-1');
-  xmlhttp.send();
-}
-
-//Process JSON Data
-function processData(e,callback) {
-  var tempYears = new Array();
-  dataset = e;
-  if (typeof dataset == "undefined") {
-    console.log("No Data Received");
-  } else {
-    var d = 0;
-    var minDate, maxDate;
-
-    for (var i = 0; i < dataset.length; i++) {
-      var newActivityID = '';
-      var startDate;
-      var endDate;
-      var department;
-      var title;
-      var geldgeber;
-      var antragsteller;
-      var projektleiter;
-      var st = new Date();
-      var et = new Date();
-
-      if (dataset[i].query.data["0"].property == "Abteilung_MfN") {
-        department = dataset[i].query.data[0].dataitem["0"].item.toString();
-        startDate = dataset[i].query.data[1].dataitem["0"].item.toString().split("/");
-        newActivityID = dataset[i].query.data[5].dataitem["0"].item.toString();
-        endDate = dataset[i].query.data[3].dataitem["0"].item.toString().split("/");
-        title = dataset[i].query.data[9].dataitem["0"].item.toString();
-        geldgeber = dataset[i].query.data[4].dataitem["0"].item.toString();
-        antragsteller = dataset[i].query.data[2].dataitem["0"].item.toString();
-        projektleiter = dataset[i].query.data[7].dataitem["0"].item.toString();
-        for (var j = 0; j < dataset[j].query.data.length; j++) {
-          if(dataset[i].query.data[j].property === "Hauptthema" ){
-            hauptThema = dataset[i].query.data[j].dataitem["0"].item.toString();
-          }else if(dataset[i].query.data[j].property === "Nebenthemen" ){
-            nebenThemen = dataset[i].query.data[j].dataitem;
-            var ntStringArray = [];
-            for (var k = 0; k < nebenThemen.length; k++) {
-              ntStringArray.push(nebenThemen[k].item.toString());
-            }
-          }else if(dataset[i].query.data[j].property === "Kooperationspartner" ){
-            kooperationsPartner = dataset[i].query.data[j].dataitem["0"].item.toString();
-          }
-        }
-      } else {
-
-        startDate = dataset[i].query.data[0].dataitem["0"].item.toString().split("/");
-        department = "FB 4";
-        endDate = dataset[i].query.data[2].dataitem["0"].item.toString().split("/");
-        newActivityID = dataset[i].query.data[4].dataitem["0"].item.toString();
-        title = dataset[i].query.data[8].dataitem["0"].item.toString();
-        geldgeber = dataset[i].query.data[3].dataitem["0"].item.toString();
-        antragsteller = dataset[i].query.data[1].dataitem["0"].item.toString();
-        projektleiter = dataset[i].query.data[6].dataitem["0"].item.toString();
-        for (var j = 0; j < dataset[i].query.data.length; j++) {
-          if(dataset[i].query.data[j].property === "Hauptthema" ){
-            hauptThema = dataset[i].query.data[j].dataitem["0"].item.toString();
-          }else if(dataset[i].query.data[j].property === "Nebenthemen" ){
-            nebenThemen = dataset[i].query.data[j].dataitem;
-            var ntStringArray = [];
-            for (var k = 0; k < nebenThemen.length; k++) {
-              ntStringArray.push(nebenThemen[k].item.toString());
-            }
-          }else if(dataset[i].query.data[j].property === "Kooperationspartner" ){
-            kooperationsPartner = dataset[i].query.data[j].dataitem["0"].item.toString();
-          }
-        }
-      }
-
-      if (title.indexOf('[') > -1) {
-        title = title.substr(1).slice(0, -1);
-      }
-
-      st.setFullYear(startDate[1], startDate[2], startDate[3]);
-      et.setFullYear(endDate[1], endDate[2], endDate[3]);
-
-      //dates.push({st, et});
-      tempYears.push(st.getFullYear());
-      tempYears.push(et.getFullYear());
-
-    var pro = {
-      antragsteller: antragsteller,
-      end: et,
-      forschungsbereich: department.substring(3),
-      geldgeber: geldgeber,
-      hauptthema: hauptThema,
-      id: newActivityID,
-      kooperationspartner: kooperationsPartner,
-      nebenthemen: ntStringArray,
-      projektleiter: projektleiter,
-      start: st,
-      titel: title
-    };
-
-    d = parseInt(department.replace(/^\D+/g, ""));
-    switch(d) {
-      case 1:
-        fb1.push(pro);
-        break;
-      case 2:
-        fb2.push(pro);
-        break;
-      case 3:
-        fb3.push(pro);
-        break;
-      case 4:
-        fb4.push(pro);
-      }
-    }
-    all.push(fb1);
-    all.push(fb2);
-    all.push(fb3);
-    all.push(fb4);
-
-    numProjects = fb1.length + fb2.length + fb3.length + fb4.length;
-
-    tempYears.sort();
-    years = tempYears.filter(function(item, pos, self) {
-      return self.indexOf(item) == pos;
-    });
-    callback(all);
-  }
-}
-
-
 class RadialChart {
     constructor() {
     	this.sectors = null;//[{text:"",percentage:0,percentageSum:0,color:"",projects:[]},...]
@@ -966,10 +719,6 @@ class ProjectGraph{
 }
 
 
-//COLOR RANGE EXAMPLE
-/*
-
-*/
 class Network {
 	constructor(projects) {
 		this.projects=projects;
@@ -1310,6 +1059,7 @@ function createBarChart(allProjects) {
 }
 
 
+//Should be made into a Class
 function createTreeMap(allProjects){
 	var tmpP = allProjects[0];
 	var data = {
@@ -1782,6 +1532,331 @@ function createBipartiteGraph(p1,p2,transfer){
 	});
 }
 
+function createStreamGraph(){
+  var n = 20, // number of layers
+      m = 200, // number of samples per layer
+      k = 10; // number of bumps per layer
+
+  //d3.stackOffsetWiggle  Wavy
+  //d3.stackOffsetNone    OnTopOfEachOther
+  var stack = d3.stack().keys(d3.range(n)).offset(d3.stackOffsetNone),
+      layers0 = stack(d3.transpose(d3.range(n).map(function() { return bumps(m, k); }))),
+      layers1 = stack(d3.transpose(d3.range(n).map(function() { return bumps(m, k); }))),
+      layers = layers0.concat(layers1);
+
+  var svg = svgGlobal,
+      width = +svg.attr("width")/2,
+      height = +svg.attr("height")/2,
+      g = svg.append("g")
+          .attr("transform",
+                "translate(" + (width/2) + "," + (height/2) + ")");
+
+  var x = d3.scaleLinear()
+      .domain([0, m - 1])
+      .range([0, width]);
+
+  var y = d3.scaleLinear()
+      .domain([d3.min(layers, stackMin), d3.max(layers, stackMax)])
+      .range([height, 0]);
+
+  var z = d3.interpolateCool;
+
+  var area = d3.area()
+      .x(function(d, i) { return x(i); })
+      .y0(function(d) { return y(d[0]); })
+      .y1(function(d) { return y(d[1]); });
+
+  g.selectAll("path")
+    .data(layers0)
+    .enter().append("path")
+      .attr("d", area)
+      .attr("fill", function() { return z(Math.random()); });
+  setTimeout(function() {
+    transition();
+  }, 3000);
+  function stackMax(layer) {
+    return d3.max(layer, function(d) { return d[1]; });
+  }
+
+  function stackMin(layer) {
+    return d3.min(layer, function(d) { return d[0]; });
+  }
+
+  function transition() {
+    var t;
+    d3.selectAll("path")
+      .data((t = layers1, layers1 = layers0, layers0 = t))
+      .transition()
+        .duration(2500)
+        .attr("d", area);
+  }
+
+  // Inspired by Lee Byron’s test data generator.
+  function bumps(n, m) {
+    var a = [], i;
+    for (i = 0; i < n; ++i) a[i] = 0;
+    for (i = 0; i < m; ++i) bump(a, n);
+    return a;
+  }
+
+  function bump(a, n) {
+    var x = 1 / (0.1 + Math.random()),
+        y = 2 * Math.random() - 0.5,
+        z = 10 / (0.1 + Math.random());
+    for (var i = 0; i < n; i++) {
+      var w = (i / n - y) * z;
+      a[i] += x * Math.exp(-w * w);
+    }
+  }
+}
+
+var svgGlobal =null;
+
+Math.radians = function(degrees) {
+  return degrees * Math.PI / 180;
+};
+
+// Converts from radians to degrees.
+Math.degrees = function(radians) {
+  return radians * 180 / Math.PI;
+};
+
+function createSvg(selector){
+	var width = $(selector).width(),
+	    height = $(selector).height()-4,
+	    radius = (Math.min(width, height) / 2) - 10;
+
+	var svg = d3.select(selector).append("svg")
+		.attr("class","svgGlobal")
+	    .attr("width", width)
+	    .attr("height", height);
+
+	svg.append("g")
+    	.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+
+    svgGlobal = svg
+}
+
+function getRandomColor() {
+	var letters = '0123456789ABCDEF';
+	var color = '#';
+	for (var i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+}
+
+function vecMinus(v1,v2){
+	return {x:(v1.x-v2.x),y:(v1.y-v2.y)};
+}
+
+function distance(p1,p2){
+	return Math.sqrt(Math.pow(p1.x-p2.x,2)+Math.pow(p1.y-p2.y,2));
+}
+
+//0° ist oben
+function radBetweenVectors(v1,v2){
+	var dot = v1.x*v2.x + v1.y*v2.y;
+	var det = v1.x*v2.y - v1.y*v2.x;
+	var angle = Math.atan2(det, dot);// -180, 180
+	angle= -angle;
+	if(angle<0){
+		angle+=Math.PI*2;
+	}
+	return angle;
+
+}
+
+
+function isInSector(startAngleRad,endAngleRad, radius, middle, point){
+    //startAngle 0° entspricht -90°
+    //endAngle 360° entspricht 270°
+	//point = {x:double,y:double}
+    //(startAngleRad, endAngleRad, radius, middle) definiert den Sector und seine Position
+
+    // result :  Boolean
+	//			true  Point ist in dem Sector
+	//			false Point ist außerhalb des Sektors
+
+	var angle = radBetweenVectors(vecMinus(point,middle),{x:0,y:-1});
+
+	//angle drehen, sodass 0° links ist
+	angle = Math.radians((Math.degrees(angle)+90)%360);
+	var dist = distance(middle,point);
+	if(startAngleRad <= angle && angle <= endAngleRad && dist <= radius){
+		return true;
+	}else{
+		return false;
+	}
+
+
+}
+
+
+var dataset;
+var fb1 = new Array();
+var fb2 = new Array();
+var fb3 = new Array();
+var fb4 = new Array();
+var all = new Array();
+var angles = [];
+var years = new Array();
+var colors = new Array();
+var colorsSys = new Array();
+var start = false;
+var scenario = 1;
+var numProjects = 0;
+
+var departments, activities;
+var currentHue = 0;
+var hueSpeed = 0.1;
+var currentAlpha = 0;
+
+//Call before setup
+function init(path,callback) {
+  myLoadJSON(path,callback);
+}
+
+//For CORS purposes
+function myLoadJSON(url,callback) {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var data = JSON.parse(xmlhttp.responseText);
+      processData(data,callback);
+    }
+  };
+  xmlhttp.open("GET", url, true);
+  xmlhttp.setRequestHeader('Content-type', 'text/plain; charset=ISO-8859-1');
+  xmlhttp.overrideMimeType('text/plain; charset=ISO-8859-1');
+  xmlhttp.send();
+}
+
+//Process JSON Data
+function processData(e,callback) {
+  var tempYears = new Array();
+  dataset = e;
+  if (typeof dataset == "undefined") {
+    console.log("No Data Received");
+  } else {
+    var d = 0;
+    var minDate, maxDate;
+
+    for (var i = 0; i < dataset.length; i++) {
+      var newActivityID = '';
+      var startDate;
+      var endDate;
+      var department;
+      var title;
+      var geldgeber;
+      var antragsteller;
+      var projektleiter;
+      var st = new Date();
+      var et = new Date();
+
+      if (dataset[i].query.data["0"].property == "Abteilung_MfN") {
+        department = dataset[i].query.data[0].dataitem["0"].item.toString();
+        startDate = dataset[i].query.data[1].dataitem["0"].item.toString().split("/");
+        newActivityID = dataset[i].query.data[5].dataitem["0"].item.toString();
+        endDate = dataset[i].query.data[3].dataitem["0"].item.toString().split("/");
+        title = dataset[i].query.data[9].dataitem["0"].item.toString();
+        geldgeber = dataset[i].query.data[4].dataitem["0"].item.toString();
+        antragsteller = dataset[i].query.data[2].dataitem["0"].item.toString();
+        projektleiter = dataset[i].query.data[7].dataitem["0"].item.toString();
+        for (var j = 0; j < dataset[j].query.data.length; j++) {
+          if(dataset[i].query.data[j].property === "Hauptthema" ){
+            hauptThema = dataset[i].query.data[j].dataitem["0"].item.toString();
+          }else if(dataset[i].query.data[j].property === "Nebenthemen" ){
+            nebenThemen = dataset[i].query.data[j].dataitem;
+            var ntStringArray = [];
+            for (var k = 0; k < nebenThemen.length; k++) {
+              ntStringArray.push(nebenThemen[k].item.toString());
+            }
+          }else if(dataset[i].query.data[j].property === "Kooperationspartner" ){
+            kooperationsPartner = dataset[i].query.data[j].dataitem["0"].item.toString();
+          }
+        }
+      } else {
+
+        startDate = dataset[i].query.data[0].dataitem["0"].item.toString().split("/");
+        department = "FB 4";
+        endDate = dataset[i].query.data[2].dataitem["0"].item.toString().split("/");
+        newActivityID = dataset[i].query.data[4].dataitem["0"].item.toString();
+        title = dataset[i].query.data[8].dataitem["0"].item.toString();
+        geldgeber = dataset[i].query.data[3].dataitem["0"].item.toString();
+        antragsteller = dataset[i].query.data[1].dataitem["0"].item.toString();
+        projektleiter = dataset[i].query.data[6].dataitem["0"].item.toString();
+        for (var j = 0; j < dataset[i].query.data.length; j++) {
+          if(dataset[i].query.data[j].property === "Hauptthema" ){
+            hauptThema = dataset[i].query.data[j].dataitem["0"].item.toString();
+          }else if(dataset[i].query.data[j].property === "Nebenthemen" ){
+            nebenThemen = dataset[i].query.data[j].dataitem;
+            var ntStringArray = [];
+            for (var k = 0; k < nebenThemen.length; k++) {
+              ntStringArray.push(nebenThemen[k].item.toString());
+            }
+          }else if(dataset[i].query.data[j].property === "Kooperationspartner" ){
+            kooperationsPartner = dataset[i].query.data[j].dataitem["0"].item.toString();
+          }
+        }
+      }
+
+      if (title.indexOf('[') > -1) {
+        title = title.substr(1).slice(0, -1);
+      }
+
+      st.setFullYear(startDate[1], startDate[2], startDate[3]);
+      et.setFullYear(endDate[1], endDate[2], endDate[3]);
+
+      //dates.push({st, et});
+      tempYears.push(st.getFullYear());
+      tempYears.push(et.getFullYear());
+
+    var pro = {
+      antragsteller: antragsteller,
+      end: et,
+      forschungsbereich: department.substring(3),
+      geldgeber: geldgeber,
+      hauptthema: hauptThema,
+      id: newActivityID,
+      kooperationspartner: kooperationsPartner,
+      nebenthemen: ntStringArray,
+      projektleiter: projektleiter,
+      start: st,
+      titel: title
+    };
+
+    d = parseInt(department.replace(/^\D+/g, ""));
+    switch(d) {
+      case 1:
+        fb1.push(pro);
+        break;
+      case 2:
+        fb2.push(pro);
+        break;
+      case 3:
+        fb3.push(pro);
+        break;
+      case 4:
+        fb4.push(pro);
+      }
+    }
+    all.push(fb1);
+    all.push(fb2);
+    all.push(fb3);
+    all.push(fb4);
+
+    numProjects = fb1.length + fb2.length + fb3.length + fb4.length;
+
+    tempYears.sort();
+    years = tempYears.filter(function(item, pos, self) {
+      return self.indexOf(item) == pos;
+    });
+    callback(all);
+  }
+}
+
+
 
 var hrefGlobal = [	[["BIORES","/pages/projekt1.html"],["MEMIN II","/pages/projekt3.html"],["AMREP II","/pages/projekt6.html"]],
 					[["WALVIS II","/pages/projekt2.html"]],
@@ -1802,7 +1877,7 @@ function searchProjekt(data,id){
 //maybe instead of Netwrork use a data class
 
 
-/*init("./res/projects.json",function(data){
+init("./res/projects.json",function(data){
 	var allProjects = data[0].concat(data[1]).concat(data[2]).concat(data[3]);
 	//console.log(allProjects);
 	//console.log(allProjects[61]);
@@ -1814,19 +1889,12 @@ function searchProjekt(data,id){
 		n.changeVisualisation("geldgeber");
 		setTimeout(function() {
 			n.changeVisualisation("geldgeber");
-		}, 3000);
+		}, 3000);*/
+		createStreamGraph();
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);
-		//"130114" meminII
-		//"110036" walvis
-		//110038 nefo3
-		//110052 biores
-		//createBipartiteGraph(searchProjekt(allProjects,"130114"),searchProjekt(allProjects,"110036"));
-		var url = window.location.href;
-		url = url.substring(0, url.lastIndexOf("/") + 1);
-		console.log(url);
-		createBipartiteGraph(searchProjekt(allProjects,"110038"),searchProjekt(allProjects,"110052"),"test");
+		//createBipartiteGraph(searchProjekt(allProjects,"130114"),searchProjekt(allProjects,"110036"),"Test");
 	});
-});*/
+});
 
 

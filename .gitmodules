@@ -19,3 +19,6 @@
 [submodule "citation-parse/grobid"]
 	path = citation-parse/grobid
 	url = https://github.com/kermitt2/grobid.git
+[submodule "IKON-ontology"]
+	path = IKON-ontology
+	url = https://github.com/FUB-HCC/IKON-ontology.git

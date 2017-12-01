@@ -100,7 +100,7 @@ init("./res/projects.json",function(data){
 		setTimeout(function() {
 			n.changeVisualisation("geldgeber");
 		}, 3000);*/
-		createStreamGraph();
+		createStreamGraph(data,allProjects);
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);
 		//createBipartiteGraph(searchProjekt(allProjects,"130114"),searchProjekt(allProjects,"110036"),"Test");

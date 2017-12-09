@@ -1,0 +1,20 @@
+{
+  "name": "Project Scraper",
+  "description": "Scraper for http://biowikifarm.net.",
+  "keywords": ["fu-berlin", "fub-hcc", "ikon"],
+  "type": "project",
+  "require": {
+    "guzzlehttp/guzzle": "^6.3",
+    "symfony/dom-crawler": "^3.3",
+    "symfony/css-selector": "^3.3",
+    "illuminate/support": "^5.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "files": [
+      "app/Support/helpers.php"
+    ]
+  }
+}

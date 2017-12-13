@@ -25,3 +25,6 @@
 [submodule "IKON-projector"]
 	path = IKON-projector
 	url = https://github.com/FUB-HCC/IKON-projector
+[submodule "tools/respec"]
+	path = tools/respec
+	url = git@github.com:w3c/respec.git

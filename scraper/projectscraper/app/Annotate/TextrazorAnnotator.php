@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Promise\EachPromise;
 use Psr\Http\Message\ResponseInterface;
 
-class DandelionAnnotator extends Annotator
+class TextrazorAnnotator extends Annotator
 {
     /**
      * @var bool
@@ -29,32 +29,17 @@ class DandelionAnnotator extends Annotator
     private $client;
 
     /**
-     * @var string
-     */
-    private $version;
-
-    /**
      * @var float
      */
     private $timeout;
 
     /**
-     * @var float
-     */
-    private $confidence;
-
-    /**
-     * @var int
-     */
-    private $concurrency;
-
-    /**
      * @var string
      */
-    private $baseUrl = 'https://api.dandelion.eu/datatxt/nex/';
+    private $baseUrl = 'https://api.textrazor.com/';
 
     /**
-     * Instantiates a new DandelionAnnotator.
+     * Instantiates a new TextrazorAnnotator.
      *
      * Sets options and instantiates a new Guzzle Client.
      *
@@ -67,12 +52,9 @@ class DandelionAnnotator extends Annotator
     {
         $this->token = $token;
 
-        $this->debug = isset($options['debug']) ? $options['debug'] : false;
-        $this->unique = isset($options['unique']) ? $options['unique'] : true;
+        $this->debug = isset($options['debug']) ? $options['debug'] : true;
+        $this->unique = isset($options['unique']) ? $options['unique'] : false;
         $this->timeout = isset($options['timeout']) ? $options['timeout'] : 60;
-        $this->version = isset($options['version']) ? $options['version'] : 'v1';
-        $this->confidence = isset($options['confidence']) ? $options['confidence'] : 0.6;
-        $this->concurrency = isset($options['concurrency']) ? $options['concurrency'] : 5;
 
         $options = [
             'debug' => $this->debug,
@@ -88,10 +70,10 @@ class DandelionAnnotator extends Annotator
      * Returns an array of entities.
      *
      * @param string|array $text Text to annotate
-     * @param string $language Language of the text (ISO 639-1)
+     * @param string $language Language of the text (ISO 639-2)
      * @return array Array of entities
      */
-    public function entities($text, string $language = 'de')
+    public function entities($text, string $language = 'ger')
     {
         $entities = [];
 
@@ -102,7 +84,6 @@ class DandelionAnnotator extends Annotator
         }
 
         (new EachPromise($promises, [
-            'concurrency' => $this->concurrency,
             'fulfilled' => function ($entity) use (&$entities) {
                 $entities[] = $entity;
             },
@@ -123,35 +104,37 @@ class DandelionAnnotator extends Annotator
      * @link http://www.php.net/manual/en/class.generator.php
      *
      * @param array $text Text to annotate
-     * @param string $language Language of the text (ISO 639-1)
+     * @param string $language Language of the text (ISO 639-2)
      * @return \Generator
      */
     private function getEntities(array $text, string $language)
-     {
-        $uri = $this->version;
-
-        $options = ['query' => [
-            'lang' => $language,
-            'token' => $this->token,
-            'min_confidence' => $this->confidence
+    {
+        $options = ['headers' => [
+            'x-textrazor-key' => $this->token
         ]];
 
         foreach ($text as $str) {
-            $options['query']['text'] = $str;
+            $options['form_params'] = [
+                'extractors' => 'entities',
+                'languageOverride' => $language,
+                'text' => $str
+            ];
 
-            yield $this->client->getAsync($uri, $options)
+            yield $this->client->postAsync(null, $options)
                 ->then(function (ResponseInterface $response) {
                     $entities = [];
                     $array = json_decode($response->getBody(), true);
 
-                    if (array_key_exists('annotations', $array)) {
-                        foreach ($array['annotations'] as $item) {
-                            $entity = [
-                                'title' => $item['title'],
-                                'href' => $item['uri']
-                            ];
+                    if (array_key_exists('entities', $array['response'])) {
+                        foreach ($array['response']['entities'] as $item) {
+                            if($item['wikiLink']){
+                                $entity = [
+                                    'title' => $item['entityId'],
+                                    'href' => $item['wikiLink']
+                                ];
 
-                            $entities[] = $entity;
+                                $entities[] = $entity;
+                            }
                         }
 
                         return $entities;

@@ -4,9 +4,6 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use App\Commands\Command;
 use App\Annotate\Annotator;
-use App\Annotate\DbpeadiaAnnotator;
-use App\Annotate\DandelionAnnotator;
-
 
 class ProjectAnnotatorCommand extends Command
 {
@@ -28,8 +25,9 @@ class ProjectAnnotatorCommand extends Command
     public function __construct()
     {
 
-        $this->annotator = new DbpeadiaAnnotator();
-        //$this->annotator = new DandelionAnnotator("token");
+        //$this->annotator = new \App\Annotate\DbpeadiaAnnotator();
+        //$this->annotator = new \App\Annotate\DandelionAnnotator("token");
+        $this->annotator = new \App\Annotate\TextrazorAnnotator("token");
     }
 
     /**

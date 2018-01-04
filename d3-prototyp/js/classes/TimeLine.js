@@ -89,6 +89,7 @@ function createBarChart(allProjects) {
 		data2[i].num = data2[i].num + plus;
 	}
 
+
 	data = data.concat(data2);
 
 	var res =[];

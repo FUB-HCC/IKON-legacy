@@ -23,15 +23,24 @@ init("./res/projects.json",function(data){
 	//console.log(allProjects);
 	//console.log(allProjects[61]);
 	$(document).ready(function() {
+		var width = 960, height = 600;
+		var stage = new PIXI.Container();
+        var renderer = PIXI.autoDetectRenderer(width, height,
+            {antialias: !0, transparent: !0, resolution: 1});
+
+        document.body.appendChild(renderer.view);
 
 		createSvg("#chart");
+
+
 		$("#chart").css('background-color', "#434058");
-		/*var n = new Network(allProjects);
+		var n = new Network(allProjects);
 		n.changeVisualisation("geldgeber");
 		setTimeout(function() {
 			n.changeVisualisation("geldgeber");
-		}, 3000);*/
-		createStreamGraph(data,allProjects);
+		}, 3000);
+		//createIcicle(allProjects);
+		//createStreamGraph(data,allProjects);
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);
 		//createBipartiteGraph(searchProjekt(allProjects,"130114"),searchProjekt(allProjects,"110036"),"Test");

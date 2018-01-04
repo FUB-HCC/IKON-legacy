@@ -13,6 +13,10 @@ html,body{
 
   /*background-color: #434058;*/
 }
+svg{
+  overflow: hidden;
+}
+
 .links line{
   stroke: #f0faf0;
 }
@@ -91,4 +95,5 @@ rect.bar{
   stroke-opacity: .9;
 }
 /*sankey Graph*/
+
 

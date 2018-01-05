@@ -28,3 +28,6 @@
 [submodule "tools/respec"]
 	path = tools/respec
 	url = git@github.com:w3c/respec.git
+[submodule "tools/WIDOCO"]
+	path = tools/WIDOCO
+	url = git@github.com:dgarijo/Widoco.git

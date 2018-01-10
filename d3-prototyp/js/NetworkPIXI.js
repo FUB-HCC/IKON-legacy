@@ -1,7 +1,29 @@
-class Network {
+class NetworkPIXI {
 	//TODO LINKS richtig updatenim Projektgraph
 	constructor(projects) {
+		//Better in a separat Class Stage
+		//and maybe a Class(or function) for the renderer (Singleton)
+		var width = $("#chart").width(), height = $("#chart").height()-4;
+
+        this.stage = new PIXI.Container();
+        this.renderer = PIXI.autoDetectRenderer(width, height,
+            {antialias: 1, transparent: 1, resolution: 1});
+        document.getElementById("chart").appendChild(this.renderer.view);
+
+        var pixiCanvas = d3.select('canvas');
+        //.translateExtent([[-0,-0],[width,height]])
+		pixiCanvas.call(d3.zoom().scaleExtent([0.5, 10]).on("zoom", zoom))
+		var that = this;
+		function zoom() {
+			console.log(d3.event);
+		    that.stage.position.x = d3.event.transform.x;
+		    that.stage.position.y = d3.event.transform.y;
+		    that.stage.scale.x = d3.event.transform.k;
+		    that.stage.scale.y = d3.event.transform.k;
+		}
+
 		this.projects=projects;
+		this.groupByUpdate = null;
 		this.groupBy = "forschungsbereiche";//forschungsbereiche kooperationspartner geldgeber
 		this.groupByConfig = {
 			forschungsbereiche:{
@@ -19,35 +41,51 @@ class Network {
 		};
 		//{text:"",percentage:0,percentageSum:0,color:"",projects:[]}
 		this.groups = this.createGroups();
-	    this.radialChart = new RadialChart(this.groups);
-	    this.projectGraph = new ProjectGraph(this.groups);
+	    this.radialChart = new RadialChartPIXI(this.stage);
+	    //this.projectGraph = new ProjectGraphPIXI(this.groups);
 		this.animationTime = 2000;
 		this.isOpen=false;
+		this.hasFaded=false;
+		//To render PIXI
+		this.ticker = PIXI.ticker.shared;
+        this.ticker.autoStart = true;
+        this.ticker.add(this.update, this);
 	}
-	changeVisualisation(groupBy){
+	update(){
+		if(this.groupByUpdate!=null){
+			//Problem visualisation change while in an Animation
+			if(this.isOpen){
+				if(this.radialChart.fade === 0 && !this.hasFaded){
+					this.hasFaded = true;
+					this.radialChart.fadeOut(this.animationTime);
+					//this.projectGraph.fadeOut(this.animationTime*2);
+				}else if(this.radialChart.fade === 0 && this.hasFaded){
+					this.isOpen=false;
+				}
+			}else{
+				this.groupBy = this.groupByUpdate;
+				this.groupByUpdate = null;
+				this.isOpen=true;
+				this.groups = this.createGroups();
 
-		var that = this;
-		if(this.isOpen){
-			this.radialChart.fadeOut(this.animationTime);
-			this.projectGraph.fadeOut(this.animationTime*2);
-			setTimeout(function() {
-				that.isOpen=false;
-				that.changeVisualisation(groupBy);
-			}, this.animationTime);
-		}else{
-			this.groupBy = groupBy;
-			this.groups = this.createGroups();
-			this.radialChart.changeData(this.groups);
-			this.radialChart.fadeIn(this.animationTime);
-			this.isOpen=true;
-			//TODO
-			setTimeout(function() {
-				that.projectGraph.changeData(that.groups);
-				that.projectGraph.fadeIn(that.animationTime);
-			}, this.animationTime/1.5);
+				this.radialChart.setData(this.groups);
+				this.radialChart.fadeIn(this.animationTime);
+				//this.projectGraph.changeData(this.groups);
+				//this.projectGraph.fadeIn(this.animationTime);
+
+
+			}
 
 		}
+		if(this.isOpen){
+			this.radialChart.update();
+			this.radialChart.draw();
+		}
+		this.renderer.render(this.stage);
 
+	}
+	setVisualisation(groupBy){
+		this.groupByUpdate=groupBy;
 	}
 	createGroups(){
 		/*			INIT 			*/

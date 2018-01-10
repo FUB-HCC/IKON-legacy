@@ -720,6 +720,7 @@ class ProjectGraph{
 
 
 class Network {
+	//TODO LINKS richtig updatenim Projektgraph
 	constructor(projects) {
 		this.projects=projects;
 		this.groupBy = "forschungsbereiche";//forschungsbereiche kooperationspartner geldgeber
@@ -1928,6 +1929,600 @@ function createIcicle(allProjects){
   }
 }
 
+class RadialChartPIXI {
+    constructor(stage) {
+    	this.sectors = null;//[{text:"",percentage:0,percentageSum:0,color:"",projects:[]},...]
+		this.arcs = null;// gfx:null,startAngle:0,endAngle:0,interpolateStartAngle:null, interpolateEndAngle:null
+
+		//TODO
+		this.stage = stage;
+		this.width = 500;
+		this.height = 500;
+
+		this.fade = 0; //-1 - FadeOut  0 - noFade Active   1 - FadeIn
+		this.animationStartTime = null;
+    	this.animationDuration = null;
+    }
+
+    setData(sectors){
+		this.sectors = sectors;
+		this.arcs = this.createArcs();
+    }
+    createArcs(){
+    	var that= this;
+    	var tmpArcs = []
+		for (var i = 0; i < this.sectors.length; i++) {
+			var gfxArc = new PIXI.Graphics();
+		    gfxArc.beginFill(0xffffff,0);
+		    gfxArc.lineStyle(20, 0xff00ff,1);
+		    gfxArc.arc(0, 0, 220, -(2 * Math.PI)/4, -(2 * Math.PI)/4); // cx, cy, radius, startAngle, endAngle
+		    gfxArc.position = {x: this.width/2, y: this.height/2};
+		    this.stage.addChild(gfxArc);
+
+		    tmpArcs.push({
+		    	gfx: 		gfxArc,
+		    	startAngle: -(2 * Math.PI)/4,
+		    	endAngle: 	-(2 * Math.PI)/4,
+		    	interpolateStartAngle: 	null,
+		    	interpolateEndAngle: 	null
+		    });
+
+	    }
+	    return tmpArcs;
+    }
+    update(){
+    	//Bad not smooth because of irregular calls
+    	if(this.fade != 0){
+    		var animDelta = (Date.now()-this.animationStartTime);
+    		if(animDelta >= this.animationDuration){
+    			//If this function is here suspended from the CPU and FadeOut/IN is executed
+    			//errors might occur with the interpolation
+    			this.fade = 0;
+    			animDelta = this.animationDuration;//To end the interpolation at exactly 1
+    		}
+    		for (var i = 0; i < this.arcs.length; i++) {
+    			//console.log(this.arcs[i].interpolateEndAngle(animDelta/this.animationDuration))
+    			this.arcs[i].endAngle = this.arcs[i].interpolateEndAngle(animDelta/this.animationDuration);
+    			this.arcs[i].startAngle = this.arcs[i].interpolateStartAngle(animDelta/this.animationDuration);
+    		}
+    	}
+
+    }
+    draw(){
+    	//console.log(this.arcs);
+    	for (var i = 0; i < this.arcs.length; i++) {
+    		var tmpArc = this.arcs[i].gfx;
+    		tmpArc.clear();
+	      	tmpArc.beginFill(0xffff00,0);
+
+	    	tmpArc.lineStyle(20, parseInt(this.sectors[i].color.substring(1), 16),1);
+	    	//console.log(this.arcs);
+
+	    	//start and endAngle opposite values and missing the (- (2*Math.PI)/4)
+	    	tmpArc.arc(0, 0, 220, this.arcs[i].endAngle- ((2*Math.PI)/4), this.arcs[i].startAngle - ((2*Math.PI)/4)+0.002 );
+    	}
+    }
+
+	//FadeIn and FadeOut Work even when the other one is Still active
+	//Only if one of them is suspended from the CPU during execution and the other function
+	//continues Problems might occur
+
+	//Solution: Update, FadeIn and FadeOut have to wait for each other to finish before the
+	//			next one starts OR fadeIN and fadeOut only execute when fade is 0
+    fadeIn(animationDuration){
+
+    	this.fade = 1;
+    	for (var i = 0; i < this.arcs.length; i++) {
+    		console.log(this.arcs[i].startAngle);
+    		this.arcs[i].interpolateStartAngle = d3.interpolate(this.arcs[i].startAngle,
+    			(this.sectors[i].percentageSum)*(2*Math.PI) - (2*Math.PI)/4 );
+
+    		this.arcs[i].interpolateEndAngle = d3.interpolate(this.arcs[i].endAngle,
+    			((this.sectors[i].percentageSum)-this.sectors[i].percentage)*(2*Math.PI) - (2*Math.PI)/4 );
+    	}
+    	this.animationStartTime = Date.now();
+    	this.animationDuration = animationDuration;
+    }
+    fadeOut(animationDuration){
+	 	this.fade = -1;
+    	for (var i = 0; i < this.arcs.length; i++) {
+    		this.arcs[i].interpolateStartAngle = d3.interpolate(this.arcs[i].startAngle, -(2*Math.PI)/4 );
+    		this.arcs[i].interpolateEndAngle = d3.interpolate(this.arcs[i].endAngle, -(2*Math.PI)/4 );
+    	}
+    	this.animationStartTime = Date.now();
+    	this.animationDuration = animationDuration;
+    }
+}
+
+
+var linksP = [{
+			source: 	"110048",
+			target: 	"130119",
+			value: 		9
+		},{
+			source: 	"130119",
+			target: 	"170000",
+			value: 		9
+		},
+		{
+			source: 	"170000",
+			target: 	"130116",
+			value: 		9
+		},
+		{
+			source: 	"170000",
+			target: 	"140019",
+			value: 		9
+		},
+		{
+			source: 	"170000",
+			target: 	"130108",
+			value: 		9
+		},
+		{
+			source: 	"130108",
+			target: 	"130116",
+			value: 		9
+		},
+		{
+			source: 	"160012",
+			target: 	"130116",
+			value: 		9
+		},
+		{
+			source: 	"110050",
+			target: 	"110046",
+			value: 		9
+		},
+		{
+			source: 	"110046",
+			target: 	"160016",
+			value: 		9
+		},
+		{
+			source: 	"110050",
+			target: 	"110048",
+			value: 		9
+		}];
+class ProjectGraphPIXI{
+	constructor() {
+		//groups [{text:"",percentage:0,percentageSum:0,color:"",projects:[]},...]
+		this.groups = null;
+		//groupSectors [{startAngle:0,endAngle:0,flowPoint:{},outerRadius:0,circleMiddle:{}},...]
+		this.groupSectors = null;
+		//poiintData [{color:"", groupNum: 0, project:{},sector:{}},...]
+		this.pointData = null;
+		this.force = null;
+		this.counter =0;
+	}
+
+	createForceSimulation(){
+		//also creates the nodes
+		var that = this;
+		var scaleX = d3.scaleLinear()
+		        .domain([-30,30])
+		        .range([0,600]);
+		var scaleY = d3.scaleLinear()
+		        .domain([0,50])
+		        .range([500,0]);
+		var tmpForce = d3.forceSimulation()
+			.force("link", d3.forceLink().id(function(d) { return d.project.id; }))
+		    .force("collide", d3.forceCollide(19))
+		    .force("center", d3.forceCenter(svgGlobal.attr("width") / 2, svgGlobal.attr("height") / 2));
+		svgGlobal.append('circle')
+				.attr("class","background")
+   				.style("fill","#f0faf0")
+		  		.style("opacity",0)
+		  		.attr("r", 220)
+		  		.attr('cx', svgGlobal.attr("width") / 2)
+		  		.attr('cy', svgGlobal.attr("height") / 2);
+
+		var toolTip = d3.select("body").append("div")
+    		.attr("class", "tooltip")
+    		.style("opacity", 0);
+
+
+    	var link = svgGlobal.append("g")
+				      .attr("class", "links")
+				    .selectAll("line")
+				    .data(linksP)
+				    .enter().append("line")
+				      .attr("stroke-width", function(d) { return Math.sqrt(d.value); })
+				      .style("opacity", 0);
+		var allNodes = svgGlobal.selectAll(".nodeGroup")
+		    .data(that.pointData).enter()
+		    .append("g")
+		    	.attr("class","nodeGroup");
+
+		allNodes.append("circle")
+		    .attr("class", "node")
+		    .attr("r", 10)
+		    .attr("fill", function(d) {
+		        return d.color;
+		    })
+		    .style("stroke", "")
+		    .style("opacity", 0)
+		    .style("stroke-width", "1px");
+		allNodes.append("polygon")
+		    .attr("points",function(d){
+		    	var tmpArr = []
+		    	for (var i = 0; i < d.polygon.length; i++) {
+		    		tmpArr.push([scaleX(d.polygon[i].x),scaleY(d.polygon[i].y)].join(","));
+		    	}
+		    	return tmpArr;
+		    })
+		    .attr("fill", function(d) {
+		        return d.color;
+		    })
+		    .attr("stroke", function(d) {
+		        return d.color;
+		    })
+		    .style("opacity", 0)
+		    .style("stroke-width", "1px")
+		    .on("click", function(d) {
+		    	/*var url = window.location.href;
+				url = url.substring(0, url.lastIndexOf("/") + 1);
+		    	document.location.href = url + d.project.href;*/
+		    	document.location.href = d.project.href;
+		    })
+		    .on("mouseover", function(d) {
+		    	d3.select(this).style("cursor", "pointer");
+		    	d3.select(this).transition()
+	                .duration(500)
+	                .style("stroke","#f0faf0")
+	                .style("fill","#f0faf0");
+
+	            var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
+	            toolTip.transition()
+	                .duration(500)
+	                .style("opacity", .8);
+	            toolTip.html(d.project.tooltip)
+	            	.style("color","#f0faf0")
+	                .style("left", (svgPos.x+d.x) + "px")
+	                .style("top", (svgPos.y+d.y - 32) + "px");
+            })
+            .on("mouseout", function(d) {
+	            d3.select(this).style("cursor", "default");
+	            d3.select(this).transition()
+	                .duration(500)
+	                .style("stroke",d.color)
+	                .style("fill", d.color);
+	            toolTip.transition()
+	                .duration(500)
+	                .style("opacity", 0);
+	        });
+		tmpForce.nodes(that.pointData)
+		    .on("tick", that.tick);
+		tmpForce.force("link")
+      			.links(linksP);
+		return tmpForce;
+	}
+	changeData(groups){
+		svgGlobal.selectAll(".tooltip").remove();
+	    svgGlobal.selectAll(".nodeGroup").remove();
+	    svgGlobal.selectAll(".links").remove()
+	    this.groups = groups;
+	    this.groupSectors = this.createGroupSectors();
+		this.pointData = this.createPointData();
+		this.force = this.createForceSimulation();
+	}
+	fadeOut(animationTime){
+	 	svgGlobal.selectAll(".background").transition()
+	 		.duration(animationTime)
+	 		.style("opacity", 0);
+	 	svgGlobal.selectAll(".links line").transition()
+	 		.duration(animationTime)
+	 		.style("opacity", 0);
+	 	svgGlobal.selectAll(".nodeGroup polygon").transition()
+	 		.duration(animationTime)
+	 		.style("opacity", 0);
+	}
+	fadeIn(animationTime){
+		svgGlobal.selectAll(".nodeGroup polygon").transition()
+	 		.duration(animationTime/2)
+	 		.style("opacity", 1);
+	 	svgGlobal.selectAll(".background").transition()
+	 		.duration(animationTime/2)
+	 		.style("opacity", 0.04);
+	 	setTimeout(function() {
+	 		svgGlobal.selectAll(".links line").transition()
+	 			.duration(animationTime/2)
+	 			.style("opacity", 1);
+		}, animationTime/2);
+
+
+	}
+	createGroupSectors(){
+		var circleMiddle = {x:svgGlobal.attr("width")/2,y:svgGlobal.attr("height")/2};
+		var outerRadius= 200;
+		var innerRadius = 90;
+
+		var tmpGroupSectors = [];//startAngle,endAngle,point,outerRadius,circleMiddle
+		for (var i = 0; i < this.groups.length; i++) {
+			var tmpEndAngle = this.groups[i].percentageSum*(2*Math.PI);
+			var tmpStartAngle = (this.groups[i].percentageSum-this.groups[i].percentage)*(2*Math.PI);
+			var tmpFlowAngle = (tmpEndAngle-((tmpEndAngle-tmpStartAngle)/2))+(Math.PI);
+			tmpGroupSectors.push({
+				startAngle: 	tmpStartAngle,
+				endAngle: 		tmpEndAngle,
+				flowPoint:{
+					x:circleMiddle.x+innerRadius*Math.cos(tmpFlowAngle),
+					y:circleMiddle.y+innerRadius*Math.sin(tmpFlowAngle)
+				},
+				outerRadius: 	outerRadius,
+				circleMiddle: 	circleMiddle
+			});
+
+		}
+		return tmpGroupSectors
+	}
+	createPointData(){
+		var pointData = [];
+		var scale = 3.5;
+		var poly = [{"x":-3*scale, "y":-1*scale},
+		        {"x":-3*scale,"y":1*scale},
+		        {"x":-1*scale,"y":3*scale},
+		        {"x":1*scale,"y":3*scale},
+		        {"x":3*scale,"y":1*scale},
+		        {"x":3*scale,"y":-1*scale},
+		        {"x":1*scale,"y":-3*scale},
+		        {"x":-1*scale,"y":-3*scale}];
+		for (var i = 0; i < this.groups.length; i++) {
+			for (var j = 0; j < this.groups[i].projects.length; j++) {
+				var point = {};
+		    	point.color = this.groups[i].color;
+		    	point.groupNum = i;
+		    	point.project = this.groups[i].projects[j];
+		    	point.sector = this.groupSectors[i];
+		    	point.time = 0;
+		    	point.timeOutside = 0;
+		    	point.polygon = poly;
+		    	pointData.push(point);
+			}
+		}
+		return pointData;
+	}
+	tick(that) {
+		svgGlobal.selectAll(".links line").attr("x1", function(d) { return d.source.x; })
+        							 .attr("y1", function(d) { return d.source.y; })
+        							 .attr("x2", function(d) { return d.target.x; })
+        							 .attr("y2", function(d) { return d.target.y; });
+
+		/* Remove Circles ? Was first used instead of polygons and contains the x y computation.
+			Possible dependency with Force simulation.*/
+        svgGlobal.selectAll('.node').attr("cx", function(d) {
+    			if(!isInSector(d.sector.startAngle+ Math.radians(6),
+    					d.sector.endAngle - Math.radians(6),
+    					d.sector.outerRadius,
+    					d.sector.circleMiddle,
+    					d)){
+    				d.timeOutside++;
+    				d.vx += (d.sector.flowPoint.x-d.x)/(7+(100000*((d.time*d.time)/100000000))-(400000*((d.timeOutside
+    					*d.timeOutside)/400000000))) ;
+				}
+				d.time++;
+				if(d.time>10000){
+					d.time=10000;
+				}
+
+				if(d.timeOutside>10000){
+					d.timeOutside=10000;
+				}
+                return d.x;
+            })
+            .attr("cy", function(d) {
+				if(!isInSector(d.sector.startAngle,
+    					d.sector.endAngle,
+    					d.sector.outerRadius,
+    					d.sector.circleMiddle,
+    					d)){
+					d.vy += (d.sector.flowPoint.y-d.y)/(3+(100000*((d.time*d.time)/100000000))-(400000*((d.timeOutside
+    					*d.timeOutside)/400000000))) ;
+				}
+				d.time++;
+				if(d.time>10000){
+					d.time=10000;
+				}
+                return d.y;
+            });
+
+        //set polygon xy to circle xy
+        svgGlobal.selectAll('.nodeGroup polygon').attr("points",function(d) {
+        	var tmpArr = []
+        	var nodeX = d3.select(this.parentNode).selectAll("circle").attr("cx");
+        	var nodeY = d3.select(this.parentNode).selectAll("circle").attr("cy");
+	    	for (var i = 0; i < d.polygon.length; i++) {
+	    		tmpArr.push([d.polygon[i].x+Number(nodeX)
+	    			,d.polygon[i].y+Number(nodeY)].join(","));
+	    	}
+	    	return tmpArr;
+        });
+    }
+
+}
+
+
+class NetworkPIXI {
+	//TODO LINKS richtig updatenim Projektgraph
+	constructor(projects) {
+		//Better in a separat Class Stage
+		//and maybe a Class(or function) for the renderer (Singleton)
+		var width = $("#chart").width(), height = $("#chart").height()-4;
+
+        this.stage = new PIXI.Container();
+        this.renderer = PIXI.autoDetectRenderer(width, height,
+            {antialias: 1, transparent: 1, resolution: 1});
+        document.getElementById("chart").appendChild(this.renderer.view);
+
+        var pixiCanvas = d3.select('canvas');
+        //.translateExtent([[-0,-0],[width,height]])
+		pixiCanvas.call(d3.zoom().scaleExtent([0.5, 10]).on("zoom", zoom))
+		var that = this;
+		function zoom() {
+			console.log(d3.event);
+		    that.stage.position.x = d3.event.transform.x;
+		    that.stage.position.y = d3.event.transform.y;
+		    that.stage.scale.x = d3.event.transform.k;
+		    that.stage.scale.y = d3.event.transform.k;
+		}
+
+		this.projects=projects;
+		this.groupByUpdate = null;
+		this.groupBy = "forschungsbereiche";//forschungsbereiche kooperationspartner geldgeber
+		this.groupByConfig = {
+			forschungsbereiche:{
+				text:["Forschungsbereich 1","Forschungsbereich 2","Forschungsbereich 3","Forschungsbereich 4"],
+				color:["#7d913c","#d9ef36","#8184a7","#985152"]
+			},
+			kooperationspartner:{
+				text:[],
+				color:[]
+			},
+			geldgeber:{
+				text:[],
+				color:[]
+			}
+		};
+		//{text:"",percentage:0,percentageSum:0,color:"",projects:[]}
+		this.groups = this.createGroups();
+	    this.radialChart = new RadialChartPIXI(this.stage);
+	    //this.projectGraph = new ProjectGraphPIXI(this.groups);
+		this.animationTime = 2000;
+		this.isOpen=false;
+		this.hasFaded=false;
+		//To render PIXI
+		this.ticker = PIXI.ticker.shared;
+        this.ticker.autoStart = true;
+        this.ticker.add(this.update, this);
+	}
+	update(){
+		if(this.groupByUpdate!=null){
+			//Problem visualisation change while in an Animation
+			if(this.isOpen){
+				if(this.radialChart.fade === 0 && !this.hasFaded){
+					this.hasFaded = true;
+					this.radialChart.fadeOut(this.animationTime);
+					//this.projectGraph.fadeOut(this.animationTime*2);
+				}else if(this.radialChart.fade === 0 && this.hasFaded){
+					this.isOpen=false;
+				}
+			}else{
+				this.groupBy = this.groupByUpdate;
+				this.groupByUpdate = null;
+				this.isOpen=true;
+				this.groups = this.createGroups();
+
+				this.radialChart.setData(this.groups);
+				this.radialChart.fadeIn(this.animationTime);
+				//this.projectGraph.changeData(this.groups);
+				//this.projectGraph.fadeIn(this.animationTime);
+
+
+			}
+
+		}
+		if(this.isOpen){
+			this.radialChart.update();
+			this.radialChart.draw();
+		}
+		this.renderer.render(this.stage);
+
+	}
+	setVisualisation(groupBy){
+		this.groupByUpdate=groupBy;
+	}
+	createGroups(){
+		/*			INIT 			*/
+		var projectCount = this.projects.length;
+		var differentGroups = 0
+		//count or set amount of differentGroups
+		if(this.groupBy==="forschungsbereiche"){
+			differentGroups = 4;
+		} else if (this.groupBy==="geldgeber") {
+
+			for (var i = 0; i < projectCount; i++) {
+				if(this.groupByConfig[this.groupBy].text.indexOf(this.projects[i].geldgeber) === -1){
+					this.groupByConfig[this.groupBy].text.push(this.projects[i].geldgeber);
+
+					differentGroups++;
+				}
+			}
+			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
+        				  .range(['#666284','#b3b2bc', '#f0faf0']);
+			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
+				this.groupByConfig[this.groupBy].color.push(colorRange(i));
+			}
+		}else if (this.groupBy==="kooperationspartner") {
+			for (var i = 0; i < projectCount; i++) {
+				if(this.groupByConfig[this.groupBy].text.indexOf(this.projects[i].kooperationspartner) === -1){
+					this.groupByConfig[this.groupBy].text.push(this.projects[i].kooperationspartner);
+					differentGroups++;
+				}
+			}
+			var colorRange=d3.scaleLinear().domain([0,this.groupByConfig[this.groupBy].text.length])
+        				  .range(['#666284','#b3b2bc', '#f0faf0']);
+			for (var i = 0; i < this.groupByConfig[this.groupBy].text.length; i++) {
+				this.groupByConfig[this.groupBy].color.push(colorRange(i));
+			}
+		}
+		//create Basic groups-Array
+		var tmpGroups =[];
+		for (var i = 0; i < differentGroups; i++) {
+			tmpGroups.push({
+				text: 			this.groupByConfig[this.groupBy].text[i],
+				count: 			0,
+				percentage: 	0,
+				percentageSum: 	0,
+				color: 			this.groupByConfig[this.groupBy].color[i],
+				projects: 		[],
+				href: 			"",
+				tooltip: 		""
+			});
+		}
+		/*			SORT			*/
+		for (var i = 0; i < projectCount; i++) {
+			if(this.groupBy==="forschungsbereiche"){
+				//counting the number of prjects
+				tmpGroups[this.projects[i].forschungsbereich - 1].count++;
+				var randomTitle = parseInt(Math.random()*(hrefGlobal[this.projects[i].forschungsbereich - 1].length));
+				this.projects[i].href = hrefGlobal[this.projects[i].forschungsbereich - 1][randomTitle][1];
+				this.projects[i].tooltip = hrefGlobal[this.projects[i].forschungsbereich - 1][randomTitle][0];
+				tmpGroups[this.projects[i].forschungsbereich - 1].projects.push(this.projects[i]);
+
+			} else if (this.groupBy==="geldgeber") {
+				for (var j = 0; j < this.groupByConfig[this.groupBy].text.length; j++) {
+					if (this.groupByConfig[this.groupBy].text[j] === this.projects[i].geldgeber){
+						tmpGroups[j].count++;
+						tmpGroups[j].projects.push(this.projects[i]);
+						break;
+					}
+				}
+			}else if (this.groupBy==="kooperationspartner") {
+				for (var j = 0; j < this.groupByConfig[this.groupBy].text.length; j++) {
+					if (this.groupByConfig[this.groupBy].text[j] === this.projects[i].kooperationspartner){
+						tmpGroups[j].count++;
+						tmpGroups[j].projects.push(this.projects[i]);
+						break;
+					}
+				}
+			}
+		}
+
+		/*			END 			*/
+		for (var i = 0; i < differentGroups; i++) {
+			//converting the number of Projects to a percentage
+			tmpGroups[i].percentage = tmpGroups[i].count/projectCount;
+		}
+		var previousPercentSum = 0;
+	    for (var i = 0; i < tmpGroups.length; i++) {
+	    	previousPercentSum += tmpGroups[i].percentage;
+	    	tmpGroups[i].percentageSum = previousPercentSum;
+	    }
+		return tmpGroups;
+	}
+
+}
+
 var svgGlobal =null;
 
 Math.radians = function(degrees) {
@@ -1953,6 +2548,16 @@ function createSvg(selector){
     	.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 
     svgGlobal = svg
+}
+
+
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
 function getRandomColor() {
@@ -2211,14 +2816,52 @@ init("./res/projects.json",function(data){
 	//console.log(allProjects[61]);
 	$(document).ready(function() {
 
-		createSvg("#chart");
-		$("#chart").css('background-color', "#434058");
-		/*var n = new Network(allProjects);
-		n.changeVisualisation("geldgeber");
-		setTimeout(function() {
-			n.changeVisualisation("geldgeber");
+		/*createSvg("#chart");
+
+
+		$("#chart").css('background-color', "#434058");*/
+
+		/*var width = $("#chart").width(), height = $("#chart").height()-4;
+
+        var stage = new PIXI.Container();
+        var renderer = PIXI.autoDetectRenderer(width, height,
+            {antialias: !0, transparent: !0, resolution: 1});
+        document.getElementById("chart").appendChild(renderer.view);
+	    var semicircle = new PIXI.Graphics();
+	    semicircle.beginFill(0xffffff,0);
+	    semicircle.lineStyle(20, 0xff00ff,1);
+	    semicircle.arc(0, 0, 100, 0, Math.PI); // cx, cy, radius, startAngle, endAngle
+	    semicircle.position = {x: width/2, y: height/2};
+	    stage.addChild(semicircle);
+	    count=0;
+
+	    //animate for temporary Animation
+	    //otherwise PIXIS TICKER
+		function animate(){
+
+
+	      	// Rotation is measured in radians. Math.PI * 2 = one full rotation.
+	      	semicircle.clear();
+	      	semicircle.rotation = (Date.now() / 1000) % (Math.PI * 2);
+	      	semicircle.beginFill(0xffffff,0);
+	    	semicircle.lineStyle(20, 0xff00ff,1);
+	    	semicircle.arc(0, 0, 100, Math.radians(count%360), Math.PI);
+	      	renderer.render(stage);
+	      	count++;
+	    	if(count<60*2){
+	    		console.log(count)
+
+	    	}
+	    	requestAnimationFrame(animate);
+
+	    }
+	   	animate();*/
+		var n = new NetworkPIXI(allProjects);
+		n.setVisualisation("forschungsbereiche");
+		/*setTimeout(function() {
+			n.setVisualisation("forschungsbereiche");
 		}, 3000);*/
-		createIcicle(allProjects);
+		//createIcicle(allProjects);
 		//createStreamGraph(data,allProjects);
 		//createBarChart(allProjects);
 		//createTreeMap(allProjects);

@@ -13,7 +13,6 @@ module.exports = {
 			files: {
 								"bundle.js": [
 										'js/lib/jquery.min.js',
-										'js/lib/pixi_4_5_1.min.js',
 										'js/lib/d3.min.js',
 										'js/lib/sankey.js',
 										'js/classes/RadialChart.js',
@@ -24,6 +23,9 @@ module.exports = {
 										'js/classes/BipartiteGraph.js',
 										'js/classes/StreamGraph.js',
 										'js/classes/Icicle.js',
+										'js/RadialChartPIXI.js',
+										'js/ProjectGraphPIXI.js',
+										'js/NetworkPIXI.js',
 										'js/helpFunctions.js',
 										'js/loadData.js',
 										'js/index.js'

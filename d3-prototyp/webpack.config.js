@@ -16,6 +16,7 @@ module.exports = {
 										'js/lib/d3.min.js',
 										'js/lib/d3.3d.min.js',
 										'js/lib/d3.chromatic.min.js',
+										'js/lib/three.min.js',
 										'js/lib/sankey.js',
 										'js/classes/RadialChart.js',
 										'js/classes/ProjectGraph.js',

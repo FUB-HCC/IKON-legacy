@@ -1,8 +1,11 @@
 class Network {
-	//TODO LINKS richtig updatenim Projektgraph
+	//Kombiniert Radial Chart und Projekt graph
+	//Handelt Daten und Animation
+
+	//TODO LINKS richtig updaten im Projektgraph
 	constructor(projects) {
 		this.projects=projects;
-		this.groupBy = "forschungsbereiche";//forschungsbereiche kooperationspartner geldgeber
+		this.groupBy = "forschungsbereiche";//Alternativen: forschungsbereiche kooperationspartner geldgeber
 		this.groupByConfig = {
 			forschungsbereiche:{
 				text:["Forschungsbereich 1","Forschungsbereich 2","Forschungsbereich 3","Forschungsbereich 4"],
@@ -25,7 +28,10 @@ class Network {
 		this.isOpen=false;
 	}
 	changeVisualisation(groupBy){
-
+		/*
+			Verändert die Visualisierung zu einer durch groupBy festgelegten anderen.
+			Einschließlich animation.
+		*/
 		var that = this;
 		if(this.isOpen){
 			this.radialChart.fadeOut(this.animationTime);
@@ -50,6 +56,14 @@ class Network {
 
 	}
 	createGroups(){
+		/*
+			Erstellt, für die durch groupby festgelegte Visualisierung, die benötigten Daten und
+			gibt diese Zurück.
+
+			Kann Optional in einer globaleren Daten Klasse passieren.
+			Am besten für jede Visualisierung einzeln.
+		*/
+
 		/*			INIT 			*/
 		var projectCount = this.projects.length;
 		var differentGroups = 0

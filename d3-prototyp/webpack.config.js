@@ -15,9 +15,10 @@ module.exports = {
 										'js/lib/jquery.min.js',
 										'js/lib/d3.min.js',
 										'js/lib/d3.3d.min.js',
-										'js/lib/d3.chromatic.min.js',
-										'js/lib/three.min.js',
-										'js/lib/sankey.js',
+										'js/lib/d3.chromatic.min.js', //3dSurfaces uses Chromatic for colouring
+										'js/lib/x3domfull.js',
+										'js/lib/d3-x3dom-axis.js',
+										'js/lib/sankey.js', //BipartiteGraph.js uses Sankey
 										'js/classes/RadialChart.js',
 										'js/classes/ProjectGraph.js',
 										'js/classes/Network.js',
@@ -27,11 +28,7 @@ module.exports = {
 										'js/classes/StreamGraph.js',
 										'js/classes/Icicle.js',
 										'js/classes/3dSurface.js',
-										'js/RadialChartPIXI.js',
-										'js/ProjectGraphPIXI.js',
-										'js/NetworkPIXI.js',
 										'js/helpFunctions.js',
-										'js/loadData.js',
 										'js/index.js'
 								],
 								"bundle.css": [

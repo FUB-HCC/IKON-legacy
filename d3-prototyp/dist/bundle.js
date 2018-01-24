@@ -6147,7 +6147,7 @@ class RadialChart {
     }
     createLabels(){
     	/*
-			Erstellt alle benötigten Paths und gibt diese Zurück.
+			Erstellt alle benötigten Labels und gibt diese Zurück.
 		*/
 
     	//Override Old Labels
@@ -6183,6 +6183,9 @@ class RadialChart {
     }
 
     fadeIn(animationTime){
+    	/*
+			Blendet den graph in animationTime ms ein.
+		*/
     	//! Animationtime is only for the arcs afterwards the text fades in! TODO
     	var that = this;
 	 	for (var i = 0; i < this.arcs.length; i++) {
@@ -6199,6 +6202,9 @@ class RadialChart {
 		}, animationTime/1.5);
     }
     fadeOut(animationTime){
+    	/*
+			Blendet den graph in animationTime ms aus.
+		*/
 	 	var that = this;
 	 	for (var i = 0; i < this.arcs.length; i++) {
 	 		this.arcs[i].transition()
@@ -6210,6 +6216,9 @@ class RadialChart {
 	 		.style("opacity", 0);
     }
     arcTween(newEndAngle,newStartAngle) {
+    	/*
+			Berechnet die Animation der Arcs(paths)
+    	*/
     	var that = this;
 		return function(d) {
 			var interpolateEnd = d3.interpolate(d.endAngle, newEndAngle);
@@ -7911,6 +7920,114 @@ function create3dSurface(allProjects){
     change();
 }
 
+function scatterPlot(){
+	 var makeSolid =  function(selection, color) {
+            selection
+                .append("appearance")
+                .append("material")
+                .attr("diffuseColor", color || "black");
+            return selection;
+        };
+        var width = 800;
+        var height = 600;
+
+        var x3d = d3.select("#chartholder")
+            .attr("width", width + 'px')
+            .attr("height", height +'px')
+            .attr("showLog", 'false')
+            .attr("showStat", 'false');
+
+        d3.select('.x3dom-canvas')
+            .attr("width", 2 * width)
+            .attr("height", 2 *  height);
+
+        var x = d3.scaleLinear().range([0, 40]);
+        var y = d3.scaleLinear().range([0, 40]);
+        var z = d3.scaleLinear().range([0, 40]);
+        var xAxis = d3_x3dom_axis.x3domAxis('x', 'z', x).tickSize(z.range()[1] - z.range()[0]).tickPadding(y.range()[0]);
+        var yAxis = d3_x3dom_axis.x3domAxis('y', 'z', y).tickSize(z.range()[1] - z.range()[0]);
+        var yAxis2 = d3_x3dom_axis.x3domAxis('y', 'x', y).tickSize(x.range()[1] - x.range()[0]).tickFormat(function(d){return ''});
+        var zAxis = d3_x3dom_axis.x3domAxis('z', 'x', y).tickSize(x.range()[1] - x.range()[0]);
+
+        var scene = x3d.append("scene");
+        var view_pos = [80, 20, 80];
+        var fov = 0.8;
+        var view_or = [0, 1, 0, 0.8];
+
+        scene.append("viewpoint")
+            .attr("id", 'dvp')
+            .attr("position", view_pos.join(" "))
+            .attr("orientation", view_or.join(" "))
+            .attr("fieldOfView", fov)
+            .attr("description", "defaultX3DViewpointNode").attr("set_bind", "true");
+
+        scene.append('group')
+            .attr('class', 'xAxis')
+            .call(xAxis)
+            .select('.domain').call(makeSolid, 'blue');
+
+        scene.append('group')
+            .attr('class', 'yAxis')
+            .call(yAxis)
+            .select('.domain').call(makeSolid, 'red');
+
+        scene.append('group')
+            .attr('class', 'yAxis')
+            .call(yAxis2)
+            .select('.domain').call(makeSolid, 'red');
+
+        scene.append('group')
+            .attr('class', 'zAxis')
+            .call(zAxis)
+            ;//.select('.domain');
+
+        var n = 40;
+        var points = d3.range(n).map(function(d) {
+            var p = {};
+            p.x = Math.random();
+            p.z = Math.random();
+            p.y = Math.random();
+            return p;
+        });
+
+        scene.selectAll('.point')
+            .data(points)
+            .enter()
+            .append('transform')
+            .attr('class', 'point')
+            .attr('translation', function(d){ return x(d.x) + ' ' + y(d.y) + ' ' + z(d.z)})
+            //AP: try mouseover
+            .attr('onmouseover', 'handlemouseover(this, event);')
+            .append('shape')
+            .call(makeSolid, 'orange')
+            .append('sphere')
+            .attr('radius', 0.8);
+
+    	scene.append('transform')
+            .attr('class', 'label')
+            .attr('scale', '1 1 1')
+            .append('billboard')
+            .attr('axisOfRotation', '0 0 0')
+            .append('shape')
+                .call(makeSolid,'0 0 0')
+                .append('Text')
+                    .attr('class','labelText')
+                    .attr('string', 'default label')
+                    .append("fontstyle")
+                        .attr("size", 1)
+                        .attr("family", "SANS")
+                        .attr("style", "BOLD")
+                        .attr("justify", "END")
+                        .attr("quality", "3");
+
+        function handlemouseover(target, event) {
+            scene.select(".label")
+                .attr('translation', target.translation);
+            scene.select(".labelText")
+                .attr('string',  "y: "+(target.translation.split(' ')[1]/40.0).toPrecision(8));
+        }
+}
+
 var svgGlobal =null;
 
 Math.radians = function(degrees) {
@@ -8073,17 +8190,15 @@ loadData("./res/newProjects.json",function(data){
 
     	allProjectsArray.push(allProjectsJson[projectId]);
     }
-    console.log(allProjectsArray);
+    for (projectId in allProjectsJson){
+    	allProjectsJson[projectId]["synergie"] = allProjectsArray[parseInt(allProjectsArray.length*Math.random())].id;
+    }
+    console.log(JSON.stringify(allProjectsJson));
 	$(document).ready(function() {
-		createSvg("#chart");
-		$("#chart").css('background-color', "#434058");
+		/*createSvg("#chart");
+		$("#chart").css('background-color', "#434058");*/
 
-		var n = new Network(allProjectsArray);
-		n.changeVisualisation("forschungsbereiche");
-		setTimeout(function() {
-			//Problem with links between Projects on changeVisulisation
-			n.changeVisualisation("forschungsbereiche");
-		}, 3000);
+		createStreamGraph(data,allProjectsArray);
 		/*
 		create3dSurface(allProjectsArray);
 		var n = new Network(allProjectsArray);

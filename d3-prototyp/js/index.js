@@ -46,7 +46,7 @@ function loadData(path, callback){
 
 };
 
-loadData("./res/newProjects.json",function(data){
+loadData("./res/projects.json",function(data){
 	//parse Dates and create Array
 	var allProjectsArray = [];
 	var allProjectsJson = data;
@@ -58,17 +58,15 @@ loadData("./res/newProjects.json",function(data){
 
     	allProjectsArray.push(allProjectsJson[projectId]);
     }
-    console.log(allProjectsArray);
+    for (projectId in allProjectsJson){
+    	allProjectsJson[projectId]["synergie"] = allProjectsArray[parseInt(allProjectsArray.length*Math.random())].id;
+    }
+    console.log(JSON.stringify(allProjectsJson));
 	$(document).ready(function() {
-		createSvg("#chart");
-		$("#chart").css('background-color', "#434058");
+		/*createSvg("#chart");
+		$("#chart").css('background-color', "#434058");*/
 
-		var n = new Network(allProjectsArray);
-		n.changeVisualisation("forschungsbereiche");
-		setTimeout(function() {
-			//Problem with links between Projects on changeVisulisation
-			n.changeVisualisation("forschungsbereiche");
-		}, 3000);
+		createStreamGraph(data,allProjectsArray);
 		/*
 		create3dSurface(allProjectsArray);
 		var n = new Network(allProjectsArray);

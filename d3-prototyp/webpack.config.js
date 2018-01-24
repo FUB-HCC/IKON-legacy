@@ -28,11 +28,13 @@ module.exports = {
 										'js/classes/StreamGraph.js',
 										'js/classes/Icicle.js',
 										'js/classes/3dSurface.js',
+										'js/classes/3dSurfacePoints.js',
 										'js/helpFunctions.js',
 										'js/index.js'
 								],
 								"bundle.css": [
-										'css/main.css'
+										'css/main.css',
+										'css/x3dom.css'
 								]
 						}
 		})

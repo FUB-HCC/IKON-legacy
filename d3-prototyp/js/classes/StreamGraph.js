@@ -1,4 +1,6 @@
 function createStreamGraph(fbProjects, allProjects){
+  //fbProjects [[allProjects of Fb1],...] TODO
+
   var fbNebenthemen = [["Mikroevolution","Evolutionäre Morphologie","Diversitätsdynamik","Impakt- und Meteoritenforschung"],
     ["Biodiversitätsentdeckung","Sammlungsentwicklung","Kompetenzzentrum Sammlung"],
     ["IT- Forschungsinfrastrukturen","Wissenschaftsdatenmanagement","Biodiversitäts- und Geoinformatik"],

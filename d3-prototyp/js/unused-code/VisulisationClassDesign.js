@@ -5,8 +5,10 @@
 		Position and Size of the Visulisation
 			Hardcodet change when nessecary
 		Color and Style
-			Defined in the css for each Visualisation
-			unless they are generated Colors
+			Css could be used´but it would struggle with the generated data of different size
+				(e.g. unkown amount of different Kooperationpartners and more specific things like Arc width)
+			Instead config json which defines theses things with a default one set
+				more for future use if it should be modified for different scenarios
 		Data
 			when calling this Visulisation it is unclear what data is needed, because this is different for all of them
 			so it gets unprocessed data and needs to transform it for itself
@@ -18,6 +20,9 @@
 		Internal Class Structure
 			It is unclear how the Structure might be for each Visualisation, but under suggestions I aggregated a few functions which seemed useful for all of them.
 			Privacy displayed through underscore(_get()) before function as suggested here(https://stackoverflow.com/questions/27849064/how-to-implement-private-method-in-es6-class-with-traceur)
+
+	If funcitons can have predifined values. It might be useful to have a config json which could be used to define color width etc. instead of css
+	this is better because a lot more can be defined here but less seperation between code and display.
 */
 
 class Visulisation{
@@ -25,13 +30,14 @@ class Visulisation{
 		Description
 	*/
 
-	constructor(svgId, data, type) {
+	constructor(svgId, data, type, config = {}) {
 		/*
 			Public
 			Creates all nessecary data and shows the Visulisation
 				svgId - defines the SVG Id (e.g."#svgChart") where the Visulisation should be appended
 				data  - the newProjects.json set or a subset of it
 				type  - String defining the Visualisation Type
+				config- Json with variables defining the Style properties
 		*/
 	}
 	updateData(data){

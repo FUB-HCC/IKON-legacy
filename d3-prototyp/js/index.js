@@ -55,18 +55,14 @@ loadData("./res/projects.json",function(data){
     	var startDate = new Date(Date.parse(allProjectsJson[projectId].start));
     	allProjectsJson[projectId].end = endDate;
     	allProjectsJson[projectId].start = startDate;
-
     	allProjectsArray.push(allProjectsJson[projectId]);
     }
-    for (projectId in allProjectsJson){
-    	allProjectsJson[projectId]["synergie"] = allProjectsArray[parseInt(allProjectsArray.length*Math.random())].id;
-    }
-    console.log(JSON.stringify(allProjectsJson));
-	$(document).ready(function() {
-		/*createSvg("#chart");
-		$("#chart").css('background-color', "#434058");*/
 
-		createStreamGraph(data,allProjectsArray);
+	$(document).ready(function() {
+		createSvg("#chart");
+		$("#chart").css('background-color', "#434058");
+		var t = new TimeLine(".svgGlobal",allProjectsJson,0);
+		//createBarChart(allProjectsArray);
 		/*
 		create3dSurface(allProjectsArray);
 		var n = new Network(allProjectsArray);

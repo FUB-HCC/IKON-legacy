@@ -4,11 +4,14 @@
 	Decisions:
 		Position and Size of the Visulisation
 			Hardcodet change when nessecary
-		Color and Style
+		Style
 			Css could be used´but it would struggle with the generated data of different size
 				(e.g. unkown amount of different Kooperationpartners and more specific things like Arc width)
 			Instead config json which defines theses things with a default one set
 				more for future use if it should be modified for different scenarios
+		Colors defined Globally
+			currently var colors. It can be changed to a Class which loads it from a json file or changes it dynamically
+			or can be changed to use only colors from the css
 		Data
 			when calling this Visulisation it is unclear what data is needed, because this is different for all of them
 			so it gets unprocessed data and needs to transform it for itself
@@ -25,7 +28,7 @@
 	this is better because a lot more can be defined here but less seperation between code and display.
 */
 
-class Visulisation{
+class Visualisation{
 	/*
 		Description
 	*/
@@ -70,13 +73,15 @@ class Visulisation{
 			Private
 			Creates all nessecary D3 elements (e.g. ForceSimulation, Scales)
 
-			(before createSvgElements() and variables Stored globally in this Class)
+				After 	_createData()
+				Before 	_createSvgElements()
 		*/
 	}
 	_createSvgElements(){
 		/*
 			Private
 			Creates all nessecary SVG elements
+			split into separate functions when too large
 		*/
 	}
 

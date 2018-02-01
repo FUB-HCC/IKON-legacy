@@ -2,30 +2,22 @@
 	Class Design for all D3Visualisations of the current Prototype
 
 	Decisions:
-		Position and Size of the Visulisation
-			Hardcodet change when nessecary
 		Style
-			Css could be used´but it would struggle with the generated data of different size
-				(e.g. unkown amount of different Kooperationpartners and more specific things like Arc width)
-			Instead config json which defines theses things with a default one set
-				more for future use if it should be modified for different scenarios
+			defined in Css
+			Additional option in the constructor config variable
 		Colors defined Globally
 			currently var colors. It can be changed to a Class which loads it from a json file or changes it dynamically
 			or can be changed to use only colors from the css
 		Data
-			when calling this Visulisation it is unclear what data is needed, because this is different for all of them
-			so it gets unprocessed data and needs to transform it for itself
+			Each Class gets the projectsJson and has to process it on its own because its very often
+			different
 		Different Visulisation Types(e.g. Petri Dish Forschungsbereiche-Geldgeber-...)
-			(Change how the Data is displayed using the same Visualisation)
 			Every Visulisation should have the Option for different types
-			if it only has one it has only one
-			Reason: I think it is easy to have different types of each Visualisation which would Display a whole new Perspective. Which is why I included this for all of them.
+			Reason:
+				I think it is easy to have different types for each Visualisation. Each giving a different Perspective
 		Internal Class Structure
 			It is unclear how the Structure might be for each Visualisation, but under suggestions I aggregated a few functions which seemed useful for all of them.
 			Privacy displayed through underscore(_get()) before function as suggested here(https://stackoverflow.com/questions/27849064/how-to-implement-private-method-in-es6-class-with-traceur)
-
-	If funcitons can have predifined values. It might be useful to have a config json which could be used to define color width etc. instead of css
-	this is better because a lot more can be defined here but less seperation between code and display.
 */
 
 class Visualisation{
@@ -36,7 +28,7 @@ class Visualisation{
 	constructor(svgId, data, type, config = {}) {
 		/*
 			Public
-			Creates all nessecary data and shows the Visulisation
+			updates all nessecary data and shows the Visulisation
 				svgId - defines the SVG Id (e.g."#svgChart") where the Visulisation should be appended
 				data  - the newProjects.json set or a subset of it
 				type  - String defining the Visualisation Type
@@ -60,28 +52,28 @@ class Visualisation{
 	}
 
 	/*--------Suggestions--------*/
-	_createData(){
+	_processData(inData){
 		/*
 			Private
 			Transforms the data in to a format which can be easily used for the Visulisation.
+				inData - the newProjects.json set or a subset of it
 
+				Returns the processed data.
 			(Possibly split up into a different function for each Visualisation type)
 		*/
+		return result;
 	}
-	_createD3Elements(){
+	_updateD3Elements(){
 		/*
 			Private
-			Creates all nessecary D3 elements (e.g. ForceSimulation, Scales)
-
-				After 	_createData()
-				Before 	_createSvgElements()
+			Updates all nessecary D3 elements (e.g. ForceSimulation, Scales)
 		*/
 	}
-	_createSvgElements(){
+	_updateSvgElements(){
 		/*
 			Private
-			Creates all nessecary SVG elements
-			split into separate functions when too large
+			Updates all nessecary SVG elements
+			(split into separate functions when too large)
 		*/
 	}
 

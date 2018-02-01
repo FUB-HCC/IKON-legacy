@@ -3,6 +3,7 @@ class TimeLine{
 	/*
 		Displays an object for each entry representing its duration.
 
+		//TODO1 update Data and Axis
 		//TODO ToolTip, Href and FadeIn/Out?
 	*/
 	constructor(svgId, data, type, config = {}) {
@@ -18,7 +19,7 @@ class TimeLine{
 		this.svg = d3.select(svgId);
 		this.width = this.svg.attr("width");
 		this.height = this.svg.attr("height");
-		this.container = this.svg.append("g")
+		this.g = this.svg.append("g")
 					.attr("transform","translate("  + (this.width/4) + ","
 													+ (this.height/4) + ")");
 		this.xScale = d3.scaleBand()
@@ -26,7 +27,7 @@ class TimeLine{
 						.padding(0.1);
 		this.yScale = d3.scaleTime()
 						.range([this.height/2, 0]);
-		this.inData = data;
+
 		/*
 			visdata  - Is an array where each entry represents an Object in the Chart. To seperate e.g.
 						the FBs, there are 4 empty entries between them.
@@ -34,10 +35,12 @@ class TimeLine{
 						num is used to put two or more objects in the same row to Optimize space
 						[{num:,color:,startDate:, endDate:,projectId:},...]
 		*/
-		this.visData = [];
-		this._createData();
-		this._createD3Elements();
-		this._createSvgElements();
+		this.visData = this._processData(data);
+		//this._createD3Elements();
+		this.xScale.domain(this.visData.map(function(d) { return d.num; }));
+		this.yScale.domain([d3.min(this.visData, function(d) { return d.startDate; }),
+							d3.max(this.visData, function(d) { return d.endDate; })]);
+		this._updateSvgElements();
 
 	}
 	updateData(data){
@@ -46,6 +49,84 @@ class TimeLine{
 			Updates The Visulisation with the new Data
 				data - the newProjects.json set or a subset of it
 		*/
+		console.log(this.visData);
+		this.visData = this._processData(data);
+		console.log(this.visData);
+		this.xScale.domain(this.visData.map(function(d) { return d.num; }));
+		this.yScale.domain([d3.min(this.visData, function(d) { return d.startDate; }),
+							d3.max(this.visData, function(d) { return d.endDate; })]);
+		//TODO1 main problem axis
+
+		var tmp=this.g.select(".yTimeLine")
+                    .transition().duration(1000)
+                    .call(d3.axisRight(this.yScale).tickSize(this.width/2));
+        tmp.select(".domain").remove();
+		tmp.selectAll(".tick line").attr("stroke", "#88a").attr("stroke-dasharray", "2,2");
+		//tmp.selectAll(".tick text").attr("x", Number(tmp.select(".tick text").attr("x"))+20);
+		var that = this;
+		var bars = this.g.selectAll(".bar")
+                    	.data(this.visData,function(d){return d.projectId});
+
+        bars.exit().transition()
+      			.duration(1000)
+      			.attr("y",function(d){
+      				var tmp = new Date(d.endDate)
+      				tmp.setDate(tmp.getDate()-600);
+      				return that.yScale(tmp);
+      			})
+      			.style("opacity", 0)
+      			.remove();
+      	bars.enter().append("rect")
+			.attr("class", "bar")
+			.attr("stroke",function(d) {
+				return d.color;
+			})
+			.style('fill',function(d) {
+				return d.color;
+			})
+			.style("opacity", 0)
+			.attr("x", function(d) { return that.xScale(d.num); })
+			.attr("width", this.xScale.bandwidth()-3)
+			.attr("y", function(d) { return that.yScale(d.endDate); })
+			.attr("height", function(d) { return  that.yScale(d.startDate) - that.yScale(d.endDate);})
+			.on("click", function(d) {
+				//TODO HREF
+				document.location.href = "/hrefIsNotUsed";
+			})
+			.on("mouseover", function(d) {
+				d3.select(this).style("cursor", "pointer");
+				d3.select(this).transition()
+					.duration(500)
+					.style("stroke",colors.system.active)
+					.style("fill",colors.system.active);
+
+				var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
+				toolTip.transition()
+					.duration(500)
+					.style("opacity", .8);
+				//TODO ToolTip
+				toolTip.html("No toolTip")
+					.style("color",colors.system.active)
+					.style("left", (d3.event.pageX) + "px")
+					.style("top", (d3.event.pageY - 32) + "px");
+			})
+			.on("mouseout", function(d) {
+				d3.select(this).style("cursor", "default");
+				d3.select(this).transition()
+					.duration(500)
+					.style("stroke",d.color)
+					.style("fill",d.color);
+				toolTip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			}).transition().duration(1000).style("opacity", 1);
+      	bars.transition()
+      		.duration(1000).attr("x", function(d) { return that.xScale(d.num); })
+			.attr("width", this.xScale.bandwidth()-3)
+			.attr("y", function(d) { return that.yScale(d.endDate); })
+			.attr("height", function(d) { return  that.yScale(d.startDate) - that.yScale(d.endDate);});
+        //this._createSvgElements();
+
 	}
 	updateType(type){
 		/*
@@ -56,34 +137,36 @@ class TimeLine{
 		//possibly a switch case which handles the different Types
 	}
 
-	_createData(){
+	_processData(inData){
 		/*
 			Private
 			Transforms the data in to a format which can be easily used for the Visulisation.
+
+				inData - the newProjects.json set or a subset of it
+
+				Returns the visData.
 
 			(Possibly split up into a different function for each Visualisation type)
 		*/
 		function optimizeSpace(data, offset){
 			/*
-				This is only an approximation. I could only think of Brutforce for optimal spacing
-				Additionally it is visually more appealling to have 4 rows with 2 projects instead
-				of one row with 5.
-				This is why I restricted each row to only have 2 projects and guaranteed that there
-				is a gap of at least 2 weeks between them.
-
-					offset - int increasing all nums by its value
-						This is used to avoid overlapping num values between each fb dataset.
-						If they are the same they will get displayed in the same row.
+				Group Projects into the same Row to minimize the width
+				by giving them the same num value.
+				(Restricted to 2 Projects per row with at least 1 Month between them )
+					data - preprocessed projects data
+					offset - int increasing all nums of this dataset
+						This is used to avoid overlapping num values between datasets.
 			*/
 			function endDateSort(a, b) {
 				return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
 			}
 			data.sort(endDateSort);
 			for (var i = 0; i < data.length; i++) {
+
 				if(!data[i].foundFit){
 					data[i].num = i+offset;
 					for (var j = i+1; j < data.length; j++) {
-						if( !data[j].foundFit &&  data[i].endDate.getTime()+(14*24*60*60*1000)
+						if( !data[j].foundFit &&  data[i].endDate.getTime()+(31*24*60*60*1000)
 												< data[j].startDate.getTime()){
 							data[j].num = i + offset;
 							data[j].foundFit = true;
@@ -107,97 +190,96 @@ class TimeLine{
 
 		//Stage 1 create baseData and split by FB
 		var splitFbs = [[],[],[],[]];
-		for (var pId in this.inData) {
+		for (var pId in inData) {
 			var d={
 				num: 0,
-				color: colors.fb[this.inData[pId].forschungsbereich],
-				startDate: this.inData[pId].start,
-				endDate: this.inData[pId].end,
+				color: colors.fb[inData[pId].forschungsbereich],
+				startDate: inData[pId].start,
+				endDate: inData[pId].end,
 				projectId: pId,
 				foundFit: false //needed to optimize Spacing (later deleted)
 			};
-			splitFbs[this.inData[pId].forschungsbereich-1].push(d);
+			splitFbs[inData[pId].forschungsbereich-1].push(d);
 
 		}
 
 		//Stage 2 Optimize space for each fb and insert spacing between fbs
-
-		this.visData = [];
+		var resultData = [];
 		var previousNums = 0;
 		for (var i = 0; i < splitFbs.length; i++) {
 			//concat didnot work :(
 			var result = shuffleArray(optimizeSpace(splitFbs[i],previousNums));
 			for (var j = 0; j < result.length; j++) {
-				this.visData.push(result[j]);
+				resultData.push(result[j]);
 			}
 			previousNums +=splitFbs[i].length;
-			for (var j = 0; j < 5; j++) {
-				this.visData.push({num: previousNums, startDate: null, endDate: null,projectId:null});
+			for (var j = 0; j < 5 && i<splitFbs.length-1; j++) {
+				resultData.push({num: previousNums, startDate: null, endDate: null,projectId:null});
 				previousNums +=1;
 			}
 		}
+		return resultData
 	}
-	_createD3Elements(){
+	_updateD3Elements(){
 		/*
 			Private
 			Creates all nessecary D3 elements (e.g. ForceSimulation, Scales)
-
-				After 	_createData()
-				Before 	_createSvgElements()
 		*/
+		//TODO1
 		this.xScale.domain(this.visData.map(function(d) { return d.num; }));
 		this.yScale.domain([d3.min(this.visData, function(d) { return d.startDate; }),
 							d3.max(this.visData, function(d) { return d.endDate; })]);
 	}
-	_createSvgElements(){
+	_updateSvgElements(){
 		/*
 			Private
-			Creates all nessecary SVG elements
+			Updates all nessecary SVG elements
 		*/
-		this._createAxis();
-		this._createCurrentDayIndication();
-		this._createBars();
+		this._updateAxis();
+		this._updateCurrentDayIndication();
+		this._updateBars();
 	}
-	_createAxis(){
+	_updateAxis(){
 		/*
-			Creates the axis in the svg
+			Updates the axis in the svg
 		*/
-
-		var g = this.container.append("g")
-			.attr("class", "timeLine")
-			.call(d3.axisRight(this.yScale).tickSize(this.width/2));
+		//TODO1
+		var yAxis = d3.axisRight(this.yScale).tickSize(this.width/2);
+		var g = this.g.append("g")
+			.attr("class", "yTimeLine")
+			.call(yAxis);
 		g.select(".domain").remove();
 		g.selectAll(".tick line").attr("stroke", "#88a").attr("stroke-dasharray", "2,2");
 		g.selectAll(".tick text").attr("x", Number(g.select(".tick text").attr("x"))+20);
 	}
-	_createCurrentDayIndication(){
+	_updateCurrentDayIndication(){
 		/*
-			Creates the CurrentDayIndication in the svg
+			Updates the CurrentDayIndication in the svg
 		*/
 		var d = new Date();
 
-		this.container.append("line")
+		this.g.append("line")
 				.attr("stroke",colors.system.active)
 				.attr("y1", this.yScale(d))
 				.attr("y2", this.yScale(d))
 				.attr("x1", -5)
 				.attr("x2", this.width/2+5);
 
-		this.container.append('circle')
+		this.g.append('circle')
 				.style("fill",colors.system.active)
 				.attr("r", 4)
 				.attr('cx', -5)
 				.attr('cy', this.yScale(d))
 
-		this.container.append('circle')
+		this.g.append('circle')
 				.style("fill",colors.system.active)
 				.attr("r", 4)
 				.attr('cx', this.width/2+5)
 				.attr('cy', this.yScale(d))
 	}
-	_createBars(){
+	_updateBars(){
 		/*
-			Creates all Bars in the svg and a tooltip in the Body
+			Updates all Bars in the svg and a tooltip in the Body
 		*/
 		var toolTip = d3.select("body").append("div")
 			.attr("class", "tooltip")
@@ -208,7 +290,7 @@ class TimeLine{
 			Replace Bars with path or polygon for different Visulisations of the Project
 			(possibly seperate Class)
 		*/
-		this.container.selectAll(".bar")
+		this.g.selectAll(".bar")
 			.data(this.visData)
 			.enter().append("rect")
 			.attr("class", "bar")

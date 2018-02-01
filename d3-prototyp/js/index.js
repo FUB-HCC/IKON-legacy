@@ -61,7 +61,25 @@ loadData("./res/projects.json",function(data){
 	$(document).ready(function() {
 		createSvg("#chart");
 		$("#chart").css('background-color', "#434058");
+		var halfProjectsJson = {};
+		var counter = 0;
+		for (pId in allProjectsJson) {
+			counter++;
+			if(counter >=50){
+				break;
+			}
+			halfProjectsJson[pId] = allProjectsJson[pId];
+		}
+		console.log(halfProjectsJson);
+
+
 		var t = new TimeLine(".svgGlobal",allProjectsJson,0);
+		setTimeout(function(){
+			t.updateData(halfProjectsJson);
+		},3000);
+		setTimeout(function(){
+			t.updateData(allProjectsJson);
+		},6000);
 		//createBarChart(allProjectsArray);
 		/*
 		create3dSurface(allProjectsArray);

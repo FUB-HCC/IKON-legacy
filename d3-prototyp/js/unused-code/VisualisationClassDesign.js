@@ -59,8 +59,9 @@ class Visualisation{
 				inData - the newProjects.json set or a subset of it
 
 				Returns the processed data.
-			(Possibly split up into a different function for each Visualisation type)
+
 		*/
+		//Possibly split up into a different functions for each Visualisation type
 		return result;
 	}
 	_updateD3Elements(){
@@ -73,7 +74,6 @@ class Visualisation{
 		/*
 			Private
 			Updates all nessecary SVG elements
-			(split into separate functions when too large)
 		*/
 	}
 

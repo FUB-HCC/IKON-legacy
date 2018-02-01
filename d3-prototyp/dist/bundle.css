@@ -107,6 +107,10 @@ div.tooltip {
 .tick text{
   fill:#88a;
 }
+.tick line{
+  stroke: #88a;
+  stroke-dasharray: 2,2;
+}
 
 /*
  * X3DOM JavaScript Library

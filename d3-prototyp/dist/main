@@ -126,41 +126,42 @@ loadData("./res/projects.json",function(data){
     	allProjectsJson[projectId].start = startDate;
     	allProjectsArray.push(allProjectsJson[projectId]);
     }
-
+	var halfProjectsJson = {};
+	var counter = 0;
+	for (pId in allProjectsJson) {
+		counter++;
+		if(counter >=50){
+			break;
+		}
+		halfProjectsJson[pId] = allProjectsJson[pId];
+	}
 	$(document).ready(function() {
 		createSvg("#chart");
 		$("#chart").css('background-color', "#434058");
-		var halfProjectsJson = {};
-		var counter = 0;
-		for (pId in allProjectsJson) {
-			counter++;
-			if(counter >=50){
-				break;
-			}
-			halfProjectsJson[pId] = allProjectsJson[pId];
-		}
-		console.log(halfProjectsJson);
 
-
-		var t = new TimeLine(".svgGlobal",allProjectsJson,0);
+		//var r = new RadialChartNew(".svgGlobal",allProjectsJson);
+		//Refactor Network
+			//1 Refactor Radial Chart
+		//Refactor Streamgraph
+		//Create 3D Surface
+		var t = new TimeLine(".svgGlobal",allProjectsJson);
 		setTimeout(function(){
 			t.updateData(halfProjectsJson);
 		},3000);
 		setTimeout(function(){
 			t.updateData(allProjectsJson);
 		},6000);
-		//createBarChart(allProjectsArray);
-		/*
-		create3dSurface(allProjectsArray);
+/*
 		var n = new Network(allProjectsArray);
 		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {
 			//Problem with links between Projects on changeVisulisation
 			n.changeVisualisation("forschungsbereiche");
 		}, 3000);
-		createIcicle(allProjectsArray);
 		createStreamGraph(data,allProjectsArray);
-		createBarChart(allProjectsArray);
+		create3dSurface(allProjectsArray);
+
+		createIcicle(allProjectsArray);
 		createTreeMap(allProjectsArray);
 		createBipartiteGraph(searchProjekt(allProjectsArray,"130114"),searchProjekt(allProjectsArray,"110036"),"Test");*/
 	});

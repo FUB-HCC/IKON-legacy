@@ -1,11 +1,11 @@
 
 class TimeLine{
 	/*
-		Displays an object for each entry representing its duration.
+		Displays an object in a Barchart for each entry representing its duration.
 
-		//TODO tooltip, Href
+		TODO tooltip, Href
 	*/
-	constructor(svgId, data, type, config = {}) {
+	constructor(svgId, data, type = "default", config = {}) {
 		/*
 			Public
 			Creates all nessecary data and shows the Visulisation
@@ -14,6 +14,11 @@ class TimeLine{
 				type  - String defining the Visualisation Type
 				config- Json with variables defining the Style properties
 		*/
+		this.transitionTime = 1000;
+		//Delays data change to let removed elements fade out and new Elements fade in.
+		this.delayTime = 500;
+		this.tooltipTransitionTime = 200;
+		this.colors = colors;
 
 		/*
 			visdata  - Is an array where each entry represents an Object in the Chart. To seperate e.g.
@@ -23,9 +28,6 @@ class TimeLine{
 						[{num:,color:,startDate:, endDate:,projectId:},...]
 		*/
 		this.visData = this._processData(data);
-		this.transitionTime = 1000;
-		this.delayTime = 500
-		this.tooltipTransitionTime = 200;
 
 		this.svg = d3.select(svgId);
 		this.width = this.svg.attr("width");
@@ -49,7 +51,7 @@ class TimeLine{
 			.attr("class", "tooltip")
 			.style("opacity", 0);
 
-		this._updateD3Elements();
+		this._updateD3Functions();
 		this._updateSvgElements();
 
 	}
@@ -60,7 +62,7 @@ class TimeLine{
 				data - the newProjects.json set or a subset of it
 		*/
 		this.visData = this._processData(data);
-		this._updateD3Elements();
+		this._updateD3Functions();
         this._updateSvgElements();
 
 	}
@@ -129,7 +131,7 @@ class TimeLine{
 		for (var pId in inData) {
 			var d={
 				num: 0,
-				color: colors.fb[inData[pId].forschungsbereich],
+				color: this.colors.fb[inData[pId].forschungsbereich],
 				startDate: inData[pId].start,
 				endDate: inData[pId].end,
 				projectId: pId,
@@ -156,10 +158,10 @@ class TimeLine{
 		}
 		return resultData
 	}
-	_updateD3Elements(){
+	_updateD3Functions(){
 		/*
 			Private
-			Updates all nessecary D3 elements (e.g. ForceSimulation, Scales)
+			Updates all nessecary D3 functions (e.g. ForceSimulation, Scales)
 			Uses the globally defined Data in this.visData
 		*/
 		this.xScale.domain(this.visData.map(function(d) { return d.num; }));
@@ -192,7 +194,7 @@ class TimeLine{
 		var d = new Date();
 
 		this.g.select(".currentDay")
-				.attr("stroke",colors.system.active)
+				.attr("stroke",this.colors.system.active)
 				.transition().delay(this.delayTime).duration(this.transitionTime)
 				.attr("y1", this.yScale(d))
 				.attr("y2", this.yScale(d))
@@ -201,7 +203,7 @@ class TimeLine{
 				.style("opacity", 1);
 
 		this.g.select(".rightDot")
-				.style("fill",colors.system.active)
+				.style("fill",this.colors.system.active)
 				.transition().delay(this.delayTime).duration(this.transitionTime)
 				.attr("r", 4)
 				.attr("cx", -5)
@@ -209,7 +211,7 @@ class TimeLine{
 				.style("opacity", 1);
 
 		this.g.select(".leftDot")
-				.style("fill",colors.system.active)
+				.style("fill",this.colors.system.active)
 				.transition().delay(this.delayTime).duration(this.transitionTime)
 				.attr("r", 4)
 				.attr("cx", this.width/2+5)
@@ -233,6 +235,7 @@ class TimeLine{
       			.attr("y",function(d){
       				var tmp = new Date(d.endDate)
       				tmp.setDate(tmp.getDate()-600);
+
       				return that.yScale(tmp);
       			})
       			.style("opacity",0)
@@ -249,7 +252,12 @@ class TimeLine{
 			.style("opacity", 0)
 			.attr("x", function(d) { return that.xScale(d.num); })
 			.attr("width", this.xScale.bandwidth()-3)
-			.attr("y", function(d) { return that.yScale(d.endDate); })
+			.attr("y",function(d){
+  				var tmp = new Date(d.endDate)
+  				tmp.setDate(tmp.getDate()-600);
+
+  				return that.yScale(tmp);
+  			})
 			.attr("height", function(d) { return  that.yScale(d.startDate) - that.yScale(d.endDate);})
 			.on("click", function(d) {
 				//TODO HREF
@@ -259,14 +267,14 @@ class TimeLine{
 				d3.select(this).style("cursor", "pointer");
 				d3.select(this).transition()
 					.duration(that.tooltipTransitionTime)
-					.style("stroke",colors.system.active)
-					.style("fill",colors.system.active);
+					.style("stroke",that.colors.system.active)
+					.style("fill",that.colors.system.active);
 				that.tooltip.transition()
 					.duration(that.tooltipTransitionTime)
 					.style("opacity", .8);
 				//TODO tooltip
 				that.tooltip.html("No tooltip")
-					.style("color",colors.system.active)
+					.style("color",that.colors.system.active)
 					.style("left", (d3.event.pageX) + "px")
 					.style("top", (d3.event.pageY - 32) + "px");
 			})
@@ -281,7 +289,8 @@ class TimeLine{
 					.style("opacity", 0);
 			})
 			.transition().delay(this.delayTime).duration(this.transitionTime)
-				.style("opacity", 1);
+				.style("opacity", 1)
+				.attr("y", function(d) { return that.yScale(d.endDate); });
 		//Update
       	bars.transition()
       		.delay(this.delayTime)

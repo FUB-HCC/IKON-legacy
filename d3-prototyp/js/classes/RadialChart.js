@@ -2,6 +2,7 @@ class RadialChart {
 	//Prozentualer auffächender Kreis.
 
     constructor() {
+
     	this.sectors = null;//[{text:"",percentage:0,percentageSum:0,color:"",projects:[]},...]
 		this.textLabels = null;
 		this.arcs = null;

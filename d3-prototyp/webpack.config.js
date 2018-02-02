@@ -21,6 +21,7 @@ module.exports = {
 										'js/lib/sankey.js', //BipartiteGraph.js uses Sankey
 										'js/colorData.js',
 										'js/classes/RadialChart.js',
+										'js/classes/RadialChartNew.js',//TODO
 										'js/classes/ProjectGraph.js',
 										'js/classes/Network.js',
 										'js/classes/TimeLine.js',

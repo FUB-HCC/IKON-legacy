@@ -6136,6 +6136,7 @@ class RadialChart {
 	//Prozentualer auffächender Kreis.
 
     constructor() {
+
     	this.sectors = null;//[{text:"",percentage:0,percentageSum:0,color:"",projects:[]},...]
 		this.textLabels = null;
 		this.arcs = null;
@@ -6256,6 +6257,194 @@ class RadialChart {
 			};
 		};
 	}
+}
+
+
+class RadialChartNew{
+	/*
+		Description
+	*/
+
+	constructor(svgId, data, type = "forschungsbereiche", config = {}) {
+		/*
+			Public
+			updates all nessecary data and shows the Visulisation
+				svgId - defines the SVG Id (e.g."#svgChart") where the Visulisation should be appended
+				data  - the newProjects.json set or a subset of it
+				type  - String defining the Visualisation Type
+							In this case mainly defining how the Data is Sorted
+				config- Json with variables defining the Style properties
+		*/
+		this.colors = colors;
+		this.innerRadius = 220;
+		this.outerRadius = 240;
+		this.animationTime = 1000;
+		//Delays the Text fade in maybe changeName for consistency
+		this.delayTime = 500;
+		this.type = type;
+		this.data = data;
+		/*
+			[{text:,startAngle:, endAngle:,color:},...]
+			Each json in this Array defines a part of the Circle.
+		*/
+		this.visData = this._processData(data,type);
+
+		this.svg = d3.select(svgId);
+		this.width = this.svg.attr("width");
+		this.height = this.svg.attr("height");
+		this.g = this.svg.append("g")
+					.attr("transform","translate("  + (this.width/2) + ","
+													+ (this.height/2) + ")");
+
+		this.arc = d3.arc().innerRadius(this.innerRadius).outerRadius(this.outerRadius);
+
+		this._updateD3Functions();
+		this._updateSvgElements();
+
+
+	}
+	updateData(data){
+		/*
+			Public
+			Updates The Visulisation with the new Data
+				data - the newProjects.json set or a subset of it
+		*/
+		this.visData = this._processData(data,this.type);
+		this._updateD3Functions();
+		this._updateSvgElements();
+	}
+	updateType(type){
+		/*
+			Public
+			Changes how the data is displayed (e.g. different Values on the axises)
+				type  - String defining the Visualisation Type
+		*/
+		this.visData = this._processData(this.data,type);
+		this._updateD3Functions();
+		this._updateSvgElements();
+	}
+
+	_processData(data, type){
+		/*
+			Private
+			Transforms the data in to a format which can be easily used for the Visulisation.
+				inData - the newProjects.json set or a subset of it
+				type - the value which should be sorted
+
+				Returns the processed data.
+
+		*/
+		//Possibly split up into a different functions for each Visualisation type
+		var result = null;
+		switch(type) {
+			case "forschungsbereiche":
+				result = this._processFbs(data, type);
+				break;
+			case "kooperationspartner":
+				//TODO
+				break;
+			default:
+				console.log("RadialChart Error: Unkown type");
+		}
+		return result;
+	}
+	_processFbs(data, type){
+		var splitFbs =[];
+		for (var i = 0; i < 4; i++) {
+			splitFbs.push({
+				text: 			"Forschungsbereich " + (i+1),
+				startAngle: 	0,
+				endAngle: 		0,
+				color: 			this.colors.fb[(i+1)],
+				count: 			0 		//Temporary to determine Angles
+			});
+		}
+
+		//Count Number of Projects
+		var projectCount = 0;
+		for (pId in data) {
+			splitFbs[data[pId].forschungsbereich - 1].count++;
+			projectCount++;
+		}
+
+		var angleSum = -(2 * Math.PI)/4;
+		for (var i = 0; i < splitFbs.length; i++) {
+			splitFbs[i].startAngle = angleSum;
+			angleSum += ((splitFbs[i].count/projectCount)*(2 * Math.PI));
+			splitFbs[i].endAngle = angleSum;
+			delete splitFbs[i].count;
+		}
+		return splitFbs;
+	}
+	_updateD3Functions(){
+		/*
+			Private
+			Updates all nessecary D3 funcitons
+		*/
+		this.arc = d3.arc().innerRadius(this.innerRadius).outerRadius(this.outerRadius);
+	}
+	_updateSvgElements(){
+		/*
+			Private
+			Updates all nessecary SVG elements
+		*/
+		this._updateArcs();
+		this._updateLabels();
+	}
+	_updateArcs(){
+		//TODO
+		var that = this;
+		var arcs = this.g.selectAll(".arcs")
+				.data(this.visData,function(d){ return d.text; });
+		//arcs.exit()
+		arcs.enter().append("path")
+				.attr("class", "arcs")
+				/*.datum({endAngle: -(2 * Math.PI)/4}) TODO*/
+				.style("fill",function(d){ return d.color; })
+				.transition()
+				.duration(this.animationTime)
+				.attrTween("d",function(d){
+					var interpolateStartAngle = d3.interpolate(-(2 * Math.PI)/4, d.startAngle);
+					var interpolateEndAngle = d3.interpolate(-(2 * Math.PI)/4, d.endAngle);
+					console.log(d)
+					return function(t) {
+						d.startAngle = interpolateStartAngle(t);
+						d.endAngle = interpolateEndAngle(t);
+						return that.arc(d);
+					};
+				});
+
+		//For Update
+		//arcs.transition()
+	}
+	_updateLabels(){
+		var that = this;
+		var labels = this.g.selectAll(".labels")
+				.data(this.visData,function(d){ return d.text; });
+		labels.enter()
+			.append("text")
+			.attr("class","labels")
+			.attr("transform", function (d) {
+				var sectorWidth = d.endAngle-d.startAngle;
+				var textAngle = d.startAngle + sectorWidth/2;
+				var xPos = (that.outerRadius+70) * Math.sin(textAngle);
+				var yPos = -(that.outerRadius+70) * Math.cos(textAngle);
+
+				return "translate("+xPos+","+yPos+")";
+			})
+			.text(function(d){
+				return d.text;
+			})
+			.style("fill",function(d){
+				return d.color;
+			})
+			.style("opacity",0)
+			.transition().delay(this.delayTime).duration(this.animationTime)
+			.style("opacity", 1);;
+	}
+
+
+
 }
 
 
@@ -6756,12 +6945,11 @@ class Network {
 
 class TimeLine{
 	/*
-		Displays an object for each entry representing its duration.
+		Displays an object in a Barchart for each entry representing its duration.
 
-		//TODO1 update Data and Axis
-		//TODO tooltip, Href and FadeIn/Out?
+		TODO tooltip, Href
 	*/
-	constructor(svgId, data, type, config = {}) {
+	constructor(svgId, data, type = "default", config = {}) {
 		/*
 			Public
 			Creates all nessecary data and shows the Visulisation
@@ -6770,6 +6958,11 @@ class TimeLine{
 				type  - String defining the Visualisation Type
 				config- Json with variables defining the Style properties
 		*/
+		this.transitionTime = 1000;
+		//Delays data change to let removed elements fade out and new Elements fade in.
+		this.delayTime = 500;
+		this.tooltipTransitionTime = 200;
+		this.colors = colors;
 
 		/*
 			visdata  - Is an array where each entry represents an Object in the Chart. To seperate e.g.
@@ -6779,9 +6972,6 @@ class TimeLine{
 						[{num:,color:,startDate:, endDate:,projectId:},...]
 		*/
 		this.visData = this._processData(data);
-		this.transitionTime = 1000;
-		this.delayTime = 500
-		this.tooltipTransitionTime = 200;
 
 		this.svg = d3.select(svgId);
 		this.width = this.svg.attr("width");
@@ -6805,7 +6995,7 @@ class TimeLine{
 			.attr("class", "tooltip")
 			.style("opacity", 0);
 
-		this._updateD3Elements();
+		this._updateD3Functions();
 		this._updateSvgElements();
 
 	}
@@ -6816,7 +7006,7 @@ class TimeLine{
 				data - the newProjects.json set or a subset of it
 		*/
 		this.visData = this._processData(data);
-		this._updateD3Elements();
+		this._updateD3Functions();
         this._updateSvgElements();
 
 	}
@@ -6885,7 +7075,7 @@ class TimeLine{
 		for (var pId in inData) {
 			var d={
 				num: 0,
-				color: colors.fb[inData[pId].forschungsbereich],
+				color: this.colors.fb[inData[pId].forschungsbereich],
 				startDate: inData[pId].start,
 				endDate: inData[pId].end,
 				projectId: pId,
@@ -6912,10 +7102,10 @@ class TimeLine{
 		}
 		return resultData
 	}
-	_updateD3Elements(){
+	_updateD3Functions(){
 		/*
 			Private
-			Updates all nessecary D3 elements (e.g. ForceSimulation, Scales)
+			Updates all nessecary D3 functions (e.g. ForceSimulation, Scales)
 			Uses the globally defined Data in this.visData
 		*/
 		this.xScale.domain(this.visData.map(function(d) { return d.num; }));
@@ -6948,7 +7138,7 @@ class TimeLine{
 		var d = new Date();
 
 		this.g.select(".currentDay")
-				.attr("stroke",colors.system.active)
+				.attr("stroke",this.colors.system.active)
 				.transition().delay(this.delayTime).duration(this.transitionTime)
 				.attr("y1", this.yScale(d))
 				.attr("y2", this.yScale(d))
@@ -6957,7 +7147,7 @@ class TimeLine{
 				.style("opacity", 1);
 
 		this.g.select(".rightDot")
-				.style("fill",colors.system.active)
+				.style("fill",this.colors.system.active)
 				.transition().delay(this.delayTime).duration(this.transitionTime)
 				.attr("r", 4)
 				.attr("cx", -5)
@@ -6965,7 +7155,7 @@ class TimeLine{
 				.style("opacity", 1);
 
 		this.g.select(".leftDot")
-				.style("fill",colors.system.active)
+				.style("fill",this.colors.system.active)
 				.transition().delay(this.delayTime).duration(this.transitionTime)
 				.attr("r", 4)
 				.attr("cx", this.width/2+5)
@@ -6989,6 +7179,7 @@ class TimeLine{
       			.attr("y",function(d){
       				var tmp = new Date(d.endDate)
       				tmp.setDate(tmp.getDate()-600);
+
       				return that.yScale(tmp);
       			})
       			.style("opacity",0)
@@ -7005,7 +7196,12 @@ class TimeLine{
 			.style("opacity", 0)
 			.attr("x", function(d) { return that.xScale(d.num); })
 			.attr("width", this.xScale.bandwidth()-3)
-			.attr("y", function(d) { return that.yScale(d.endDate); })
+			.attr("y",function(d){
+  				var tmp = new Date(d.endDate)
+  				tmp.setDate(tmp.getDate()-600);
+
+  				return that.yScale(tmp);
+  			})
 			.attr("height", function(d) { return  that.yScale(d.startDate) - that.yScale(d.endDate);})
 			.on("click", function(d) {
 				//TODO HREF
@@ -7015,19 +7211,14 @@ class TimeLine{
 				d3.select(this).style("cursor", "pointer");
 				d3.select(this).transition()
 					.duration(that.tooltipTransitionTime)
-					.style("stroke",colors.system.active)
-					.style("fill",colors.system.active);
-
-				var svgPos = $(".svgGlobal")[0].getBoundingClientRect();
-				console.log("Error??");
-				console.log(that);
+					.style("stroke",that.colors.system.active)
+					.style("fill",that.colors.system.active);
 				that.tooltip.transition()
 					.duration(that.tooltipTransitionTime)
 					.style("opacity", .8);
-
 				//TODO tooltip
 				that.tooltip.html("No tooltip")
-					.style("color",colors.system.active)
+					.style("color",that.colors.system.active)
 					.style("left", (d3.event.pageX) + "px")
 					.style("top", (d3.event.pageY - 32) + "px");
 			})
@@ -7041,7 +7232,9 @@ class TimeLine{
 					.duration(that.tooltipTransitionTime)
 					.style("opacity", 0);
 			})
-			.transition().delay(this.delayTime).duration(this.transitionTime).style("opacity", 1);
+			.transition().delay(this.delayTime).duration(this.transitionTime)
+				.style("opacity", 1)
+				.attr("y", function(d) { return that.yScale(d.endDate); });
 		//Update
       	bars.transition()
       		.delay(this.delayTime)
@@ -8320,41 +8513,42 @@ loadData("./res/projects.json",function(data){
     	allProjectsJson[projectId].start = startDate;
     	allProjectsArray.push(allProjectsJson[projectId]);
     }
-
+	var halfProjectsJson = {};
+	var counter = 0;
+	for (pId in allProjectsJson) {
+		counter++;
+		if(counter >=50){
+			break;
+		}
+		halfProjectsJson[pId] = allProjectsJson[pId];
+	}
 	$(document).ready(function() {
 		createSvg("#chart");
 		$("#chart").css('background-color', "#434058");
-		var halfProjectsJson = {};
-		var counter = 0;
-		for (pId in allProjectsJson) {
-			counter++;
-			if(counter >=50){
-				break;
-			}
-			halfProjectsJson[pId] = allProjectsJson[pId];
-		}
-		console.log(halfProjectsJson);
 
-
-		var t = new TimeLine(".svgGlobal",allProjectsJson,0);
+		//var r = new RadialChartNew(".svgGlobal",allProjectsJson);
+		//Refactor Network
+			//1 Refactor Radial Chart
+		//Refactor Streamgraph
+		//Create 3D Surface
+		var t = new TimeLine(".svgGlobal",allProjectsJson);
 		setTimeout(function(){
 			t.updateData(halfProjectsJson);
 		},3000);
 		setTimeout(function(){
 			t.updateData(allProjectsJson);
 		},6000);
-		//createBarChart(allProjectsArray);
-		/*
-		create3dSurface(allProjectsArray);
+/*
 		var n = new Network(allProjectsArray);
 		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {
 			//Problem with links between Projects on changeVisulisation
 			n.changeVisualisation("forschungsbereiche");
 		}, 3000);
-		createIcicle(allProjectsArray);
 		createStreamGraph(data,allProjectsArray);
-		createBarChart(allProjectsArray);
+		create3dSurface(allProjectsArray);
+
+		createIcicle(allProjectsArray);
 		createTreeMap(allProjectsArray);
 		createBipartiteGraph(searchProjekt(allProjectsArray,"130114"),searchProjekt(allProjectsArray,"110036"),"Test");*/
 	});

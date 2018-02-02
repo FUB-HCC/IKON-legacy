@@ -26,11 +26,6 @@ svg{
   height:100%;
 }
 
-.legend{
-	font-family: CHBold;
-}
-
-
 .label{
 	word-wrap: break-word;
 }
@@ -85,8 +80,8 @@ rect.bar{
   fill:none;
   /*stroke:#985152;*/
   stroke-width:2;
-  /*rx:10;
-  ry:10;*/
+  rx:2;
+  ry:2;
 }
 div.tooltip {
     position: fixed;
@@ -110,4 +105,14 @@ div.tooltip {
 .tick line{
   stroke: #88a;
   stroke-dasharray: 2,2;
+}
+/*
+---------------------
+RADIAL CHART
+---------------------
+*/
+.labels{
+  font-size: 14px;
+  text-anchor: middle;
+  font-family: CHBold;
 }

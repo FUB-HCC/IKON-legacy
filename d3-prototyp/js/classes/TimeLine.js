@@ -1,8 +1,7 @@
-
 class TimeLine{
 	/*
 		Displays an object in a Barchart for each entry representing its duration.
-
+		BUG on transition and mouseover
 		TODO tooltip, Href
 	*/
 	constructor(svgId, data, type = "default", config = {}) {
@@ -229,6 +228,7 @@ class TimeLine{
 		var that = this;
 		var bars = this.g.selectAll(".bar")
                     	.data(this.visData,function(d){return d.projectId});
+        console.log(bars);
         //Delete old elements
         bars.exit().transition()
       			.duration(this.transitionTime)

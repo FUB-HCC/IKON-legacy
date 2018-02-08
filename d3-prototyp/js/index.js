@@ -61,7 +61,7 @@ loadData("./res/projects.json",function(data){
 	var counter = 0;
 	for (pId in allProjectsJson) {
 		counter++;
-		if(counter >=50){
+		if(counter >=2){
 			break;
 		}
 		halfProjectsJson[pId] = allProjectsJson[pId];
@@ -70,19 +70,25 @@ loadData("./res/projects.json",function(data){
 		createSvg("#chart");
 		$("#chart").css('background-color', "#434058");
 
-		//var r = new RadialChartNew(".svgGlobal",allProjectsJson);
+		var r = new RadialChartNew(".svgGlobal",allProjectsJson);
+		setTimeout(function(){
+			r.updateData(halfProjectsJson);
+		},3000);
+		setTimeout(function(){
+			r.updateData(allProjectsJson);
+		},6000);
 		//Refactor Network
 			//1 Refactor Radial Chart
 		//Refactor Streamgraph
 		//Create 3D Surface
-		var t = new TimeLine(".svgGlobal",allProjectsJson);
+/*		var t = new TimeLine(".svgGlobal",allProjectsJson);
 		setTimeout(function(){
 			t.updateData(halfProjectsJson);
 		},3000);
 		setTimeout(function(){
 			t.updateData(allProjectsJson);
 		},6000);
-/*
+
 		var n = new Network(allProjectsArray);
 		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {

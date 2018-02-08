@@ -6278,9 +6278,9 @@ class RadialChartNew{
 		this.colors = colors;
 		this.innerRadius = 220;
 		this.outerRadius = 240;
-		this.animationTime = 1000;
+		this.animationTime = 1500;
 		//Delays the Text fade in maybe changeName for consistency
-		this.delayTime = 500;
+		this.delayTime = 0;
 		this.type = type;
 		this.data = data;
 		/*
@@ -6288,6 +6288,11 @@ class RadialChartNew{
 			Each json in this Array defines a part of the Circle.
 		*/
 		this.visData = this._processData(data,type);
+		this.pie = d3.pie().sort(null)
+      		.value(function (d) {
+        		return d.count;
+      		});
+		this.pieData = this.pie(this.visData);
 
 		this.svg = d3.select(svgId);
 		this.width = this.svg.attr("width");
@@ -6310,6 +6315,7 @@ class RadialChartNew{
 				data - the newProjects.json set or a subset of it
 		*/
 		this.visData = this._processData(data,this.type);
+		this.pieData = this.pie(this.visData);
 		this._updateD3Functions();
 		this._updateSvgElements();
 	}
@@ -6320,6 +6326,7 @@ class RadialChartNew{
 				type  - String defining the Visualisation Type
 		*/
 		this.visData = this._processData(this.data,type);
+		this.pieData = this.pie(this.visData);
 		this._updateD3Functions();
 		this._updateSvgElements();
 	}
@@ -6349,30 +6356,22 @@ class RadialChartNew{
 		return result;
 	}
 	_processFbs(data, type){
+		//TODO maybe rethink pieDATA
 		var splitFbs =[];
+		console.log(this.pieData);
 		for (var i = 0; i < 4; i++) {
 			splitFbs.push({
 				text: 			"Forschungsbereich " + (i+1),
-				startAngle: 	0,
-				endAngle: 		0,
+				oldStartAngle: 	Object.is(this.pieData, undefined) ? (-(2*Math.PI)/4) : this.pieData[i].startAngle,
+				oldEndAngle: 	Object.is(this.pieData, undefined) ? (-(2*Math.PI)/4) : this.pieData[i].endAngle,
 				color: 			this.colors.fb[(i+1)],
-				count: 			0 		//Temporary to determine Angles
+				count: 			0
 			});
 		}
 
-		//Count Number of Projects
-		var projectCount = 0;
+		//Count Number of Projects per fb
 		for (pId in data) {
 			splitFbs[data[pId].forschungsbereich - 1].count++;
-			projectCount++;
-		}
-
-		var angleSum = -(2 * Math.PI)/4;
-		for (var i = 0; i < splitFbs.length; i++) {
-			splitFbs[i].startAngle = angleSum;
-			angleSum += ((splitFbs[i].count/projectCount)*(2 * Math.PI));
-			splitFbs[i].endAngle = angleSum;
-			delete splitFbs[i].count;
 		}
 		return splitFbs;
 	}
@@ -6392,55 +6391,69 @@ class RadialChartNew{
 		this._updateLabels();
 	}
 	_updateArcs(){
-		//TODO
+		//weird AttrTween behaviour on exit and update avoid them
 		var that = this;
 		var arcs = this.g.selectAll(".arcs")
-				.data(this.visData,function(d){ return d.text; });
-		//arcs.exit()
+				.data(this.pieData);
 		arcs.enter().append("path")
 				.attr("class", "arcs")
-				/*.datum({endAngle: -(2 * Math.PI)/4}) TODO*/
-				.style("fill",function(d){ return d.color; })
+				.style("fill",function(d){ return d.data.color; })
+				.merge(arcs) //update Solution arcs.transition() was not working
 				.transition()
+				.delay(this.delayTime)
 				.duration(this.animationTime)
 				.attrTween("d",function(d){
-					var interpolateStartAngle = d3.interpolate(-(2 * Math.PI)/4, d.startAngle);
-					var interpolateEndAngle = d3.interpolate(-(2 * Math.PI)/4, d.endAngle);
-					console.log(d)
+					var offSet= -(2*Math.PI)/4;
+					var interpolateStartAngle = d3.interpolate(	d.data.oldStartAngle ,
+																d.startAngle + offSet );
+					var interpolateEndAngle = d3.interpolate( d.data.oldEndAngle,
+															  d.endAngle + offSet );
 					return function(t) {
 						d.startAngle = interpolateStartAngle(t);
 						d.endAngle = interpolateEndAngle(t);
 						return that.arc(d);
 					};
 				});
-
-		//For Update
-		//arcs.transition()
 	}
 	_updateLabels(){
 		var that = this;
 		var labels = this.g.selectAll(".labels")
-				.data(this.visData,function(d){ return d.text; });
+				.data(this.pieData);
 		labels.enter()
 			.append("text")
 			.attr("class","labels")
-			.attr("transform", function (d) {
-				var sectorWidth = d.endAngle-d.startAngle;
-				var textAngle = d.startAngle + sectorWidth/2;
-				var xPos = (that.outerRadius+70) * Math.sin(textAngle);
-				var yPos = -(that.outerRadius+70) * Math.cos(textAngle);
-
-				return "translate("+xPos+","+yPos+")";
-			})
 			.text(function(d){
-				return d.text;
+				return d.data.text;
 			})
 			.style("fill",function(d){
-				return d.color;
+				return d.data.color;
 			})
 			.style("opacity",0)
+			.merge(labels)
 			.transition().delay(this.delayTime).duration(this.animationTime)
-			.style("opacity", 1);;
+			.attrTween("transform", function (d) {
+				var offSet = -(2*Math.PI)/4;
+				var sectorWidth = d.endAngle-d.startAngle;
+				var textAngle = d.startAngle + sectorWidth/2;
+
+				var oldSectorWidth = d.data.oldEndAngle - d.data.oldStartAngle;
+				var oldTextAngle = d.data.oldStartAngle + oldSectorWidth/2;
+				console.log(oldTextAngle);
+				console.log(d);
+				var interpolateTextAngle = d3.interpolate(oldTextAngle,textAngle+offSet);
+				return function(t) {
+					var xPos = (that.outerRadius+70) * Math.sin(interpolateTextAngle(t));
+					var yPos = -(that.outerRadius+70) * Math.cos(interpolateTextAngle(t));
+					return "translate("+xPos+","+yPos+")";
+				};
+			})
+			.style("opacity", function(d){
+				if(d.startAngle===d.endAngle){
+					return 0;
+				}else{
+					return 1;
+				}
+			});
 	}
 
 
@@ -6942,11 +6955,10 @@ class Network {
 
 }
 
-
 class TimeLine{
 	/*
 		Displays an object in a Barchart for each entry representing its duration.
-
+		BUG on transition and mouseover
 		TODO tooltip, Href
 	*/
 	constructor(svgId, data, type = "default", config = {}) {
@@ -7173,6 +7185,7 @@ class TimeLine{
 		var that = this;
 		var bars = this.g.selectAll(".bar")
                     	.data(this.visData,function(d){return d.projectId});
+        console.log(bars);
         //Delete old elements
         bars.exit().transition()
       			.duration(this.transitionTime)
@@ -8517,7 +8530,7 @@ loadData("./res/projects.json",function(data){
 	var counter = 0;
 	for (pId in allProjectsJson) {
 		counter++;
-		if(counter >=50){
+		if(counter >=2){
 			break;
 		}
 		halfProjectsJson[pId] = allProjectsJson[pId];
@@ -8526,19 +8539,25 @@ loadData("./res/projects.json",function(data){
 		createSvg("#chart");
 		$("#chart").css('background-color', "#434058");
 
-		//var r = new RadialChartNew(".svgGlobal",allProjectsJson);
+		var r = new RadialChartNew(".svgGlobal",allProjectsJson);
+		setTimeout(function(){
+			r.updateData(halfProjectsJson);
+		},3000);
+		setTimeout(function(){
+			r.updateData(allProjectsJson);
+		},6000);
 		//Refactor Network
 			//1 Refactor Radial Chart
 		//Refactor Streamgraph
 		//Create 3D Surface
-		var t = new TimeLine(".svgGlobal",allProjectsJson);
+/*		var t = new TimeLine(".svgGlobal",allProjectsJson);
 		setTimeout(function(){
 			t.updateData(halfProjectsJson);
 		},3000);
 		setTimeout(function(){
 			t.updateData(allProjectsJson);
 		},6000);
-/*
+
 		var n = new Network(allProjectsArray);
 		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {

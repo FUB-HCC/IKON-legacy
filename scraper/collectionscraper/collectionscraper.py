@@ -1,10 +1,6 @@
 from itemclass import Item
 from bs4 import BeautifulSoup
 import requests
-import re
-import json
-import sys
-import csv
 from multiprocessing import Pool
 
 

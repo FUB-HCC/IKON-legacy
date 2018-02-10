@@ -74,7 +74,7 @@ class DbpeadiaAnnotator extends Annotator
      * Returns an array of entities.
      *
      * @param string|array $text Text to annotate
-     * @param string $language Language of the text
+     * @param string $language Language of the text (ISO 639-1)
      * @return array Array of entities
      */
     public function entities($text, string $language = 'de')
@@ -93,7 +93,9 @@ class DbpeadiaAnnotator extends Annotator
             },
         ]))->promise()->wait();
 
-        return array_collapse($entities);
+        $entities = array_collapse($entities);
+
+        return $entities;
     }
 
     /**
@@ -102,7 +104,7 @@ class DbpeadiaAnnotator extends Annotator
      * @link http://www.php.net/manual/en/class.generator.php
      *
      * @param array $texts Texts to annotate
-     * @param string $language
+     * @param string $language Language of the text (ISO 639-1)
      * @return \Generator
      */
     private function getEntities(array $texts, string $language)

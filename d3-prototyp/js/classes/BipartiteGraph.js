@@ -38,20 +38,6 @@ function createBipartiteGraph(p1,p2,transfer){
 		["Sammlungsentwicklung und Biodiversitätsentdeckung","Biodiversitätsentdeckung","Sammlungsentwicklung","Kompetenzzentrum Sammlung","Biodiversitätsdynamik"],
 		["Digitale Welt und Informationswissenschaft","IT- Forschungsinfrastrukturen","Wissenschaftsdatenmanagement","Biodiversitäts- und Geoinformatik"],
 		["Wissenschaftskommunikation und Wissensforschung","Ausstellung und Wissenstransfer","Bildung und Vermittlung","Wissenschaft in der Gesellschaft","Perspektiven auf Natur - PAN","Historische Arbeitsstelle","Dynamische Informations- und Wissensintegration","Wissenstransfer"]];
-	/*var svgDefs = svgGlobal.append('defs');
-
-    var mainGradient = svgDefs.append('linearGradient')
-        .attr('id', 'myGradient');
-
-    // Create the stops of the main gradient. Each stop will be assigned
-    // a class to style the stop using CSS.
-    mainGradient.append('stop')
-        .attr('stop-color','#009688')
-        .attr('offset', '0');
-
-    mainGradient.append('stop')
-        .attr('stop-color','#3f51b5')
-        .attr('offset', '1');*/
 
 	var height = svgGlobal.attr("height")/2,
 	    width = svgGlobal.attr("width")/4;
@@ -87,9 +73,10 @@ function createBipartiteGraph(p1,p2,transfer){
 		}
 
 	}
-	/*var div = d3.select("body").append("div")
-	    .attr("class", "tooltip")
-	    .style("opacity", 0);*/
+	//setting colors for each field
+		//Improvement
+			//different way to address right left (with "." and with out)
+			//different way to adress nebenthemen0, 1, 2
 	var color = d3.scaleOrdinal()
 	    .domain(["forschungsbereich",".forschungsbereich","hauptthema",".hauptthema","projektleiter",".projektleiter","titel",".titel"
 	    	,"nebenthemen0",".nebenthemen0","nebenthemen1",".nebenthemen1","nebenthemen2",".nebenthemen2","nebenthemen3",".nebenthemen3"
@@ -105,7 +92,7 @@ function createBipartiteGraph(p1,p2,transfer){
 	var node;
 	var link;
 
-	var nodeNames = [/*"titel",".titel",*/"projektleiter",".projektleiter","forschungsbereich",".forschungsbereich",
+	var nodeNames = ["projektleiter",".projektleiter","forschungsbereich",".forschungsbereich",
 			"hauptthema",".hauptthema","nebenthemen",".nebenthemen","transfer",".transfer","start",".start","geldgeber",".geldgeber",
 			"kooperationspartner",".kooperationspartner"];
 

@@ -13,22 +13,12 @@ html,body{
 
   /*background-color: #434058;*/
 }
-.links line{
-  stroke: #f0faf0;
+svg{
+  overflow: hidden;
 }
 
-div.tooltip {
-    position: fixed;
-
-    text-align: center;
-    width: auto;
-    height: 16px;
-    padding: 4px;
-    font: 14px CHBold;
-    background: #434058;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
+.links line{
+  stroke: #f0faf0;
 }
 
 #chart{
@@ -36,25 +26,15 @@ div.tooltip {
   height:100%;
 }
 
-.legend{
-	font-family: CHBold;
-}
-rect.bar{
-	fill:none;
-	/*stroke:#985152;*/
-	stroke-width:2;
-	/*rx:10;
-	ry:10;*/
-}
-.tick text{
-	fill:#88a;
-}
-
 .label{
 	word-wrap: break-word;
 }
 
-/*sankey Graph*/
+/*
+---------------------
+SANKEY GRAPH
+---------------------
+*/
 /*path {
   stroke: white;
   stroke-width: 0.25px;
@@ -90,4 +70,49 @@ rect.bar{
 .linksankey:hover {
   stroke-opacity: .9;
 }
-/*sankey Graph*/
+/*
+---------------------
+TIMELINE
+---------------------
+*/
+
+rect.bar{
+  fill:none;
+  /*stroke:#985152;*/
+  stroke-width:2;
+  rx:2;
+  ry:2;
+}
+div.tooltip {
+    position: fixed;
+    text-align: center;
+    width: auto;
+    height: 16px;
+    padding: 4px;
+    font: 14px CHBold;
+    background: #434058;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+/*right Axis*/
+.domain{
+  stroke: rgba(0,0,0,0);
+}
+.tick text{
+  fill:#88a;
+}
+.tick line{
+  stroke: #88a;
+  stroke-dasharray: 2,2;
+}
+/*
+---------------------
+RADIAL CHART
+---------------------
+*/
+.labels{
+  font-size: 14px;
+  text-anchor: middle;
+  font-family: CHBold;
+}

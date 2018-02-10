@@ -88,7 +88,7 @@ class DandelionAnnotator extends Annotator
      * Returns an array of entities.
      *
      * @param string|array $text Text to annotate
-     * @param string $language Language of the text
+     * @param string $language Language of the text (ISO 639-1)
      * @return array Array of entities
      */
     public function entities($text, string $language = 'de')
@@ -123,7 +123,7 @@ class DandelionAnnotator extends Annotator
      * @link http://www.php.net/manual/en/class.generator.php
      *
      * @param array $text Text to annotate
-     * @param string $language Language of the text
+     * @param string $language Language of the text (ISO 639-1)
      * @return \Generator
      */
     private function getEntities(array $text, string $language)

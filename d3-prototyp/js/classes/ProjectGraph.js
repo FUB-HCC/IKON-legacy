@@ -48,6 +48,8 @@ var linksP = [{
 			value: 		9
 		}];
 class ProjectGraph{
+	//Erstellt für alle Projekte einen Graphen und bewegt die Projekte an ihre richtige Position im Kreis.
+
 	constructor() {
 		//groups [{text:"",percentage:0,percentageSum:0,color:"",projects:[]},...]
 		this.groups = null;
@@ -60,7 +62,12 @@ class ProjectGraph{
 	}
 
 	createForceSimulation(){
-		//also creates the nodes
+		/*
+			Erstellt alle benötigten d3 elemente.
+
+			Gibt die forceSimulation zurück.
+				(Schlechte Namenwahl aufsplitten in 2 Funktionen)
+		*/
 		var that = this;
 		var scaleX = d3.scaleLinear()
 		        .domain([-30,30])
@@ -161,6 +168,10 @@ class ProjectGraph{
 		return tmpForce;
 	}
 	changeData(groups){
+		/*
+			Bekommt die Benötigten neuen Daten, löscht die alten und erstellt
+			daraus die neue Visualisierung.
+		*/
 		svgGlobal.selectAll(".tooltip").remove();
 	    svgGlobal.selectAll(".nodeGroup").remove();
 	    svgGlobal.selectAll(".links").remove()
@@ -170,6 +181,9 @@ class ProjectGraph{
 		this.force = this.createForceSimulation();
 	}
 	fadeOut(animationTime){
+		/*
+			Blendet den graph in animationTime ms aus.
+		*/
 	 	svgGlobal.selectAll(".background").transition()
 	 		.duration(animationTime)
 	 		.style("opacity", 0);
@@ -181,6 +195,9 @@ class ProjectGraph{
 	 		.style("opacity", 0);
 	}
 	fadeIn(animationTime){
+		/*
+			Blendet den graph in animationTime ms ein.
+		*/
 		svgGlobal.selectAll(".nodeGroup polygon").transition()
 	 		.duration(animationTime/2)
 	 		.style("opacity", 1);
@@ -196,6 +213,9 @@ class ProjectGraph{
 
 	}
 	createGroupSectors(){
+		/*
+			Berechnet welche porjekte in Welche sektoren gehören und gibt dies zurück.
+		*/
 		var circleMiddle = {x:svgGlobal.attr("width")/2,y:svgGlobal.attr("height")/2};
 		var outerRadius= 200;
 		var innerRadius = 90;
@@ -220,6 +240,12 @@ class ProjectGraph{
 		return tmpGroupSectors
 	}
 	createPointData(){
+		/*
+			Erstellt Polygon für jedes Projekt (achteck) und fasst die Datenzusammen.
+
+			(schlecht benannt)
+			(datenstruktur überarbeiten)
+		*/
 		var pointData = [];
 		var scale = 3.5;
 		var poly = [{"x":-3*scale, "y":-1*scale},
@@ -246,13 +272,17 @@ class ProjectGraph{
 		return pointData;
 	}
 	tick(that) {
+		/*
+			Berechnet für die force simulation die bewegung jedes Projektes.
+
+			Am Anfang, während die Projekte noch ausgeblendet sind werden sie Stark zu ihrem richtigen
+			Sektor gezogen. Danach bewegen sie sich immer schwächer.
+		*/
 		svgGlobal.selectAll(".links line").attr("x1", function(d) { return d.source.x; })
         							 .attr("y1", function(d) { return d.source.y; })
         							 .attr("x2", function(d) { return d.target.x; })
         							 .attr("y2", function(d) { return d.target.y; });
 
-		/* Remove Circles ? Was first used instead of polygons and contains the x y computation.
-			Possible dependency with Force simulation.*/
         svgGlobal.selectAll('.node').attr("cx", function(d) {
     			if(!isInSector(d.sector.startAngle+ Math.radians(6),
     					d.sector.endAngle - Math.radians(6),

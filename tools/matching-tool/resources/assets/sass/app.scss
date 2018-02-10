@@ -1,0 +1,13 @@
+// Variables
+@import "variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.btn-outline-secondary {
+    background-color: #fff;
+    border-color: #ddd;
+}
+.form-control:disabled {
+    background-color: #fff;
+}

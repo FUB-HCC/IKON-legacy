@@ -62,15 +62,15 @@ function distance(p1,p2){
 	return Math.sqrt(Math.pow(p1.x-p2.x,2)+Math.pow(p1.y-p2.y,2));
 }
 
-//0° ist oben
 function radBetweenVectors(v1,v2){
 	var dot = v1.x*v2.x + v1.y*v2.y;
 	var det = v1.x*v2.y - v1.y*v2.x;
 	var angle = Math.atan2(det, dot);// -180, 180
-	angle= -angle;
-	if(angle<0){
-		angle+=Math.PI*2;
+	angle = -angle;
+	if(angle < 0){
+		angle = (angle+Math.PI*2)%(Math.PI*2);
 	}
+
 	return angle;
 
 }
@@ -86,12 +86,10 @@ function isInSector(startAngleRad,endAngleRad, radius, middle, point){
 	//			true  Point ist in dem Sector
 	//			false Point ist außerhalb des Sektors
 
-	var angle = radBetweenVectors(vecMinus(point,middle),{x:0,y:-1});
-
-	//angle drehen, sodass 0° links ist
-	angle = Math.radians((Math.degrees(angle)+90)%360);
+	var angle = radBetweenVectors(vecMinus(point,middle),{x:-1,y:0});
 	var dist = distance(middle,point);
-	if(startAngleRad <= angle && angle <= endAngleRad && dist <= radius){
+	//+(Math.PI*2)/4 weil es bei uns links anfängt
+	if(startAngleRad+(Math.PI*2)/4 < angle && angle < endAngleRad+(Math.PI*2)/4 && dist <= radius){
 		return true;
 	}else{
 		return false;

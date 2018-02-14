@@ -20,10 +20,9 @@ module.exports = {
 										'js/lib/d3-x3dom-axis.js',
 										'js/lib/sankey.js', //BipartiteGraph.js uses Sankey
 										'js/colorData.js',
-										'js/classes/RadialChart.js',
-										'js/classes/RadialChartNew.js',//TODO
+										'js/classes/PieChart.js',
 										'js/classes/ProjectGraph.js',
-										'js/classes/Network.js',
+										'js/classes/NetworkNew.js',
 										'js/classes/TimeLine.js',
 										'js/classes/TreeMap.js',
 										'js/classes/BipartiteGraph.js',

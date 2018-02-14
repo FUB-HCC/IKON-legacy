@@ -1,9 +1,9 @@
-class NewProjectGraph{
+class PetriDish{
 	/*
 		Description
 	*/
 
-	constructor(svgId, data, type = "default", config = {}) {
+	constructor(svgId, data, type = "forschungsbereiche", config = {}) {
 		/*
 			Public
 			updates all nessecary data and shows the Visulisation
@@ -12,6 +12,8 @@ class NewProjectGraph{
 				type  - String defining the Visualisation Type
 				config- Json with variables defining the Style properties
 		*/
+		this.pieChart = new PieChart(svgId,data,type,config);
+		this.projectGraph = new ProjectGraph(svgId,data,type,config);
 	}
 	updateData(data){
 		/*
@@ -19,6 +21,8 @@ class NewProjectGraph{
 			Updates The Visulisation with the new Data
 				data - the newProjects.json set or a subset of it
 		*/
+		this.pieChart.updateData(data);
+		this.projectGraph.updateData(data);
 	}
 	updateType(type){
 		/*
@@ -27,33 +31,7 @@ class NewProjectGraph{
 				type  - String defining the Visualisation Type
 		*/
 		//possibly a switch case which handles the different Types
+		//this.pieChart.updateData(type);
+		//NOT WORKING
 	}
-
-	_processData(inData){
-		/*
-			Private
-			Transforms the data in to a format which can be easily used for the Visulisation.
-				inData - the newProjects.json set or a subset of it
-
-				Returns the processed data.
-
-		*/
-		//Possibly split up into a different functions for each Visualisation type
-		return result;
-	}
-	_updateD3Functions(){
-		/*
-			Private
-			Updates all nessecary D3 funcitons (e.g. ForceSimulation, Scales)
-		*/
-	}
-	_updateSvgElements(){
-		/*
-			Private
-			Updates all nessecary SVG elements
-		*/
-	}
-
-
-
 }

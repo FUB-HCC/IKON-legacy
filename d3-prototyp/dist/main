@@ -114,7 +114,19 @@ function loadData(path, callback){
 
 
 };
-
+function subJson(allProjectsJson,num){
+	var halfProjectsJson = {};
+	var counter = 0;
+	for (pId in allProjectsJson) {
+		counter++;
+		if(counter >=num){
+			break;
+		}
+		halfProjectsJson[pId] = allProjectsJson[pId];
+	}
+	console.log(halfProjectsJson);
+	return halfProjectsJson;
+}
 loadData("./res/projects.json",function(data){
 	//parse Dates and create Array
 	var allProjectsArray = [];
@@ -126,26 +138,18 @@ loadData("./res/projects.json",function(data){
     	allProjectsJson[projectId].start = startDate;
     	allProjectsArray.push(allProjectsJson[projectId]);
     }
-	var halfProjectsJson = {};
-	var counter = 0;
-	for (pId in allProjectsJson) {
-		counter++;
-		if(counter >=2){
-			break;
-		}
-		halfProjectsJson[pId] = allProjectsJson[pId];
-	}
+
 	$(document).ready(function() {
 		createSvg("#chart");
 		$("#chart").css('background-color', "#434058");
 
-		var r = new RadialChartNew(".svgGlobal",allProjectsJson);
-		setTimeout(function(){
+		//var r = new ProjectGraphNew(".svgGlobal",allProjectsJson);
+		/*setTimeout(function(){
 			r.updateData(halfProjectsJson);
 		},3000);
 		setTimeout(function(){
 			r.updateData(allProjectsJson);
-		},6000);
+		},6000);*/
 		//Refactor Network
 			//1 Refactor Radial Chart
 		//Refactor Streamgraph
@@ -156,14 +160,63 @@ loadData("./res/projects.json",function(data){
 		},3000);
 		setTimeout(function(){
 			t.updateData(allProjectsJson);
+		},6000);*/
+		/*var r = new ProjectGraphNew(".svgGlobal",allProjectsJson);
+		setTimeout(function(){
+			r.updateData(subJson(allProjectsJson,2));
+		},3000);
+		setTimeout(function(){
+			r.updateData(subJson(allProjectsJson,5));
 		},6000);
-
-		var n = new Network(allProjectsArray);
+		setTimeout(function(){
+			r.updateData(subJson(allProjectsJson,10));
+		},9000);
+		setTimeout(function(){
+			r.updateData(subJson(allProjectsJson,30));
+		},12000);
+		setTimeout(function(){
+			r.updateData(subJson(allProjectsJson,50));
+		},15000);
+		setTimeout(function(){
+			r.updateData(subJson(allProjectsJson,70));
+		},18000);
+		setTimeout(function(){
+			r.updateData(subJson(allProjectsJson,90));
+		},21000);
+		setTimeout(function(){
+			r.updateData(subJson(allProjectsJson,100));
+		},24000);*/
+		var n = new NetworkNew(".svgGlobal",allProjectsJson);
+		setTimeout(function(){
+			n.updateData(subJson(allProjectsJson,2));
+		},3000);
+		setTimeout(function(){
+			n.updateData(subJson(allProjectsJson,5));
+		},6000);
+		setTimeout(function(){
+			n.updateData(subJson(allProjectsJson,10));
+		},9000);
+		setTimeout(function(){
+			n.updateData(subJson(allProjectsJson,30));
+		},12000);
+		setTimeout(function(){
+			n.updateData(subJson(allProjectsJson,50));
+		},15000);
+		setTimeout(function(){
+			n.updateData(subJson(allProjectsJson,70));
+		},18000);
+		setTimeout(function(){
+			n.updateData(subJson(allProjectsJson,90));
+		},21000);
+		setTimeout(function(){
+			n.updateData(subJson(allProjectsJson,100));
+		},24000);
+		/*var n = new Network(allProjectsArray);
 		n.changeVisualisation("forschungsbereiche");
 		setTimeout(function() {
 			//Problem with links between Projects on changeVisulisation
 			n.changeVisualisation("forschungsbereiche");
-		}, 3000);
+		}, 3000);*//*
 		createStreamGraph(data,allProjectsArray);
 		create3dSurface(allProjectsArray);
 

@@ -21,7 +21,6 @@ class PieChart{
 		this.innerRadius = 220;
 		this.outerRadius = 240;
 		this.animationTime = 1500;
-		//Delays the Text fade in maybe changeName for consistency
 		this.delayTime = 0;
 		this.type = type;
 		this.data = data;
@@ -47,8 +46,6 @@ class PieChart{
 
 		this._updateD3Functions();
 		this._updateSvgElements();
-
-
 	}
 	updateData(data){
 		/*
@@ -83,7 +80,6 @@ class PieChart{
 				Returns the processed data.
 
 		*/
-		//Possibly split up into a different functions for each Visualisation type
 		var result = null;
 		switch(type) {
 			case "forschungsbereiche":
@@ -93,7 +89,7 @@ class PieChart{
 				//TODO
 				break;
 			default:
-				console.log("RadialChart Error: Unkown type");
+				console.log("PieChart Error: Unkown type");
 		}
 		return result;
 	}
@@ -110,6 +106,7 @@ class PieChart{
 		}
 
 		//Count Number of Projects per fb
+		var pId;
 		for (pId in data) {
 			splitFbs[data[pId].forschungsbereich - 1].count++;
 		}

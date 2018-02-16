@@ -28,3 +28,6 @@
 [submodule "tools/WIDOCO"]
 	path = tools/WIDOCO
 	url = git@github.com:dgarijo/Widoco.git
+[submodule "IKON-ontology"]
+	path = IKON-ontology
+	url = https://github.com/FUB-HCC/IKON-ontology.git

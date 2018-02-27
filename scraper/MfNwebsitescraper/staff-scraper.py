@@ -20,7 +20,7 @@ def worker(sublist):
 
 
 if __name__ == '__main__':
-    base_url = "https://www.naturkundemuseum.berlin"
+    base_url = "https://www.museumfuernaturkunde.berlin"
     requests.encoding = "utf-8"
     # get number of parallel jobs
     if len(sys.argv) > 1 and sys.argv[1].isnumeric():
@@ -28,10 +28,10 @@ if __name__ == '__main__':
     else:
         workers = 100
 
-    htmlTree = BeautifulSoup(requests.get(base_url+"/de/einblicke/mitarbeiter").text, 'lxml')
+    htmlTree = BeautifulSoup(requests.get(base_url+"/de/ueber-uns/team").text, 'lxml')
 
     # get all the staff and their corresponding profile link
-    workerList = htmlTree.find("div" , class_="panel-pane pane-views-panes pane-mitarbeiter-kontakt-panel-pane-3"  ).find_all("a", href=re.compile("/(.*)"))
+    workerList = htmlTree.find("div" , class_="pane-mitarbeiter-kontakt-panel-pane-3").find_all("a", href=re.compile("/(.*)"))
     # delete "/de" prefixes and clean list from duplicates via conversion to a set
     workerSet = {(link.get("href")[3:] if link.get("href").startswith("/de") else link.get("href")) for link in workerList}
     stafflist = []
@@ -59,4 +59,6 @@ if __name__ == '__main__':
             outstring.extend(staff.toJSON())
         outstring.extend("]".encode('utf8'))
         jsonout.write(outstring)
+
+
 

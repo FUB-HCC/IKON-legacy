@@ -38,6 +38,8 @@ def normalizeTitel(titel):
             return "Forschung"
         elif titel in ["Forschungsprojekte", "Projekte"]:
             return "Forschungsprojekte"
+        elif not titel:
+            return "Sonstiges"
         else:
             return titel
 
@@ -60,7 +62,7 @@ class Staff(object):
 
     def populateObjectFromHTML(tree):
         proplist = []
-        base_url = "https://www.naturkundemuseum.berlin"
+        base_url = "https://www.museumfuernaturkunde.berlin"
         # scrapes the contact info section
         arguments = ['Name','Email', 'Telefon', 'Fax', 'Adresse']
         for info in arguments:
@@ -75,28 +77,28 @@ class Staff(object):
         #scrapes the accordion
         accordion = {}
         # get all accordion entries
-        for element in tree.find_all('div', class_="ui styled accordion"):
-            titel = normalizeTitel(re.sub(r"[^\w .()]", "", element.find('div', class_="ac_title_text").get_text()).strip())
+        for element in tree.find_all('section', class_="ui_segment_accordion"):
+            titel = normalizeTitel(re.sub(r"[^\w .()]", "", element.find('h2', class_="ui_segment_accordion__head").get_text()).strip())
             # get all publications and parse them by <br/>'s
             if titel == "Publikationen":
-                accordion[titel] = parseInformation(element, "content", 'list')
+                accordion[titel] = parseInformation(element, "ui_segment_accordion__content", 'list')
             # search in the "Forschung" entry for an "Forschungsprojekte" entry to extract it
             elif titel == "Forschung":
-                templist = [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])]
-                secondtemplist = [list(group) for k, group in groupby(templist, lambda x: re.match(r"((.{0,15}Forschungsprojekt.*)|(.{0,15}Projekt.*))", x)) if not k]
-                if len(secondtemplist) > 1:
+                research = [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="ui_segment_accordion__content").find_all(['li', 'p', 'h2'])]
+                groupedResearch = [list(group) for k, group in groupby(research, lambda x: re.match(r".{0,5}(Forschungsprojekt|Projekt)e?:?$", x)) if not k]
+                if len(groupedResearch) > 1:
                     if 'Forschungsprojekte' in accordion:
-                        accordion['Forschungsprojekte'] += secondtemplist.pop(1)
+                        accordion['Forschungsprojekte'] += groupedResearch.pop(1)
                     else:
-                        accordion['Forschungsprojekte'] = secondtemplist.pop(1)
-                if len(secondtemplist) > 0:
-                    accordion[titel] = [element for sublist in secondtemplist for element in sublist if element]
+                        accordion['Forschungsprojekte'] = groupedResearch.pop(1)
+                if len(groupedResearch) > 0:
+                    accordion[titel] = [element for sublist in groupedResearch for element in sublist if element]
             # if nothing matches just get the text of the element
             else:
                 if titel in accordion:
-                    accordion[titel] += [el for el in [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])] if el]
+                    accordion[titel] += [el for el in [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="ui_segment_accordion__content").find_all(['li', 'p'])] if el]
                 else:
-                    accordion[titel] = [el for el in [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="content").find_all(['li', 'p'])] if el]
+                    accordion[titel] = [el for el in [re.sub(r"[^\w .()-:/]", "",li.text.strip(' -')) for li in element.find('div', class_="ui_segment_accordion__content").find_all(['li', 'p'])] if el]
         proplist.append(accordion)
 
         #try to find additional informations
@@ -140,6 +142,10 @@ class Staff(object):
         # parse the name and normalize weird writing styles for "Ph.D."
         proplist[0] = HumanName(re.sub(r"Ph\. D\.", "Ph.D." ,proplist[0]), constants=constants).as_dict()
         return proplist
+
+
+
+
 
 
 

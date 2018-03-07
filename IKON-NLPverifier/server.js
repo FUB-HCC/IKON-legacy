@@ -2,11 +2,15 @@ const express = require('express')
 const multer  = require('multer')
 const fs = require('fs-extra')
 const util = require('util')
+const bodyParser = require('body-parser')
 const app = express()
 
 // set up frontend files
 const frontend = fs.readFileSync('./frontend/build/index.html')
 app.use(express.static(__dirname + "/frontend/build"));
+
+// parse body per middleware
+app.use(bodyParser.json())
 
 // define important constants
 const PORT = process.env.PORT || 8080
@@ -48,7 +52,7 @@ const upload = multer({
 })
 
 // get frontend
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
     res.writeHead(200, {'Content-Type': 'text/html'})
     res.end(frontend)
 })
@@ -70,7 +74,10 @@ app.put('/files', upload.single('data'), (req, res) => {
 // gets an entry from the file :file
 app.get('/files/:file', async (req, res) => {
     if(await validFileParam(req.params.file)){
-        res.json(JSON.parse(fs.readFileSync(SAVEDIR + req.params.file)).pop())
+        let setProjects = await fs.readJson(SAVEDIR + req.params.file)
+        let setAnnotatedProjects = await fs.readJson(WORKDIR + req.params.file)
+        let NotAnnotatedProjects = setLeftSetDifference(setProjects, setAnnotatedProjects)
+        res.json(NotAnnotatedProjects.pop())
         .status(200)
         .end()
     }
@@ -82,14 +89,13 @@ app.get('/files/:file', async (req, res) => {
 // appends an annotation to the annotated file
 app.post('/files/:file', async (req, res) => {
     if(await validFileParam(req.params.file)){
-        fs.pathExists(WORKDIR + req.params.file)
-            .then(exists => {
-                if (!exists) {
-
-                }
-            })
-            .then()
-            .then()
+        if(! await fs.pathExists(WORKDIR + req.params.file) ) {
+            await fs.outputFile(WORKDIR + req.params.file, '[]')
+        }
+        let annotated = await fs.readJson(WORKDIR + req.params.file)
+        annotated.push(req.body)
+        await fs.writeJson(WORKDIR + req.params.file, annotated)
+        res.status(200).end()
     }
     else{
         res.status(404).end()

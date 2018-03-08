@@ -3,6 +3,8 @@ const multer  = require('multer')
 const fs = require('fs-extra')
 const util = require('util')
 const bodyParser = require('body-parser')
+// wraps try catch around the async routes
+const asyncHandler = require('express-async-handler')
 const app = express()
 
 // set up frontend files
@@ -24,18 +26,18 @@ const storage = multer.diskStorage({
   }
 })
 
+// just allow filenames which are present in the entry and don't exploit the filepath
 const validFileParam = async (file) => {
     return new Promise((resolve, reject) => {
         fs.readdir(SAVEDIR)
             .then(files => {
-                console.log(files, file, files.includes(file))
-                resolve(files.includes(file))
+                resolve(files.includes(file) && !file.includes('/'))
             })
     })
 }
 
 const acceptedFileTypes = (file) => {
-    return file.mimetype === 'application/json'
+    return ['application/json', 'text/plain'].includes(file.mimetype)
 }
 
 const fileFilter = (req, file, cb) => {
@@ -44,6 +46,10 @@ const fileFilter = (req, file, cb) => {
 
 const setLeftSetDifference = (set1, set2) => {
     return set1.filter(x => set2.indexOf(x) < 0 )
+}
+
+const legitEntry = (x) => {
+    return setLeftSetDifference(['id', 'title', 'href', 'content', 'entities'], Object.keys(x)).length === 0
 }
 
 const upload = multer({
@@ -67,12 +73,24 @@ app.get('/files', (req, res) => {
 })
 
 //saves a file in order to annotate it later
-app.put('/files', upload.single('data'), (req, res) => {
-    res.status((req.file)?200:422).end()
-})
+app.put('/files', upload.single('data'), asyncHandler(async (req, res) => {
+    if(!req.file) {
+        res.status(422).send('Wrong file type!').end()
+        return
+    }
+
+    let filedata = await fs.readJson(req.file.path)
+    if(Array.isArray(filedata) && filedata.every(legitEntry)) {
+        res.status(200).end()
+    }
+    else {
+        fs.unlink(req.file.path)
+        res.status(422).send('Wrong file structure!').end()
+    }
+}))
 
 // gets an entry from the file :file
-app.get('/files/:file', async (req, res) => {
+app.get('/files/:file', asyncHandler(async (req, res) => {
     if(await validFileParam(req.params.file)){
         let setProjects = await fs.readJson(SAVEDIR + req.params.file)
         let setAnnotatedProjects = await fs.readJson(WORKDIR + req.params.file)
@@ -84,12 +102,12 @@ app.get('/files/:file', async (req, res) => {
     else{
         res.status(404).end()
     }
-})
+}))
 
 // appends an annotation to the annotated file
-app.post('/files/:file', async (req, res) => {
+app.post('/files/:file', asyncHandler(async (req, res) => {
     if(await validFileParam(req.params.file)){
-        if(! await fs.pathExists(WORKDIR + req.params.file) ) {
+        if(!await fs.pathExists(WORKDIR + req.params.file) ) {
             await fs.outputFile(WORKDIR + req.params.file, '[]')
         }
         let annotated = await fs.readJson(WORKDIR + req.params.file)
@@ -100,10 +118,10 @@ app.post('/files/:file', async (req, res) => {
     else{
         res.status(404).end()
     }
-})
+}))
 
 // resets an annotation by deleting the annotated file
-app.delete('/files/:file', async (req, res) => {
+app.delete('/files/:file', asyncHandler(async (req, res) => {
     if (await validFileParam(req.params.file)) {
         fs.unlink(WORKDIR + req.params.file, (err) => {
             res.send((err)?err:'File deleted!').status((err)?500:200).end()
@@ -116,4 +134,4 @@ app.delete('/files/:file', async (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server running on ${PORT}!`)
-})
+}))

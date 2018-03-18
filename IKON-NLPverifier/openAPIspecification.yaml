@@ -1,0 +1,149 @@
+swagger: "2.0"
+info:
+  description: "A simple backend service for the IKON NLPverifier."
+  version: "1.0.0"
+  title: "IKON  NLPverifier store"
+host: "putinsomething.de"
+basePath: "/"
+schemes:
+- "http"
+paths:
+  /files:
+    get:
+      summary: "Get all available files with names and their ID"
+      description: ""
+      operationId: "addFile"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        405:
+          description: "Invalid input"
+    put:
+      summary: "Upload a new file in order to annotate it"
+      description: ""
+      operationId: "updatePet"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "data"
+        in: "formData"
+        description: "File to upload"
+        required: true
+        type: "file"
+      responses:
+        400:
+          description: "Invalid file type"
+        422:
+          description: "Invalid file format"
+  /files/{fileId}:
+    parameters:
+      - name: "fileId"
+        in: "path"
+        description: "ID of file of which one entry should be returned"
+        required: true
+        type: "string"
+        format: "string"
+    get:
+      summary: "Returns a single entry of a file in order to annotate it"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Entry"
+        404:
+          description: "File not found"
+    post:
+      summary: "Adds an annotated entry to the corresponsing file"
+      description: ""
+      operationId: "updatePetWithForm"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: "data"
+          in: "body"
+          schema:
+            $ref: '#/definitions/AnnotatedEntry'
+      responses:
+        405:
+          description: "Invalid input"
+    delete:
+      summary: "Resets an annotation"
+      description: ""
+      operationId: "deletePet"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "petId"
+        in: "path"
+        description: "Pet id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Pet not found"
+  
+definitions:
+  Entry:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "string"
+      title:
+        type: "string"
+        format: "string"
+      href:
+        type: "string"
+        format: "string"
+      content:
+        type: "string"
+        format: "string"
+      entities:
+        type: "string"
+        format: "string"
+  AnnotatedEntry:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "string"
+      title:
+        type: "string"
+        format: "string"
+      href:
+        type: "string"
+        format: "string"
+      content:
+        type: "string"
+        format: "string"
+      entities:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              format: "string"
+            id:
+              type: "string"
+              format: "string"
+            category:
+              type: "string"
+              format: "string"
+            

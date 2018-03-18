@@ -31,7 +31,7 @@ const validFileParam = async (file) => {
     return new Promise((resolve, reject) => {
         fs.readdir(SAVEDIR)
             .then(files => {
-                resolve(files.includes(file) && !file.includes('/'))
+                resolve(files.includes(file) && !file.includes('/') && !file.includes('-'))
             })
     })
 }
@@ -57,16 +57,10 @@ const upload = multer({
     storage: storage
 })
 
-// get frontend
-app.get('/', (req, res) => {
-    res.writeHead(200, {'Content-Type': 'text/html'})
-    res.end(frontend)
-})
-
 // get all files with name and id
 app.get('/files', (req, res) => {
     fs.readdir(SAVEDIR)
-    .then(files => res.json(files.map(file => {return {name: file.substring(0, file.length-14), fileID: file}}))
+    .then(files => res.json(files.map(file => {return {name: file.split('-')[0], fileID: file}}))
                         .status(200)
                         .end())
 
@@ -75,7 +69,7 @@ app.get('/files', (req, res) => {
 //saves a file in order to annotate it later
 app.put('/files', upload.single('data'), asyncHandler(async (req, res) => {
     if(!req.file) {
-        res.status(422).send('Wrong file type!').end()
+        res.status(400).send('Wrong file type!').end()
         return
     }
 
@@ -130,8 +124,14 @@ app.delete('/files/:file', asyncHandler(async (req, res) => {
     else{
         res.status(404).end()
     }
+}))
+
+// get frontend
+app.get('/', (req, res) => {
+    res.writeHead(200, {'Content-Type': 'text/html'})
+    res.end(frontend)
 })
 
 app.listen(PORT, () => {
     console.log(`Server running on ${PORT}!`)
-}))
+})

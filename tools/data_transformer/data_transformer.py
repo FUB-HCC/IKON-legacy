@@ -23,7 +23,7 @@ def loadDatabase(filename):
 def findInDatabase(database, name):
     for row in database:
         if name in row.values():
-            return (row['Wissenschaftsbereich ID'], row['Fachgebiet'])
+            return (row['Wissenschaftsbereich'], row['Fachgebiet'])
     return ('','')
 
 
@@ -42,7 +42,7 @@ def convertToJson(database, index=None, project_id=None, institution_id=None, re
         'titel': title,
         'beschreibung': project_abstract,
         'href': '',
-        'forschungsregion': international_connections,
+        'forschungsregion': [elem.strip() for elem in international_connections.split(';') if elem.strip()],
         'synergie': '1'
     }
 
@@ -52,4 +52,4 @@ def saveJson(filename, list):
 
 
 database = loadDatabase('database.csv')
-saveJson('projects.json', {x['project_id'] : convertToJson(database, **x) for x in getCSVData('project_details_v2.csv')})
+saveJson('projects.json', {x['project_id'] : convertToJson(database, **x) for x in getCSVData('MfN_project_detail_04.06.csv')})
